@@ -10,7 +10,4 @@ module.exports = function(app, exp) {
 		app.use(exp.static(app.root + '/app'));
 	});	
 	
-	require(app.root + '/app/socket')(app);	
-	require(app.root + '/app/router')(app);
-	
 }

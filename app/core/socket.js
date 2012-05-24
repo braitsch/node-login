@@ -4,16 +4,15 @@
  * Author :: Stephen Braitsch
  */
 
-var io, appName, clients = {};
+var io, appName, clients = {}, callbacks = {};
 
-module.exports = function(sio, an) {
-	
+module.exports.init = function(sio, an)
+{
 	io = sio; appName = an;
 	io.on('connection', registerSocket);
-	return this;
 }
 
-module.exports.onConnect = function(){}
+module.exports.set = function(p, f){ callbacks[p] = f; }
 
 function registerSocket(socket)
 {
@@ -26,7 +25,7 @@ function onSocketConnect(socket)
 {
 	if (socket.handshake.headers.host.indexOf(appName) != -1){
 		console.log('connecting ---', socket.handshake.headers.host);
-		module.exports.onConnect(socket);
+		if (callbacks['onConnect']) callbacks['onConnect'](socket);
 		// dispatch to clients //		
 		clients[socket.id] = {};
 		io.sockets.emit(appName + '-status', { connections:clients });
@@ -36,7 +35,8 @@ function onSocketConnect(socket)
 function onSocketDisconnect(socket)
 {	
 	if (socket.handshake.headers.host.indexOf(appName) != -1){
-		console.log('disconnecting --- ', socket.handshake.headers.host, socket.id)
+		console.log('disconnecting --- ', socket.handshake.headers.host, socket.id);
+		if (callbacks['onDisconnect']) callbacks['onDisconnect'](socket);		
 		// dispatch to clients //
 		delete clients[socket.id];
 		io.sockets.emit(appName + '-status', { connections:clients });

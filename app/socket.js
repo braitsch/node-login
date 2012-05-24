@@ -1,8 +1,7 @@
 
 module.exports = function(app) { 
 
-	var io = require(app.root + '/app/core/socket')(app.socket, 'bridge');
-	io.onConnect = onSocketConnect;	
+	app.io.set('onConnect', onSocketConnect);
 	
 };
 
