@@ -7,12 +7,11 @@
 module.exports = function(sio){
 
 	var exp = require('express');
-	var app = exp.createServer();
-	app.settings.root = __dirname;
+	var app = exp.createServer();	
 
-	require('./core/env')(app, exp);
-	require('./core/router')(app);
-	require('./core/socket')(sio);
+	app.root = __dirname;
+	app.socket = sio;
+	require('./app/core/config')(app, exp);
 	
 	return app;
 }

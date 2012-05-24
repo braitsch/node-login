@@ -1,0 +1,24 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  user-select: none;
+}
+#wrap {
+  min-height: 100%;
+}
+#main {
+  overflow: auto;
+  padding-bottom: 40px;
+  background-color: #fff;
+}
+#footer {
+  position: relative;
+  height: 40px;
+  margin-top: -40px;
+  background-color: #ddd;
+}
+#nfnd {
+  padding: 20px;
+}

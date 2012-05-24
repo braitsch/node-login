@@ -1,26 +1,19 @@
 
-var io, clients = {};
-var appName = 'bridge';
+/**
+ * Simple Socket Manager
+ * Author :: Stephen Braitsch
+ */
 
-module.exports = function(sio) { io = sio; io.on('connection', registerSocket); };
-module.exports.init = function(){};
+var io, appName, clients = {};
 
-// --- events and callbacks unique to this application //
-
-function addEventHandlers(socket)
-{
-	socket.on('custom-event', function(data) { onCustomEvent(socket, data); });		
-}
- 
-function onCustomEvent(socket, data)
-{
-// append this socket's id so we know who is talking //
-	data.id = socket.id;
-	socket.broadcast.emit('custom-event', data);
+module.exports = function(sio, an) {
+	
+	io = sio; appName = an;
+	io.on('connection', registerSocket);
+	return this;
 }
 
-
-// --- general connection methods used by all applications --- //
+module.exports.onConnect = function(){}
 
 function registerSocket(socket)
 {
@@ -33,7 +26,7 @@ function onSocketConnect(socket)
 {
 	if (socket.handshake.headers.host.indexOf(appName) != -1){
 		console.log('connecting ---', socket.handshake.headers.host);
-		addEventHandlers(socket);
+		module.exports.onConnect(socket);
 		// dispatch to clients //		
 		clients[socket.id] = {};
 		io.sockets.emit(appName + '-status', { connections:clients });
