@@ -1,6 +1,14 @@
-h1= title
-p Hello from SF-Bridge
+#form-cnt
+    form( method="post")#loginForm.well.span4
+        h4= title
+        label Username 
+        input(type="text", name="user").span4.required
+        label Password
+        input(type="password", name="pass").span4.required
+        input(type="submit", value="Sign in").btn.btn-primary      
+        label.checkbox Remember Me
+            input(type="checkbox")
 
-script(src='/socket.io/socket.io.js')    
-script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+script(src='/vendor/jquery.min.js')
+script(src='/vendor/jquery.form.js')
 script(src='/js/index.js')

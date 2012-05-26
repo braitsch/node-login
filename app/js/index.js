@@ -1,20 +1,23 @@
+$(document).ready(function(){
 
-var socket, connections;
+	$('#loginForm').ajaxForm({
+		beforeSubmit : function(formData, jqForm, options){
+			var pass = true; 
+			$('.required').each(function(n, obj){
+				var o = $(obj);
+				if (!o.val()){
+					alert('please enter both fields');
+					console.log(o.attr('name') + ' is empty');
+					pass = false; return pass;
+				}
+			})
+			if (pass) console.log('about to submit :: '+$.param(formData));
+			return pass;
+		},
+		success	: function(responseText, status, xhr, $form){
+			if (status == 'success') window.location.href = '/print';
+		}
+		
+	}); 
 
-$(document).ready(function() {
-	initSocket();	
-});
-
-function initSocket()
-{
-	console.log('socket-initializing')
-	socket = io.connect();
-	socket.on('bridge-status', function (data) {
-		connections = data.connections;
-		var i=0; for (p in connections) i++;
-		console.log(i + ' People Currently Connected');
-	});
-	socket.on('bridge-event', function (data) {
-		console.log('bridge-event received');
-	});
-}
+})

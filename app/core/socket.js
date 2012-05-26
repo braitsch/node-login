@@ -4,11 +4,12 @@
  * Author :: Stephen Braitsch
  */
 
-var io, appName, clients = {}, callbacks = {};
+var io = global.socket;
+var appName, clients = {}, callbacks = {};
 
-module.exports.init = function(sio, an)
+module.exports.init = function(an)
 {
-	io = sio; appName = an;
+	appName = an;
 	io.on('connection', registerSocket);
 }
 

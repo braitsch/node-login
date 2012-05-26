@@ -5,20 +5,27 @@ body {
   height: 100%;
   user-select: none;
 }
-#wrap {
-  min-height: 100%;
+h4 {
+  text-align: center;
 }
-#main {
-  overflow: auto;
-  padding-bottom: 40px;
-  background-color: #fff;
+#form-cnt {
+  width: 340px;
+  margin: 200px auto;
 }
-#footer {
-  position: relative;
-  height: 40px;
-  margin-top: -40px;
-  background-color: #ddd;
+label {
+  margin-top: 10px;
+}
+.btn {
+  padding: 6px 40px 6px 40px;
+  float: left;
+  margin-top: 15px;
 }
 #nfnd {
+  padding: 20px;
+}
+.checkbox {
+  margin: 23px 0 0 160px;
+}
+#print {
   padding: 20px;
 }
