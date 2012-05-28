@@ -1,25 +1,69 @@
+textShadow()
+	text-shadow: -1px 1px 0 white
+	-moz-text-shadow: -1px 1px 0 white
+	-webkit-text-shadow: -1px 1px 0 white
 
 html, body 
-    margin: 0
-    padding: 0
-    height: 100%
-    user-select: none
-    
-h4
-    text-align center
-#form-cnt
-    width 340px
-    margin 200px auto
+	margin: 0
+	padding: 0
+	height: 100%
+	user-select: none
 	
-label
-    margin-top 10px    
-.btn     
-    padding 6px 40px 6px 40px
-    float left
-    margin-top 15px
-#nfnd
-    padding:20px
-.checkbox
-    margin 23px 0 0 160px
+// login page //	
+    
+#login-container{
+    width 340px
+    margin 180px auto
+    #subheading{
+		color #777
+		textShadow()		
+		margin-top 3px
+	}
+	label{
+		color grey
+		textShadow()
+		margin 15px 0 5px 5px
+	}
+	#btn-login{
+		width 150px
+		padding 6px 40px 6px 40px
+		float left
+		margin-top 15px
+	}
+	#remember-me{
+		margin 23px 0 0 180px    
+	}
+	#btm-links{
+		text-align center
+		margin-top 10px
+	}
+	#forgot-pass{
+		float:left
+		margin-left:10px
+	}
+	#create-account{
+		float:right
+		margin-right:13px        
+	}
+}
+    
+// logged-in page //    
+    
+#btn-logout
+	width 100px
+	top 1px
+	right 8px
+	position absolute
+    
+// print page //
+
 #print
-    padding 20px
+	padding 20px    
+    
+// shared rules //
+button i
+	padding-left 8px
+.clear-fix
+	clear both
+#four04
+	padding:20px

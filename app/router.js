@@ -50,6 +50,22 @@ module.exports = function(app) {
 	    });
 	});
 	
+	app.get('/home', function(req, res) {
+		res.render('home', { 
+			locals: {
+				title: 'Welcome',
+			}
+		});
+	});
+	
+	app.get('/new-account', function(req, res) {
+		res.render('new-account', { 
+			locals: {
+				title: 'Create Account',
+			}
+		});
+	});
+	
 // separate socket view for later ...
 	
 	app.get('/socket', function(req, res) {

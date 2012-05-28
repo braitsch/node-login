@@ -1,13 +1,22 @@
-#form-cnt
+#login-container
     form( method="post")#loginForm.well.span4
-        h4= title
+        h1 Hello! 
+        p#subheading Please Login To Your Account
         label Username 
         input(type="text", name="user").span4.required
         label Password
         input(type="password", name="pass").span4.required
-        input(type="submit", value="Sign in").btn.btn-primary      
-        label.checkbox Remember Me
+        button(type="submit")#btn-login.btn.btn-primary
+            i.icon-lock.icon-white
+            | Sign in
+        label#remember-me.checkbox Remember Me
             input(type="checkbox")
+        div.clear-fix
+        hr
+        #btm-links
+            a(href='#')#forgot-pass Forgot Your Password? 
+            a(href='/new-account')#create-account Create An Account
+
 
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')

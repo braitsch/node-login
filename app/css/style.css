@@ -5,27 +5,60 @@ body {
   height: 100%;
   user-select: none;
 }
-h4 {
-  text-align: center;
-}
-#form-cnt {
+#login-container {
   width: 340px;
-  margin: 200px auto;
+  margin: 180px auto;
 }
-label {
-  margin-top: 10px;
+#login-container #subheading {
+  color: #777;
+  text-shadow: -1px 1px 0 #fff;
+  -moz-text-shadow: -1px 1px 0 #fff;
+  -webkit-text-shadow: -1px 1px 0 #fff;
+  margin-top: 3px;
 }
-.btn {
+#login-container label {
+  color: #808080;
+  text-shadow: -1px 1px 0 #fff;
+  -moz-text-shadow: -1px 1px 0 #fff;
+  -webkit-text-shadow: -1px 1px 0 #fff;
+  margin: 15px 0 5px 5px;
+}
+#login-container #btn-login {
+  width: 150px;
   padding: 6px 40px 6px 40px;
   float: left;
   margin-top: 15px;
 }
-#nfnd {
-  padding: 20px;
+#login-container #remember-me {
+  margin: 23px 0 0 180px;
 }
-.checkbox {
-  margin: 23px 0 0 160px;
+#login-container #btm-links {
+  text-align: center;
+  margin-top: 10px;
+}
+#login-container #forgot-pass {
+  float: left;
+  margin-left: 10px;
+}
+#login-container #create-account {
+  float: right;
+  margin-right: 13px;
+}
+#btn-logout {
+  width: 100px;
+  top: 1px;
+  right: 8px;
+  position: absolute;
 }
 #print {
+  padding: 20px;
+}
+button i {
+  padding-left: 8px;
+}
+.clear-fix {
+  clear: both;
+}
+#four04 {
   padding: 20px;
 }
