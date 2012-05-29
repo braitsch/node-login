@@ -1,6 +1,9 @@
 
+
 require('./modules/account-manager').AccountManager;
 var AM = new AccountManager();
+var EM = require('./modules/email-dispatcher');
+var CT = require('./modules/country-list').countries;
 
 module.exports = function(app) {
 	
@@ -38,14 +41,19 @@ module.exports = function(app) {
 	
 	function getCredentials(req, res)
 	{
-		console.log('email = '+req.param('email'));
-		res.send('ok', 200);		
+		EM.send(req.param('email'), function(err, msg){
+			console.log('err = '+err);
+			console.log(err || msg); 
+		})
+		res.send('ok', 200);
 	}
 	
 // view & delete accounts //			
 	
 	app.get('/print', function(req, res) {
+		console.log('print')
 		AM.findAll( function(e, accounts){
+			console.log(e)
 			res.render('print', {
 				locals: {
 					title : 'Account List',
@@ -73,30 +81,21 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.get('/new-account', function(req, res) {
-		res.render('new-account', { 
+	app.get('/signup', function(req, res) {
+		res.render('signup', { 
 			locals: {
-				title: 'Create Account',
+				title: 'Signup', countries : CT
 			}
 		});
 	});
 	
-	app.post('/new-account', function(req, res){
+	app.post('/signup', function(req, res){
 		console.log(req.param('email'));
 	 	res.send('ok', 400);
 	//	user: req.param('user'),
 	//	pass: req.param('pass'),
 	});
 		
-	
-// separate socket view for later ...
-	
-	app.get('/socket', function(req, res) {
-		res.render('socket', {
-			locals: { title : 'SF-Bridge'}
-		});
-	});		
- 
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 	
 };

@@ -9,21 +9,7 @@ body {
   width: 340px;
   margin: 160px auto;
 }
-#login-container #subheading {
-  color: #777;
-  text-shadow: -1px 1px 0 #fff;
-  -moz-text-shadow: -1px 1px 0 #fff;
-  -webkit-text-shadow: -1px 1px 0 #fff;
-  margin-top: 3px;
-}
-#login-container form {
-  margin-left: 0;
-}
 #login-container label {
-  color: #808080;
-  text-shadow: -1px 1px 0 #fff;
-  -moz-text-shadow: -1px 1px 0 #fff;
-  -webkit-text-shadow: -1px 1px 0 #fff;
   margin: 15px 0 5px 5px;
 }
 #login-container #btn-login {
@@ -46,6 +32,13 @@ body {
 #login-container #create-account {
   float: right;
   margin-right: 13px;
+}
+#signup-container {
+  width: 460px;
+  margin: 100px auto;
+}
+#clist {
+  width: 280px;
 }
 #sendCredentials {
   width: 494px;
@@ -86,12 +79,40 @@ body {
 #print {
   padding: 20px;
 }
+#four04 {
+  padding: 20px;
+}
 button i {
   padding-left: 8px;
 }
 .clear-fix {
   clear: both;
 }
-#four04 {
-  padding: 20px;
+label {
+  color: #808080;
+  text-shadow: -1px 1px 0 #fff;
+  -moz-text-shadow: -1px 1px 0 #fff;
+  -webkit-text-shadow: -1px 1px 0 #fff;
+}
+.subheading {
+  color: #777;
+  text-shadow: -1px 1px 0 #fff;
+  -moz-text-shadow: -1px 1px 0 #fff;
+  -webkit-text-shadow: -1px 1px 0 #fff;
+  margin-top: 3px;
+}
+form,
+.form-horizontal,
+.well {
+  margin-left: 0;
+}
+.form-horizontal .control-label {
+  width: 80px;
+}
+.form-horizontal .controls {
+  margin-left: 120px;
+}
+.form-horizontal .form-actions {
+  margin: 0;
+  padding: 17px 0 0 270px;
 }

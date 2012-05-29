@@ -1,0 +1,42 @@
+
+#signup-container
+	form( method='post' ).form-horizontal.well.span6
+		h1 Signup 
+		p.subheading Please tell us a little about yourself.
+		hr
+		fieldset
+			.control-group
+				label.control-label(for='name') Name
+				.controls
+					input#name.input-xlarge(type='text')
+			.control-group
+				label.control-label(for='email') Email
+				.controls
+					input#email.input-xlarge(type='text')
+			.control-group
+				label.control-label(for='clist') Location
+				.controls
+					select#clist
+						- var items = countries
+						each item in items
+							option= item.name
+			hr
+			p.subheading Choose your username & password
+			.control-group
+				label.control-label(for='user') Username
+				.controls
+					input#user.input-xlarge(type='text')
+			.control-group
+				label.control-label(for='pass') Password
+				.controls
+					input#pass.input-xlarge(type='password')
+			.form-actions
+				button#signup-no.btn Cancel
+				button#signup-ok.btn.btn-primary(type='submit') Submit
+
+
+script(src='/vendor/jquery.min.js')
+script(src='/vendor/jquery.form.js')
+script(src='/vendor/bootstrap-modal.js')
+script(src='/vendor/bootstrap-transition.js')
+script(src='/js/login/signup.js')

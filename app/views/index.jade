@@ -1,7 +1,8 @@
+
 #login-container
     form( method="post")#loginForm.well.span4
         h1 Hello! 
-        p#subheading Please Login To Your Account
+        p.subheading Please Login To Your Account
         label Username 
         input(type="text", name="user", id='user').span4.required
         label Password
@@ -15,7 +16,7 @@
         hr
         #btm-links
             a(href='#')#forgot-pass Forgot Your Password? 
-            a(href='/new-account')#create-account Create An Account
+            a(href='/signup')#create-account Create An Account
 
 #sendCredentials.modal.hide.fade
     div.modal-header

@@ -2,7 +2,7 @@ var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 
 var dbPort = 27017;
-var dbHost = 'localhost';
+var dbHost = global.host;
 var dbName = 'login-testing';
 
 AccountManager = function() {

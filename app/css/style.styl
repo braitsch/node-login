@@ -9,22 +9,12 @@ html, body
 	height: 100%
 	user-select: none
 	
-// login page //	
+// login page //
     
 #login-container{
-    width 340px
-    margin 160px auto
-    #subheading{
-		color #777
-		textShadow()		
-		margin-top 3px
-	}
-	form{
-		margin-left 0
-	}	
+	width 340px
+	margin 160px auto
 	label{
-		color grey
-		textShadow()
 		margin 15px 0 5px 5px
 	}
 	#btn-login{
@@ -34,7 +24,7 @@ html, body
 		margin-top 15px
 	}
 	#remember-me{
-		margin 23px 0 0 180px    
+		margin 23px 0 0 180px
 	}
 	#btm-links{
 		text-align center
@@ -46,11 +36,19 @@ html, body
 	}
 	#create-account{
 		float:right
-		margin-right:13px        
+		margin-right:13px
 	}
 }
 
-// register page //
+// signup page //
+
+#signup-container
+	width 460px
+	margin 100px auto
+#clist
+	width 280px
+
+// retrieve password window //
 
 #sendCredentials{
 	width 494px	
@@ -90,15 +88,31 @@ html, body
 	right 8px
 	position absolute
     
-// print page //
+// support pages //
 
 #print
-	padding 20px    
+	padding 20px
+#four04
+	padding:20px	
     
 // shared rules //
 button i
 	padding-left 8px
 .clear-fix
 	clear both
-#four04
-	padding:20px
+label
+	color grey
+	textShadow()
+.subheading
+	color #777
+	textShadow()		
+	margin-top 3px
+form, .form-horizontal, .well
+	margin-left 0	
+.form-horizontal .control-label
+	width 80px
+.form-horizontal .controls
+	margin-left 120px
+.form-horizontal .form-actions
+	margin 0
+	padding 17px 0 0 270px
