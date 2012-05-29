@@ -3,9 +3,9 @@
         h1 Hello! 
         p#subheading Please Login To Your Account
         label Username 
-        input(type="text", name="user").span4.required
+        input(type="text", name="user", id='user').span4.required
         label Password
-        input(type="password", name="pass").span4.required
+        input(type="password", name="pass", id='pass').span4.required
         button(type="submit")#btn-login.btn.btn-primary
             i.icon-lock.icon-white
             | Sign in
@@ -17,7 +17,23 @@
             a(href='#')#forgot-pass Forgot Your Password? 
             a(href='/new-account')#create-account Create An Account
 
+#sendCredentials.modal.hide.fade
+    div.modal-header
+        button.close(data-dismiss='modal') x
+        h3 Retrieve Password
+    div.modal-body
+        form( method="post")#emailForm.well.span5
+            p Please enter the email address associated with your account
+            input(type="text", name="email")#email.span5.required
+            button(type="submit")#submit.btn.btn-primary Submit
+            button(data-dismiss="modal")#cancel.btn Cancel
+            div.alert.alert-error
+                button(data-dismiss="alert").close
+    div.modal-footer
 
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')
-script(src='/js/index.js')
+script(src='/vendor/bootstrap-modal.js')
+script(src='/vendor/bootstrap-transition.js')
+script(src='/js/login/index.js')
+script(src='/js/login/send-credentials.js')

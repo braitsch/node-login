@@ -15,6 +15,15 @@ module.exports = function(app) {
 	});	
 	
 	app.post('/', function(req, res){
+		if (req.param('email') == null){
+			addAccount(req, res);
+		}	else{
+			getCredentials(req, res);
+		}
+	});
+	
+	function addAccount(req, res)
+	{
 	    AM.create({
 	        user: req.param('user'),
 	        pass: req.param('pass'),
@@ -24,8 +33,14 @@ module.exports = function(app) {
 			}	else{
 				res.send('could not add record', 400);
 			}
-	    });
-	});
+	    });		
+	}
+	
+	function getCredentials(req, res)
+	{
+		console.log('email = '+req.param('email'));
+		res.send('ok', 200);		
+	}
 	
 // view & delete accounts //			
 	
@@ -65,6 +80,14 @@ module.exports = function(app) {
 			}
 		});
 	});
+	
+	app.post('/new-account', function(req, res){
+		console.log(req.param('email'));
+	 	res.send('ok', 400);
+	//	user: req.param('user'),
+	//	pass: req.param('pass'),
+	});
+		
 	
 // separate socket view for later ...
 	
