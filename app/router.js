@@ -19,34 +19,84 @@ module.exports = function(app) {
 	
 	app.post('/', function(req, res){
 		if (req.param('email') == null){
-			addAccount(req, res);
+			attemptLogin(req, res);
 		}	else{
 			getCredentials(req, res);
 		}
 	});
 	
-	function addAccount(req, res)
-	{
-	    AM.create({
-	        user: req.param('user'),
-	        pass: req.param('pass'),
-	    }, function( e, obj) {
-			if (!e){
-				res.send('ok', 200);
-			}	else{
-				res.send('could not add record', 400);
+// logged in user page //	
+	
+	app.get('/home', function(req, res) {
+		res.render('home', { 
+			locals: {
+				title: 'Welcome',
 			}
-	    });		
+		});
+	});
+		
+	function attemptLogin(req, res)
+	{
+		res.send('ok', 200);
 	}
 	
 	function getCredentials(req, res)
+	{
+		AM.findByField({email : req.param('email')}, function(e, o){
+			if (o == null){
+				res.send('email-not-found', 400);
+			}	else{
+				sendCredentials(o, res)
+			}
+		});
+	}
+	
+	function sendCredentials()
 	{
 		EM.send(req.param('email'), function(err, msg){
 			console.log('err = '+err);
 			console.log(err || msg); 
 		})
-		res.send('ok', 200);
+		res.send('ok', 200);		
 	}
+	
+// creating new accounts //	
+	
+	app.get('/signup', function(req, res) {
+		res.render('signup', { 
+			locals: {
+				title: 'Signup', countries : CT
+			}
+		});
+	});
+	
+	app.post('/signup', function(req, res){
+	    AM.findByField({email : req.param('email')}, function(e, o){
+			if (o){
+				res.send('email-taken', 400);
+			}	else{
+	    		AM.findByField({user : req.param('user')}, function(e, o){
+					if (o){
+						res.send('username-taken', 400);
+					}	else{
+						AM.create({
+							name 	: req.param('name'),
+							email 	: req.param('email'),
+							country : req.param('country'),
+							user 	: req.param('user'),
+							pass 	: req.param('pass')
+						}, function(e, o){
+							if (!e){
+								res.send('ok', 200);
+							}	else{
+								res.send('error creating account', 400);
+							}
+						})
+					}
+				});
+			}
+		});
+	});
 	
 // view & delete accounts //			
 	
@@ -69,31 +119,7 @@ module.exports = function(app) {
 				res.send('record not found', 400);
 			}
 	    });
-	});
-	
-	app.get('/home', function(req, res) {
-		res.render('home', { 
-			locals: {
-				title: 'Welcome',
-			}
-		});
-	});
-	
-	app.get('/signup', function(req, res) {
-		res.render('signup', { 
-			locals: {
-				title: 'Signup', countries : CT
-			}
-		});
-	});
-	
-	app.post('/signup', function(req, res){
-		console.log(req.param('name'));
-		console.log(req.param('email'));
-		console.log(req.param('user'));
-		console.log(req.param('pass'));
-	 	res.send('ok', 200);
-	});
+	});	
 		
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 	

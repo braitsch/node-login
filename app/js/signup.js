@@ -7,13 +7,19 @@ $(document).ready(function(){
 	
 	$('#signupForm').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			return validateForm();
+			return true; //validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
-
+			if (status == 'success') window.location.href = '/print';
 		},
-		error : function(){
-
+		error : function(e){
+			if (e.responseText == 'email-taken'){
+				cgs[1].addClass('error');
+				displayErrors(['That email address is already in use.']);
+			}	else if (e.responseText == 'username-taken'){
+				cgs[2].addClass('error');				
+				displayErrors(['That username is already in use.']);				
+			}
 		}
 	});
 	
@@ -35,13 +41,7 @@ $(document).ready(function(){
 			cgs[3].addClass('error'); 
 			e.push('Password Should Be At Least 6 Characters');
 		}
-		if (e.length){
-			$('#signupErrors .modal-body p').text('Please correct the following problems :')			
-			var ul = $('#signupErrors .modal-body ul');
-				ul.empty();
-			for (var i=0; i < e.length; i++) ul.append('<li>'+e[i]+'</li>');
-			$('#signupErrors').modal('show');
-		}
+		if (e.length) displayErrors(e);
 		return e.length === 0;
 	}
 	
@@ -59,6 +59,15 @@ $(document).ready(function(){
 	function validatePassword(s)
 	{
 		return s.length >= 6;
+	}
+	
+	function displayErrors(a)
+	{
+		$('#signupErrors .modal-body p').text('Please correct the following problems :');
+		var ul = $('#signupErrors .modal-body ul');
+			ul.empty();
+		for (var i=0; i < a.length; i++) ul.append('<li>'+a[i]+'</li>');
+		$('#signupErrors').modal('show');
 	}	
 	
 // display errors in a modal window //	

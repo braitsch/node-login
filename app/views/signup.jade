@@ -16,7 +16,7 @@
 			.control-group
 				label.control-label(for='clist') Location
 				.controls
-					select#clist
+					select#clist(name='country')
 						- var items = countries
 						each item in items
 							option= item.name
