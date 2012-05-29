@@ -40,6 +40,18 @@ body {
 #clist {
   width: 280px;
 }
+#signupErrors .modal-body p {
+  color: #808080;
+  text-shadow: -1px 1px 0 #fff;
+  -moz-text-shadow: -1px 1px 0 #fff;
+  -webkit-text-shadow: -1px 1px 0 #fff;
+}
+#signupErrors .modal-body li {
+  color: #d8000c;
+  text-shadow: -1px 1px 0 #fff;
+  -moz-text-shadow: -1px 1px 0 #fff;
+  -webkit-text-shadow: -1px 1px 0 #fff;
+}
 #sendCredentials {
   width: 494px;
   margin: -200px 0 0 -250px;

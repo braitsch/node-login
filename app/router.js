@@ -10,7 +10,7 @@ module.exports = function(app) {
 // login window //	
 	
 	app.get('/', function(req, res){
-		res.render('index', { 
+		res.render('login', { 
 			locals: {
 				title: 'Hello - Please Login To Your Account',
 			}
@@ -51,9 +51,7 @@ module.exports = function(app) {
 // view & delete accounts //			
 	
 	app.get('/print', function(req, res) {
-		console.log('print')
 		AM.findAll( function(e, accounts){
-			console.log(e)
 			res.render('print', {
 				locals: {
 					title : 'Account List',
@@ -90,10 +88,11 @@ module.exports = function(app) {
 	});
 	
 	app.post('/signup', function(req, res){
+		console.log(req.param('name'));
 		console.log(req.param('email'));
-	 	res.send('ok', 400);
-	//	user: req.param('user'),
-	//	pass: req.param('pass'),
+		console.log(req.param('user'));
+		console.log(req.param('pass'));
+	 	res.send('ok', 200);
 	});
 		
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
