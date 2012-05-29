@@ -1,14 +1,17 @@
 {
-    "name": "sf-bridge",
-    "version": "0.0.1",    
-    "description": "",
+    "name": "node-login",
+    "version": "1.0.0",
+    "description": "A template for quickly building login systems on top of Node.js & MongoDb",
     "author": {
         "name": "Stephen Braitsch",
         "email": "stephen@braitsch.io"
     },
+    "website":{
+        "url": "node-login.braitsch.io"
+    },
     "repository": {
         "type": "git",
-        "url": "git://github.com/braitsch/sf-bridge.git"
+        "url": "git://github.com/braitsch/node-login.git"
     },
     "private": true,
     "dependencies": {
