@@ -82,11 +82,24 @@ body {
 #sendCredentials .modal-footer {
   height: 20px;
 }
+#loginFailure {
+  width: 310px;
+  margin: -200px 0 0 -150px;
+}
+#loginFailure .cancel {
+  float: right;
+}
 #btn-logout {
   width: 100px;
   top: 1px;
   right: 8px;
   position: absolute;
+}
+#userData {
+  margin: 50px 0 0 22px;
+}
+#userData p {
+  color: #808080;
 }
 #print {
   padding: 20px;

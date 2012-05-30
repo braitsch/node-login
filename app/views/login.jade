@@ -29,11 +29,21 @@
             button(type="submit")#submit.btn.btn-primary Submit
             button(data-dismiss="modal")#cancel.btn Cancel
             div.alert.alert-error
-                button(data-dismiss="alert").close
+            button(data-dismiss="alert").close
     div.modal-footer
+    
+#loginFailure.modal.hide.fade
+    div.modal-header
+        button.close(data-dismiss='modal') x
+        h3 Login Failure
+    div.modal-body
+        p Please check your username and/or password
+    div.modal-footer
+        button(data-dismiss="modal").cancel.btn.btn-warning OK    
 
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')
 script(src='/vendor/bootstrap-modal.js')
 script(src='/vendor/bootstrap-transition.js')
-script(src='/js/login.js')
+script(src='/js/login-form.js')
+script(src='/js/login-retrieval.js')

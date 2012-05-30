@@ -28,16 +28,45 @@ module.exports = function(app) {
 // logged in user page //	
 	
 	app.get('/home', function(req, res) {
-		res.render('home', { 
-			locals: {
-				title: 'Welcome',
-			}
-		});
+	    if (req.session.user == null){
+	        res.redirect('/');
+	    }   else{
+			res.render('home', {
+				locals: {
+					title : 'Control Panel',
+					udata : req.session.user
+				}
+			});
+	    }
+	});
+	
+	app.post('/home', function(req, res){
+		if (req.param('logout') == 'true') {
+            req.session.destroy(function(e){
+                if (e == null){
+                    res.send('ok', 200);
+                }   else{
+                    res.send('unable to destory user session', 400);                    
+                }
+            });
+		}	else{
+            res.send('invalid request from client', 400);
+		}
 	});
 		
 	function attemptLogin(req, res)
 	{
-		res.send('ok', 200);
+		AM.login([
+			{user : req.param('user')},
+			{pass : req.param('pass')}
+		], function(e, o){
+			if (o.length == 0){
+				res.send('invalid-credentials', 400);
+			}	else{
+			    req.session.user = o;
+				res.send(o, 200);
+			}
+		});
 	}
 	
 	function getCredentials(req, res)
@@ -51,13 +80,12 @@ module.exports = function(app) {
 		});
 	}
 	
-	function sendCredentials()
+	function sendCredentials(o, res)
 	{
-		EM.send(req.param('email'), function(err, msg){
-			console.log('err = '+err);
-			console.log(err || msg); 
+		EM.send(o, function(err, msg){
+	//		console.log('error = '+err, 'message = '+msg);
 		})
-		res.send('ok', 200);		
+		res.send('ok', 200);
 	}
 	
 // creating new accounts //	

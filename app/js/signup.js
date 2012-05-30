@@ -7,7 +7,7 @@ $(document).ready(function(){
 	
 	$('#signupForm').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			return true; //validateForm();
+			return validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
 			if (status == 'success') window.location.href = '/print';
@@ -22,6 +22,15 @@ $(document).ready(function(){
 			}
 		}
 	});
+	$('#signup-no').click(function(){ window.location.href = '/';})	
+	
+// display errors in a modal window //
+	
+	$('#signupErrors').modal({
+		show : false,
+		keyboard : true,
+		backdrop : true
+	});	
 	
 	function validateForm()
 	{
@@ -68,14 +77,6 @@ $(document).ready(function(){
 			ul.empty();
 		for (var i=0; i < a.length; i++) ul.append('<li>'+a[i]+'</li>');
 		$('#signupErrors').modal('show');
-	}	
-	
-// display errors in a modal window //	
-	
-	$('#signupErrors').modal({
-		show : false,
-		keyboard : true,
-		backdrop : true
-	});
+	}
 	
 })

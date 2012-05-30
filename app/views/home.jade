@@ -1,13 +1,16 @@
+- user= udata[0]
+
 div.navbar.navbar-fixed-top
     div.navbar-inner
         div.container-fluid
             ul#global-nav.nav.pull-left
-                li.divider-vertical
-                a(href='#').brand Hello !            
-                li.divider-vertical
+                a(href='#').brand Control Panel
             button#btn-logout.btn.btn-primary
                 i.icon-lock.icon-white
                 | Sign Out
-                
+
+#userData
+    p= 'Welcome :: '+ user.name +' , '+user.email+' , '+ user.country +' , '+ user.user +' , '+user.pass
+    
 script(src='/vendor/jquery.min.js')
 script(src='/js/home.js')

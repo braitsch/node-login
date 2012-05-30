@@ -11,6 +11,13 @@ AccountManager = function() {
 	this.collection = this.db.collection('accounts');
 };
 
+AccountManager.prototype.login = function(credentials, callback) {
+	this.collection.find( { $and : credentials } ).toArray(function(e, results) {
+		if (e) callback(e)
+		else callback(null, results)
+	});	
+}
+
 AccountManager.prototype.create = function(credentials, callback) {
 // append date stamp when record was created //	
 	credentials.date = new Date();
@@ -23,7 +30,7 @@ AccountManager.prototype.delete = function(id, callback) {
 
 AccountManager.prototype.lookup = function(o, callback){
 // function to search across multiple fields //	
-	console.log(o);
+	console.log('AccountManager.prototype.lookup : '+o);
 	this.collection.find( { $or : o } ).toArray(function(e, results) {
 		if (e) callback(e)
 		else callback(null, results)

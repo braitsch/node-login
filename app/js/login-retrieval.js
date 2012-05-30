@@ -1,40 +1,15 @@
 $(document).ready(function(){
 
-	// login form shown when page loads //
+	// modal window to allow users to request credentials by email //
 
-	$('#loginForm').ajaxForm({
-		beforeSubmit : function(formData, jqForm, options){
-			if ($('#user').val() == ''){
-				alert('please enter your username');
-				return false;				
-			}	else if ($('#pass').val() == ''){
-				alert('please enter your password');
-				return false;
-			}	else{
-				console.log('about to submit :: '+$.param(formData));
-				return pass;
-			}
-		},
-		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') window.location.href = '/print';
-		}
-	}); 
-	
-	$('#forgot-pass').click(function(){
-		$('#sendCredentials').modal('show');
-	});
-	
-	// retrieve password modal window & form // 	
-	
-	var a = $('.alert');
 	$('#sendCredentials').modal({
 		show : false,
 		keyboard : true,
 		backdrop : true
 	});
-	$('#sendCredentials').on('show', function(){	
-		$('#emailForm').resetForm(); a.hide();
-	});
+	var a = $('#sendCredentials .alert');
+	$('#sendCredentials').on('show', function(){ $('#emailForm').resetForm(); a.hide();});
+	
 	$('#emailForm').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (validate($('#email').val())){
@@ -49,7 +24,7 @@ $(document).ready(function(){
 			showSuccess("You've been sent an email with your login credentials.");
 		},
 		error : function(){
-			showError("<b> I'm Sorry.</b> I could not find that email address");
+			showError("I'm Sorry. I could not find that email address");
 		}
 	});
 	
@@ -65,11 +40,11 @@ $(document).ready(function(){
 		a.html(m); a.show();			
 	}
 	
-	function showSucess(m)
+	function showSuccess(m)
 	{
 		a.attr('class', 'alert alert-success');
 		a.html(m);
 		a.fadeIn(500);		
 	}
-
-})
+	
+});
