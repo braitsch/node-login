@@ -6,15 +6,15 @@ $(document).ready(function(){
 
 	$('#loginForm').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			if ($('#user').val() == ''){
+			if ($('#user-tf').val() == ''){
                 lc.showLoginError('Whoops!', 'Please enter a valid username');
 				return false;				
-			}	else if ($('#pass').val() == ''){
+			}	else if ($('#pass-tf').val() == ''){
                 lc.showLoginError('Whoops!', 'Please enter a valid password');
 				return false;
 			}	else{
-				console.log('about to submit :: '+$.param(formData));
-				return pass;
+		//		console.log('about to submit :: '+$.param(formData));
+				return true;
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
@@ -24,6 +24,7 @@ $(document).ready(function(){
             lc.showLoginError('Login Failure', 'Please check your username and/or password');
 		}
 	}); 
+	$('#user-tf').focus();
 	$('#loginForm #forgot-pass').click(function(){ $('#getCredentials').modal('show');});
 	
 // login retrieval form via email //	

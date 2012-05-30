@@ -17,6 +17,7 @@ $(document).ready(function(){
 			}
 		}
 	});
-	$('#signup-cancel').click(function(){ window.location.href = '/';})	
+	$('#name-tf').focus();
+	$('#signup-cancel').click(function(){ window.location.href = '/';});
 	
 })

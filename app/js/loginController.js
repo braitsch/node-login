@@ -13,7 +13,11 @@ function LoginController(){
     _local.emailModal = $('#getCredentials');
     _local.emailModal.modal({ show : false, keyboard : true, backdrop : true });
     _local.emailModalAlert = $('#getCredentials .alert');
-    _local.emailModal.on('show', function(){ $('#emailForm').resetForm(); _local.emailModalAlert.hide(); });
+    _local.emailModal.on('show', function(){ $('#emailForm').resetForm(); _local.emailModalAlert.hide();});
+    
+// toggle focus between the email modal window and the login form //    
+    _local.emailModal.on('shown', function(){ $('#email-tf').focus(); });
+    _local.emailModal.on('hidden', function(){ $('#user-tf').focus(); });
 }
 
 LoginController.prototype.showLoginError = function(t, m)
