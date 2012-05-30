@@ -18,6 +18,8 @@ AccountManager.prototype.login = function(credentials, callback) {
 	});	
 }
 
+// record insertion & deletion methods //
+
 AccountManager.prototype.create = function(credentials, callback) {
 // append date stamp when record was created //	
 	credentials.date = new Date();
@@ -25,20 +27,13 @@ AccountManager.prototype.create = function(credentials, callback) {
 }
 
 AccountManager.prototype.delete = function(id, callback) {
-	this.collection.remove({_id: getObjectId(this.collection, id)}, callback);
+	this.collection.remove({_id: getObjectId(id)}, callback);
 };
 
-AccountManager.prototype.lookup = function(o, callback){
-// function to search across multiple fields //	
-	console.log('AccountManager.prototype.lookup : '+o);
-	this.collection.find( { $or : o } ).toArray(function(e, results) {
-		if (e) callback(e)
-		else callback(null, results)
-	});
-}
+// record lookup methods // 
 
 AccountManager.prototype.findById = function(id, callback) {
-	this.collection.findOne({_id: getObjectId(this.collection, id)}, 
+	this.collection.findOne({_id: getObjectId(id)}, 
 		function(e, res) {
 		if (e) callback(e)
 		else callback(null, res)
@@ -54,17 +49,27 @@ AccountManager.prototype.findByField = function(o, callback){
 }
 
 AccountManager.prototype.findAll = function(callback) {
-	this.collection.find().toArray(function(e, results) {
+	this.collection.find().toArray(
+	    function(e, res) {
 		if (e) callback(e)
-		else callback(null, results)
+		else callback(null, res)
 	});
 };
 
+AccountManager.prototype.findByMultipleFields = function(a, callback){
+// this takes an array of objects to search against {fieldName : 'value'} //	
+	console.log('AccountManager.prototype.lookup : '+a);
+	this.collection.find( { $or : a } ).toArray(
+	    function(e, results) {
+		if (e) callback(e)
+		else callback(null, results)
+	});
+}
 
-function getObjectId(collection, id)
+AccountManager.prototype.getObjectId = function(id)
 {
-// this is necessary for lookups, just passing the id fails for some reason //	
-	return collection.db.bson_serializer.ObjectID.createFromHexString(id)
+// this is necessary for id lookups, just passing the id fails for some reason //	
+	return this.collection.db.bson_serializer.ObjectID.createFromHexString(id)
 }
 
 exports.AccountManager = AccountManager;

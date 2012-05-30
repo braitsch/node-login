@@ -31,8 +31,8 @@
 				.controls
 					input#pass-tf.input-xlarge(type='password', name='pass')
 			.form-actions
-				button(type='button')#signup-no.btn Cancel
-				button(type='submit')#signup-ok.btn.btn-primary Submit
+				button(type='button')#signup-cancel.btn Cancel
+				button(type='submit')#signup-submit.btn.btn-primary Submit
 
 #signupErrors.modal.hide.fade
 	div.modal-header
@@ -50,3 +50,4 @@ script(src='/vendor/jquery.form.js')
 script(src='/vendor/bootstrap-modal.js')
 script(src='/vendor/bootstrap-transition.js')
 script(src='/js/signup.js')
+script(src='/js/signupController.js')

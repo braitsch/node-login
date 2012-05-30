@@ -52,34 +52,34 @@ body {
   -moz-text-shadow: -1px 1px 0 #fff;
   -webkit-text-shadow: -1px 1px 0 #fff;
 }
-#sendCredentials {
+#getCredentials {
   width: 494px;
   margin: -200px 0 0 -250px;
 }
-#sendCredentials #emailForm {
+#getCredentials #emailForm {
   color: #808080;
   text-shadow: -1px 1px 0 #fff;
   -moz-text-shadow: -1px 1px 0 #fff;
   -webkit-text-shadow: -1px 1px 0 #fff;
   margin-bottom: 0;
 }
-#sendCredentials form button {
+#getCredentials form button {
   width: 80px;
   top: 213px;
   position: absolute;
 }
-#sendCredentials #cancel {
+#getCredentials #cancel {
   right: 110px;
 }
-#sendCredentials #submit {
+#getCredentials #submit {
   right: 20px;
 }
-#sendCredentials .modal-body {
+#getCredentials .modal-body {
   height: 140px;
   overflow: hidden;
   padding-bottom: 0;
 }
-#sendCredentials .modal-footer {
+#getCredentials .modal-footer {
   height: 20px;
 }
 #loginFailure {

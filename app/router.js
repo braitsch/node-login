@@ -1,8 +1,10 @@
 
 
 require('./modules/account-manager').AccountManager;
+require('./modules/email-dispatcher').EmailDispatcher;
+
 var AM = new AccountManager();
-var EM = require('./modules/email-dispatcher');
+var EM = new EmailDispatcher();
 var CT = require('./modules/country-list').countries;
 
 module.exports = function(app) {
@@ -83,7 +85,7 @@ module.exports = function(app) {
 	function sendCredentials(o, res)
 	{
 		EM.send(o, function(err, msg){
-	//		console.log('error = '+err, 'message = '+msg);
+			console.log('sendCredentials :: error = '+err, 'message = '+msg);
 		})
 		res.send('ok', 200);
 	}
