@@ -9,6 +9,8 @@ A basic account login & management system built in Node.js with the following fe
 * Session Tracking for Logged-In Users
 * Local Cookie Storage for Returning Users
 
+***
+
 Node-Login is built on top of the following libraries :
 
 * [Node.js](http://nodejs.org/) - Application Server
@@ -18,6 +20,9 @@ Node-Login is built on top of the following libraries :
 * [Stylus](http://learnboost.github.com/stylus/) - CSS Preprocessor
 * [EmailJS](http://github.com/eleith/emailjs) - Node.js > SMTP Server Middleware
 * [Moment.js](http://momentjs.com/) - Lightweight Date Library
+* [Twitter Bootstrap](http://twitter.github.com/bootstrap/) - UI Component & Layout Library
+
+***
 
 [Live Demo](http://node-login.braitsch.io)
 

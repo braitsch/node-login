@@ -8,6 +8,8 @@ $(document).ready(function(){
 
 	$('#login-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
+		// append 'remember-me' option to formData to write local cookie //	
+			formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
 			return lv.validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){

@@ -11,18 +11,45 @@ module.exports = function(app) {
 // login window //	
 	
 	app.get('/', function(req, res){
-		res.render('login', { 
-			locals: {
-				title: 'Hello - Please Login To Your Account',
-			}
-		});
+	// check if the user's credentials are saved in a cookie //	
+		if (req.cookies.user != undefined && req.cookies.pass != undefined){
+		// attempt automatic login //
+			AM.login([ 
+				{user : req.cookies.user }, 
+				{pass : req.cookies.pass } 
+			], function(e, o){
+				if (o){
+				    req.session.user = o;			
+					res.redirect('/home');
+				}	else{
+					res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});					
+				}
+			});
+		}	else{
+			res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
+		}
 	});	
 	
 	app.post('/', function(req, res){
-		if (req.param('email') == null){
-			attemptLogin(req, res);
+		if (req.param('email') != null){
+			getCredentials(req, res);			
 		}	else{
-			getCredentials(req, res);
+		// attempt manual login //
+			AM.login([ 
+				{user : req.param('user')}, 
+				{pass : req.param('pass')} 
+			], function(e, o){
+				if (!o){
+					res.send('invalid-credentials', 400);
+				}	else{
+				    req.session.user = o;
+					if (req.param('remember-me') == 'true'){
+						res.cookie('user', o.user, { maxAge: 900000 });
+						res.cookie('pass', o.pass, { maxAge: 900000 });					
+					}				
+					res.send(o, 200);
+				}
+			});
 		}
 	});
 	
@@ -30,6 +57,7 @@ module.exports = function(app) {
 	
 	app.get('/home', function(req, res) {
 	    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //	
 	        res.redirect('/');
 	    }   else{
 			res.render('home', {
@@ -46,6 +74,8 @@ module.exports = function(app) {
 		if (req.param('logout') != 'true') {
 			updateAccount(req, res);
 		}	else{
+			res.clearCookie('user');
+			res.clearCookie('pass');
             req.session.destroy(function(e){
                 if (e == null){
                     res.send('ok', 200);
@@ -55,21 +85,6 @@ module.exports = function(app) {
             });
 		}
 	});
-		
-	function attemptLogin(req, res)
-	{
-		AM.login([
-			{user : req.param('user')},
-			{pass : req.param('pass')}
-		], function(e, o){
-			if (!o){
-				res.send('invalid-credentials', 400);
-			}	else{
-			    req.session.user = o;
-				res.send(o, 200);
-			}
-		});
-	}
 	
 	function updateAccount(req, res)
 	{
@@ -91,15 +106,17 @@ module.exports = function(app) {
 			if (o == null){
 				res.send('email-not-found', 400);
 			}	else{
-				sendCredentials(o, res)
+				emailCredentials(o, res)
 			}
 		});
 	}
 	
-	function sendCredentials(o, res)
+	function emailCredentials(o, res)
 	{
 		EM.send(o, function(err, msg){
-			console.log('sendCredentials :: error = '+err, 'message = '+msg);
+	// todo - wait to send success until email actually returns true //
+	// requires showing some kind of 'working' mechanism on the client side ..		
+			console.log('emailCredentials :: error = '+err, 'message = '+msg);
 		})
 		res.send('ok', 200);
 	}
