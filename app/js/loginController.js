@@ -1,3 +1,4 @@
+
 function LoginController(){
     
 // bind this to _local for anonymous functions //    
@@ -6,14 +7,14 @@ function LoginController(){
     
 // modal window to display any login form errors //
 	
-	_local.loginModal = $('#loginFailure');
+	_local.loginModal = $('.modal-simple-alert');
     _local.loginModal.modal({ show : false, keyboard : true, backdrop : true });
 
 // modal window to allow users to request credentials by email //    
-    _local.emailModal = $('#getCredentials');
+    _local.emailModal = $('#modal-retrieve-password');
     _local.emailModal.modal({ show : false, keyboard : true, backdrop : true });
-    _local.emailModalAlert = $('#getCredentials .alert');
-    _local.emailModal.on('show', function(){ $('#emailForm').resetForm(); _local.emailModalAlert.hide();});
+    _local.emailModalAlert = $('#modal-retrieve-password .alert');
+    _local.emailModal.on('show', function(){ $('#retrieve-password-form').resetForm(); _local.emailModalAlert.hide();});
     
 // toggle focus between the email modal window and the login form //    
     _local.emailModal.on('shown', function(){ $('#email-tf').focus(); });
@@ -22,8 +23,8 @@ function LoginController(){
 
 LoginController.prototype.showLoginError = function(t, m)
 {
-    $('#loginFailure .modal-header h3').text(t);	    
-    $('#loginFailure .modal-body p').text(m);
+    $('.modal-simple-alert .modal-header h3').text(t);	    
+    $('.modal-simple-alert .modal-body p').text(m);
     this.loginModal.modal('show');
 }
 

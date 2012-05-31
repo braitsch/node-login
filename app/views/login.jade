@@ -1,7 +1,7 @@
 
 #login-container
-    form( method="post")#loginForm.well.span4
-        h1 Hello! 
+    form( method="post")#login-form.well.span4
+        h1 Hello!
         p.subheading Please Login To Your Account
         label Username 
         input(type="text", name="user", id='user-tf').span4.required
@@ -14,16 +14,16 @@
             input(type="checkbox")
         div.clear-fix
         hr
-        #btm-links
-            a(href='#')#forgot-pass Forgot Your Password? 
+        div.btm-links
+            a(href='#')#forgot-password Forgot Your Password? 
             a(href='/signup')#create-account Create An Account
 
-#getCredentials.modal.hide.fade
+#modal-retrieve-password.modal.hide.fade
     div.modal-header
         button.close(data-dismiss='modal') x
         h3 Retrieve Password
     div.modal-body
-        form( method="post")#emailForm.well.span5
+        form( method="post")#retrieve-password-form.well.span5
             p Please enter the email address associated with your account
             input(type="text", name="email", id='email-tf').span5.required
             button(type="submit")#submit.btn.btn-primary Submit
@@ -32,14 +32,7 @@
             button(data-dismiss="alert").close
     div.modal-footer
     
-#loginFailure.modal.hide.fade
-    div.modal-header
-        button.close(data-dismiss='modal') x
-        h3 Login Failure
-    div.modal-body
-        p Please check your username and/or password
-    div.modal-footer
-        button(data-dismiss="modal").cancel.btn.btn-warning OK    
+include simple-alert
 
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')

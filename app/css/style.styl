@@ -1,4 +1,5 @@
-textShadow()
+raiseText()
+	color grey
 	text-shadow: -1px 1px 0 white
 	-moz-text-shadow: -1px 1px 0 white
 	-webkit-text-shadow: -1px 1px 0 white
@@ -7,96 +8,83 @@ html, body
 	margin: 0
 	padding: 0
 	height: 100%
-	user-select: none
 	
-// login page //
+// login form //
     
 #login-container{
 	width 340px
-	margin 160px auto
+	margin 160px auto	
 	label{
 		margin 15px 0 5px 5px
 	}
-	#btn-login{
+	button{
 		width 150px
 		padding 6px 40px 6px 40px
 		float left
 		margin-top 15px
 	}
-	#remember-me{
+	.checkbox{
 		margin 23px 0 0 180px
 	}
-	#btm-links{
+	.btm-links{
 		text-align center
 		margin-top 10px
-	}
-	#forgot-pass{
-		float:left
-		margin-left:10px
 	}
 	#create-account{
 		float:right
 		margin-right:13px
+	}	
+	#forgot-password{
+		float:left
+		margin-left:10px
 	}
 }
 
-// signup page //
+// account form on signup & home page //
 
-#signup-container
+#account-form-container
 	width 460px
 	margin 100px auto
-#clist
+#country-list
 	width 280px
-#signupErrors .modal-body{
-	p{
-		color grey
-		textShadow()	
-	}
-	li{
-		color #D8000C
-		textShadow()	
-	}
-}
+#account-form-errors li
+	raiseText()
+	color #D8000C
 
 // retrieve password window //
 
-#getCredentials{
+#modal-retrieve-password{
 	width 494px	
 	margin -200px 0 0 -250px
-	#emailForm{
-		color grey		
-		textShadow()
-		margin-bottom 0
+	form{
+		raiseText()
+		margin-bottom 0		
+ 		button{
+			width 80px
+			top 213px
+			position absolute
+		}
+		#cancel{
+			right 110px
+		}
+		#submit{
+			right 20px
+		}
 	}
-	form button{
-		width 80px
-		top 213px
-		position absolute		
-	}
-	#cancel{
-		right 110px
-	}
-	#submit{
-		right 20px
-	}	
 	.modal-body{
 		height 140px
 		overflow hidden	
 		padding-bottom 0
-	}
+	}	
 	.modal-footer{
 		height 20px
 	}	
 }
 
-#loginFailure{
+.modal-simple-alert{
 	width 310px
-	margin -200px 0 0 -150px	
-	.cancel{
-	    float right
-	}
+	margin -200px 0 0 -150px
 }
-
     
 // logged-in page //    
     
@@ -105,14 +93,7 @@ html, body
 	top 1px
 	right 8px
 	position absolute
-	
-#userData{
-    margin 50px 0 0 22px
-    p {
-        color grey
-    }
-}
-    
+	 
 // support pages //
 
 #print
@@ -120,24 +101,21 @@ html, body
 #four04
 	padding:20px	
     
-// shared rules //
-button i
-	padding-left 8px
+// general shared rules //
 .clear-fix
 	clear both
-label
-	color grey
-	textShadow()
-.subheading
-	color #777
-	textShadow()		
-	margin-top 3px
-form, .form-horizontal, .well
+.well
 	margin-left 0	
 .form-horizontal .control-label
 	width 80px
 .form-horizontal .controls
 	margin-left 120px
 .form-horizontal .form-actions
-	margin 0
 	padding 17px 0 0 270px
+label
+	raiseText()	
+.subheading
+	raiseText()
+	margin-top 3px
+button i
+	padding-left 8px	

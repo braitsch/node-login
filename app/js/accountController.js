@@ -1,11 +1,12 @@
-function SignupController(){
+
+function AccountController(){
     		
 	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf')];    		
 	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg')];
 	
 // display errors in a modal window //
 	
-	this.alert = $('#signupErrors');	
+	this.alert = $('#account-form-errors');	
 	this.alert.modal({ show : false, keyboard : true, backdrop : true});	
     
 	this.validateEmail = function(e)
@@ -26,8 +27,8 @@ function SignupController(){
 	
 	this.showErrors = function(a)
 	{
-		$('#signupErrors .modal-body p').text('Please correct the following problems :');
-		var ul = $('#signupErrors .modal-body ul');
+		$('#account-form-errors .modal-body p').text('Please correct the following problems :');
+		var ul = $('#account-form-errors .modal-body ul');
 			ul.empty();
 		for (var i=0; i < a.length; i++) ul.append('<li>'+a[i]+'</li>');
         this.alert.modal('show');
@@ -35,19 +36,19 @@ function SignupController(){
     
 }
 
-SignupController.prototype.showInvalidEmail = function()
+AccountController.prototype.showInvalidEmail = function()
 {
 	this.controlGroups[1].addClass('error');
 	this.showErrors(['That email address is already in use.']);
 }
 
-SignupController.prototype.showInvalidUserName = function()
+AccountController.prototype.showInvalidUserName = function()
 {
 	this.controlGroups[2].addClass('error');				
 	this.showErrors(['That username is already in use.']);	    
 }
 
-SignupController.prototype.validateForm = function()
+AccountController.prototype.validateForm = function()
 {
 	var e = [];
 	for (var i=0; i < this.controlGroups.length; i++) this.controlGroups[i].removeClass('error');

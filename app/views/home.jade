@@ -1,4 +1,3 @@
-- user= udata[0]
 
 div.navbar.navbar-fixed-top
     div.navbar-inner
@@ -9,8 +8,7 @@ div.navbar.navbar-fixed-top
                 i.icon-lock.icon-white
                 | Sign Out
 
-#userData
-    p= 'Welcome :: '+ user.name +' , '+user.email+' , '+ user.country +' , '+ user.user +' , '+user.pass
-    
-script(src='/vendor/jquery.min.js')
+include account
+include simple-alert
+
 script(src='/js/home.js')

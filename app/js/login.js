@@ -1,10 +1,11 @@
+
 $(document).ready(function(){
 	
 	var lc = new LoginController();	
 
 // main login form //
 
-	$('#loginForm').ajaxForm({
+	$('#login-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if ($('#user-tf').val() == ''){
                 lc.showLoginError('Whoops!', 'Please enter a valid username');
@@ -25,11 +26,11 @@ $(document).ready(function(){
 		}
 	}); 
 	$('#user-tf').focus();
-	$('#loginForm #forgot-pass').click(function(){ $('#getCredentials').modal('show');});
+	$('#login-form #forgot-password').click(function(){ $('#modal-retrieve-password').modal('show');});
 	
 // login retrieval form via email //	
 	
-	$('#emailForm').ajaxForm({
+	$('#retrieve-password-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (lc.validateEmail($('#email').val())){
 				lc.hideEmailAlert();

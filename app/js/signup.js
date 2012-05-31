@@ -1,23 +1,34 @@
+
 $(document).ready(function(){
 	
-	var sc = new SignupController();
+	var ac = new AccountController();
 	
-	$('#signupForm').ajaxForm({
+	$('#accountForm').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			return sc.validateForm();
+			return ac.validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') window.location.href = '/print';
+			if (status == 'success') $('#modal-signup-success').modal('show');
 		},
 		error : function(e){
 			if (e.responseText == 'email-taken'){
-			    sc.showInvalidEmail();
+			    ac.showInvalidEmail();
 			}	else if (e.responseText == 'username-taken'){
-			    sc.showInvalidUserName();			
+			    ac.showInvalidUserName();			
 			}
 		}
 	});
 	$('#name-tf').focus();
 	$('#signup-cancel').click(function(){ window.location.href = '/';});
+    $('.modal-simple-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
+    $('.modal-simple-alert .modal-header h3').text('Success!');
+    $('.modal-simple-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');		
+	$('.modal-simple-alert #ok').click(function(){ setTimeout(function(){window.location.href = '/';}, 300)});
+
+// customize the account settings form //
+	
+	$('#accountForm h1').text('Signup');
+	$('#accountForm #sub1').text('Please tell us a little about yourself');
+	$('#accountForm #sub2').text('Choose your username & password');	
 	
 })

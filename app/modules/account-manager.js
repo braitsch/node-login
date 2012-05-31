@@ -27,13 +27,13 @@ AccountManager.prototype.create = function(credentials, callback) {
 }
 
 AccountManager.prototype.delete = function(id, callback) {
-	this.collection.remove({_id: getObjectId(id)}, callback);
+	this.collection.remove({_id: this.getObjectId(id)}, callback);
 };
 
 // record lookup methods // 
 
 AccountManager.prototype.findById = function(id, callback) {
-	this.collection.findOne({_id: getObjectId(id)}, 
+	this.collection.findOne({_id: this.getObjectId(id)}, 
 		function(e, res) {
 		if (e) callback(e)
 		else callback(null, res)

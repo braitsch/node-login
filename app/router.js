@@ -1,5 +1,4 @@
 
-
 require('./modules/account-manager').AccountManager;
 require('./modules/email-dispatcher').EmailDispatcher;
 
@@ -36,6 +35,7 @@ module.exports = function(app) {
 			res.render('home', {
 				locals: {
 					title : 'Control Panel',
+					countries : CT,					
 					udata : req.session.user
 				}
 			});
@@ -52,7 +52,8 @@ module.exports = function(app) {
                 }
             });
 		}	else{
-            res.send('invalid request from client', 400);
+			console.log(req.param('name'));
+            res.send('ok', 200);
 		}
 	});
 		
