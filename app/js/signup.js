@@ -1,37 +1,41 @@
 
 $(document).ready(function(){
 	
-	var ac = new AccountController();
+	var av = new AccountValidator();
 	
-	$('#accountForm').ajaxForm({
+	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			return ac.validateForm();
+			return av.validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') $('.modal-simple-alert').modal('show');
+			if (status == 'success') $('.modal-alert').modal('show');
 		},
 		error : function(e){
 			if (e.responseText == 'email-taken'){
-			    ac.showInvalidEmail();
+			    av.showInvalidEmail();
 			}	else if (e.responseText == 'username-taken'){
-			    ac.showInvalidUserName();			
+			    av.showInvalidUserName();			
 			}
 		}
 	});
 	$('#name-tf').focus();
-	$('#signup-cancel').click(function(){ window.location.href = '/';});
+// redirect to homepage when cancel button is clicked //	
+	$('#account-form-btn1').click(function(){ window.location.href = '/';});
+	
+// customize the account signup form //
+	
+	$('#account-form h1').text('Signup');
+	$('#account-form #sub1').text('Please tell us a little about yourself');
+	$('#account-form #sub2').text('Choose your username & password');
+	$('#account-form-btn1').html('Cancel');
+	$('#account-form-btn2').html('Submit');
+	$('#account-form-btn2').addClass('btn-primary');	
 	
 // setup the alert that displays when an account is successfully created //
 	
-    $('.modal-simple-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
-    $('.modal-simple-alert .modal-header h3').text('Success!');
-    $('.modal-simple-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');		
-	$('.modal-simple-alert #ok').click(function(){ setTimeout(function(){window.location.href = '/';}, 300)});
+    $('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
+    $('.modal-alert .modal-header h3').text('Success!');
+    $('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');		
+	$('.modal-alert #ok').click(function(){ setTimeout(function(){window.location.href = '/';}, 300)});
 
-// customize the account data entry form //
-	
-	$('#accountForm h1').text('Signup');
-	$('#accountForm #sub1').text('Please tell us a little about yourself');
-	$('#accountForm #sub2').text('Choose your username & password');	
-	
 })

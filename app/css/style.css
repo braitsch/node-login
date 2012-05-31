@@ -39,44 +39,44 @@ body {
 #country-list {
   width: 280px;
 }
-#account-form-errors li {
+.modal-form-errors li {
   color: #808080;
   text-shadow: -1px 1px 0 #fff;
   -moz-text-shadow: -1px 1px 0 #fff;
   -webkit-text-shadow: -1px 1px 0 #fff;
   color: #d8000c;
 }
-#modal-retrieve-password {
+.modal-get-credentials {
   width: 494px;
   margin: -200px 0 0 -250px;
 }
-#modal-retrieve-password form {
+.modal-get-credentials form {
   color: #808080;
   text-shadow: -1px 1px 0 #fff;
   -moz-text-shadow: -1px 1px 0 #fff;
   -webkit-text-shadow: -1px 1px 0 #fff;
   margin-bottom: 0;
 }
-#modal-retrieve-password form button {
+.modal-get-credentials form button {
   width: 80px;
   top: 213px;
   position: absolute;
 }
-#modal-retrieve-password form #cancel {
+.modal-get-credentials form #cancel {
   right: 110px;
 }
-#modal-retrieve-password form #submit {
+.modal-get-credentials form #submit {
   right: 20px;
 }
-#modal-retrieve-password .modal-body {
+.modal-get-credentials .modal-body {
   height: 140px;
   overflow: hidden;
   padding-bottom: 0;
 }
-#modal-retrieve-password .modal-footer {
+.modal-get-credentials .modal-footer {
   height: 20px;
 }
-.modal-simple-alert {
+.modal-alert {
   width: 310px;
   margin: -200px 0 0 -150px;
 }

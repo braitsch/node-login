@@ -5,6 +5,9 @@ var dbPort = 27017;
 var dbHost = global.host;
 var dbName = 'login-testing';
 
+// use moment.js for pretty date-stamping //
+var moment = require('moment');
+
 AccountManager = function() {
 	this.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
 	this.db.open(function(e, d){ console.log('connected to database :: ' + dbName)});
@@ -22,7 +25,7 @@ AccountManager.prototype.login = function(credentials, callback) {
 
 AccountManager.prototype.create = function(credentials, callback) {
 // append date stamp when record was created //	
-	credentials.date = new Date();
+	credentials.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 	this.collection.insert(credentials, callback);
 }
 

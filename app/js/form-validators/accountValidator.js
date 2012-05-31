@@ -1,19 +1,15 @@
 
-function AccountController(){
+function AccountValidator(){
     		
+// build array maps of the form inputs & control groups //
+
 	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf')];    		
 	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg')];
 	
-// display errors in a modal window //
+// bind the form-error modal window to this controller to display any errors //
 	
-	this.alert = $('#account-form-errors');	
+	this.alert = $('.modal-form-errors');	
 	this.alert.modal({ show : false, keyboard : true, backdrop : true});
-    
-	this.validateEmail = function(e)
-	{
-   		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	return re.test(e);
-	}
 	
 	this.validateName = function(s)
 	{
@@ -25,10 +21,16 @@ function AccountController(){
 		return s.length >= 6;
 	}
 	
+	this.validateEmail = function(e)
+	{
+   		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	return re.test(e);
+	}	
+	
 	this.showErrors = function(a)
 	{
-		$('#account-form-errors .modal-body p').text('Please correct the following problems :');
-		var ul = $('#account-form-errors .modal-body ul');
+		$('.modal-form-errors .modal-body p').text('Please correct the following problems :');
+		var ul = $('.modal-form-errors .modal-body ul');
 			ul.empty();
 		for (var i=0; i < a.length; i++) ul.append('<li>'+a[i]+'</li>');
         this.alert.modal('show');
@@ -36,19 +38,19 @@ function AccountController(){
     
 }
 
-AccountController.prototype.showInvalidEmail = function()
+AccountValidator.prototype.showInvalidEmail = function()
 {
 	this.controlGroups[1].addClass('error');
 	this.showErrors(['That email address is already in use.']);
 }
 
-AccountController.prototype.showInvalidUserName = function()
+AccountValidator.prototype.showInvalidUserName = function()
 {
 	this.controlGroups[2].addClass('error');				
 	this.showErrors(['That username is already in use.']);	    
 }
 
-AccountController.prototype.validateForm = function()
+AccountValidator.prototype.validateForm = function()
 {
 	var e = [];
 	for (var i=0; i < this.controlGroups.length; i++) this.controlGroups[i].removeClass('error');

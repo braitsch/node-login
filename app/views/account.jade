@@ -1,9 +1,11 @@
 
-// preset form values if we receive a userdata object 
+// preset form values if we receive a userdata object //
 - user = typeof(udata) != 'undefined' ? udata : {}
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
 
 #account-form-container
-	form( method="post")#accountForm.form-horizontal.well.span6
+	form( method="post")#account-form.form-horizontal.well.span6
 		h1
 		p#sub1.subheading Please tell us a little about yourself.
 		hr
@@ -33,23 +35,15 @@
 				.controls
 					input#pass-tf.input-xlarge(type='password', name='pass', value= user.pass)
 			.form-actions
-				button(type='button')#signup-cancel.btn Cancel
-				button(type='submit')#signup-submit.btn.btn-primary Submit
+				button(type='button')#account-form-btn1.btn
+				button(type='submit')#account-form-btn2.btn
 
-// display form errors in a modal window //
+// display form errors in a custom modal window //
 
-#account-form-errors.modal.hide.fade
-	div.modal-header
-		button.close(data-dismiss='modal') x
-		h3 Whoops!
-	div.modal-body
-		p.subheading It looks like there was a problem.
-		ul
-	div.modal-footer
-		button(data-dismiss="modal").btn.btn-warning OK
+include modals/form-errors
 
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')
 script(src='/vendor/bootstrap-modal.js')
 script(src='/vendor/bootstrap-transition.js')
-script(src='/js/accountController.js')
+script(src='/js/form-validators/accountValidator.js')
