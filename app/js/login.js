@@ -25,7 +25,7 @@ $(document).ready(function(){
 	
 	$('#retrieve-password-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			if (ev.validateEmail($('#email').val())){
+			if (ev.validateEmail($('#email-tf').val())){
 				ev.hideEmailAlert();
 				return true;
 			}	else{

@@ -87,6 +87,7 @@ module.exports = function(app) {
 	function getCredentials(req, res)
 	{
 		AM.findByField({email : req.param('email')}, function(e, o){
+			console.log(e, o);
 			if (o == null){
 				res.send('email-not-found', 400);
 			}	else{
