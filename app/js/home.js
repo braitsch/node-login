@@ -5,6 +5,8 @@ $(document).ready(function(){
 	
 	$('#accountForm').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
+		// push the disabled field onto the form data array //	
+			formData.push({name:'user', value:$('#user-tf').val()})
 			return ac.validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
@@ -30,6 +32,7 @@ $(document).ready(function(){
 	$('#accountForm #signup-submit').html('Update');
 
 // setup the alert that displays when user updates their setttings //
+
     $('.modal-simple-alert').modal({ show : false, keyboard : true, backdrop : true });
     $('.modal-simple-alert .modal-header h3').text('Success!');
     $('.modal-simple-alert .modal-body p').html('Your account has been updated.');

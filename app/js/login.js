@@ -14,7 +14,6 @@ $(document).ready(function(){
                 lc.showLoginError('Whoops!', 'Please enter a valid password');
 				return false;
 			}	else{
-		//		console.log('about to submit :: '+$.param(formData));
 				return true;
 			}
 		},

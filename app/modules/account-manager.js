@@ -14,7 +14,7 @@ AccountManager = function() {
 AccountManager.prototype.login = function(credentials, callback) {
 	this.collection.find( { $and : credentials } ).toArray(function(e, results) {
 		if (e) callback(e)
-		else callback(null, results)
+		else callback(null, results[0])
 	});	
 }
 
@@ -24,6 +24,11 @@ AccountManager.prototype.create = function(credentials, callback) {
 // append date stamp when record was created //	
 	credentials.date = new Date();
 	this.collection.insert(credentials, callback);
+}
+
+AccountManager.prototype.update = function(accountData, callback) {
+// it doesn't appear that save takes a callback...	
+	this.collection.save(accountData);
 }
 
 AccountManager.prototype.delete = function(id, callback) {

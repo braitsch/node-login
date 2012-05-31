@@ -7,7 +7,7 @@ function AccountController(){
 // display errors in a modal window //
 	
 	this.alert = $('#account-form-errors');	
-	this.alert.modal({ show : false, keyboard : true, backdrop : true});	
+	this.alert.modal({ show : false, keyboard : true, backdrop : true});
     
 	this.validateEmail = function(e)
 	{

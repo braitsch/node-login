@@ -43,7 +43,9 @@ module.exports = function(app) {
 	});
 	
 	app.post('/home', function(req, res){
-		if (req.param('logout') == 'true') {
+		if (req.param('logout') != 'true') {
+			updateAccount(req, res);
+		}	else{
             req.session.destroy(function(e){
                 if (e == null){
                     res.send('ok', 200);
@@ -51,9 +53,6 @@ module.exports = function(app) {
                     res.send('unable to destory user session', 400);                    
                 }
             });
-		}	else{
-			console.log(req.param('name'));
-            res.send('ok', 200);
 		}
 	});
 		
@@ -63,12 +62,25 @@ module.exports = function(app) {
 			{user : req.param('user')},
 			{pass : req.param('pass')}
 		], function(e, o){
-			if (o.length == 0){
+			if (!o){
 				res.send('invalid-credentials', 400);
 			}	else{
 			    req.session.user = o;
 				res.send(o, 200);
 			}
+		});
+	}
+	
+	function updateAccount(req, res)
+	{
+		AM.findByField({user : req.param('user')}, function(e, o){
+			o.name 		= req.param('name');
+			o.email 	= req.param('email');
+			o.country 	= req.param('country');
+			o.pass 		= req.param('pass');
+			AM.update(o);
+			req.session.user = o;
+			res.send('ok', 200);
 		});
 	}
 	
