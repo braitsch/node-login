@@ -1,21 +1,14 @@
 
 $(document).ready(function(){
 	
-// main login form //
-	
 	var lv = new LoginValidator();
+	var lc = new LoginController();
+
+// main login form //
 
 	$('#login-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			if ($('#user-tf').val() == ''){
-                lv.showLoginError('Whoops!', 'Please enter a valid username');
-				return false;				
-			}	else if ($('#pass-tf').val() == ''){
-                lv.showLoginError('Whoops!', 'Please enter a valid password');
-				return false;
-			}	else{
-				return true;
-			}
+			return lv.validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
 			if (status == 'success') window.location.href = '/home';
@@ -25,7 +18,6 @@ $(document).ready(function(){
 		}
 	}); 
 	$('#user-tf').focus();
-	$('#login-form #forgot-password').click(function(){ $('.modal-get-credentials').modal('show');});
 	
 // login retrieval form via email //	
 	
@@ -47,11 +39,6 @@ $(document).ready(function(){
 		error : function(){
 			ev.showEmailAlert("I'm Sorry. I could not find that email address");
 		}
-	});	
-	
-// toggle focus between the email modal window and the login form //
-
-    $('.modal-get-credentials').on('shown', function(){ $('#email-tf').focus(); });
-	$('.modal-get-credentials').on('hidden', function(){ $('#user-tf').focus(); });	
+	});
 	
 })

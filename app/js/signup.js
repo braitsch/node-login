@@ -2,6 +2,7 @@
 $(document).ready(function(){
 	
 	var av = new AccountValidator();
+	var sc = new SignupController();
 	
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
@@ -19,8 +20,6 @@ $(document).ready(function(){
 		}
 	});
 	$('#name-tf').focus();
-// redirect to homepage when cancel button is clicked //	
-	$('#account-form-btn1').click(function(){ window.location.href = '/';});
 	
 // customize the account signup form //
 	
@@ -35,7 +34,6 @@ $(document).ready(function(){
 	
     $('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
     $('.modal-alert .modal-header h3').text('Success!');
-    $('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');		
-	$('.modal-alert #ok').click(function(){ setTimeout(function(){window.location.href = '/';}, 300)});
+    $('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');
 
 })
