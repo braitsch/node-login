@@ -8,7 +8,7 @@ $(document).ready(function(){
 			return ac.validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') $('#modal-signup-success').modal('show');
+			if (status == 'success') $('.modal-simple-alert').modal('show');
 		},
 		error : function(e){
 			if (e.responseText == 'email-taken'){
