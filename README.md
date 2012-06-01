@@ -1,10 +1,10 @@
 node-login
 ======
 
-A basic account login & management system built in Node.js with the following features :
+A basic login & account management system built in Node.js with the following features :
 
 * New User Account Creation
-* Login Panel with Password Retrieval via Email
+* Secure Password Reset via Email
 * Ability to Update / Delete Account
 * Session Tracking for Logged-In Users
 * Local Cookie Storage for Returning Users
