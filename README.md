@@ -8,6 +8,7 @@ A basic account login & management system built in Node.js with the following fe
 * Ability to Update / Delete Account
 * Session Tracking for Logged-In Users
 * Local Cookie Storage for Returning Users
+* Blowfish-based Scheme Password Encryption
 
 ***
 

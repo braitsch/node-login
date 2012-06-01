@@ -46,34 +46,34 @@ body {
   -webkit-text-shadow: -1px 1px 0 #fff;
   color: #d8000c;
 }
-.modal-get-credentials {
-  width: 494px;
-  margin: -200px 0 0 -250px;
+.modal-single-input {
+  width: 452px;
+  margin: -200px 0 0 -232px;
 }
-.modal-get-credentials form {
+.modal-single-input form {
   color: #808080;
   text-shadow: -1px 1px 0 #fff;
   -moz-text-shadow: -1px 1px 0 #fff;
   -webkit-text-shadow: -1px 1px 0 #fff;
   margin-bottom: 0;
 }
-.modal-get-credentials form button {
+.modal-single-input form button {
   width: 80px;
   top: 213px;
   position: absolute;
 }
-.modal-get-credentials form #cancel {
+.modal-single-input form #cancel {
   right: 110px;
 }
-.modal-get-credentials form #submit {
-  right: 20px;
+.modal-single-input form #submit {
+  right: 18px;
 }
-.modal-get-credentials .modal-body {
+.modal-single-input .modal-body {
   height: 140px;
   overflow: hidden;
   padding-bottom: 0;
 }
-.modal-get-credentials .modal-footer {
+.modal-single-input .modal-footer {
   height: 20px;
 }
 .modal-alert {

@@ -6,9 +6,13 @@ $(document).ready(function(){
 	
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-		// push the disabled username field onto the form data array //	
-			formData.push({name:'user', value:$('#user-tf').val()})
-			return av.validateForm();
+			if (av.validateForm() == false){
+				return false;
+			} 	else{
+			// push the disabled username field onto the form data array //	
+				formData.push({name:'user', value:$('#user-tf').val()})
+				return true;
+			}
 		},
 		success	: function(responseText, status, xhr, $form){
 			if (status == 'success') hc.onUpdateSuccess();

@@ -8,9 +8,13 @@ $(document).ready(function(){
 
 	$('#login-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-		// append 'remember-me' option to formData to write local cookie //	
-			formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
-			return lv.validateForm();
+			if (lv.validateForm() == false){
+				return false;
+			} 	else{
+			// append 'remember-me' option to formData to write local cookie //					
+				formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
+				return true;
+			}
 		},
 		success	: function(responseText, status, xhr, $form){
 			if (status == 'success') window.location.href = '/home';
@@ -25,7 +29,7 @@ $(document).ready(function(){
 	
 	var ev = new EmailValidator();	
 	
-	$('#retrieve-password-form').ajaxForm({
+	$('#get-credentials-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (ev.validateEmail($('#email-tf').val())){
 				ev.hideEmailAlert();
@@ -36,7 +40,7 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-			ev.showEmailSuccess("You've been sent an email with your login credentials.");
+			ev.showEmailSuccess("Check your email on how to reset your password.");
 		},
 		error : function(){
 			ev.showEmailAlert("I'm Sorry. I could not find that email address");

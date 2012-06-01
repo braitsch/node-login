@@ -6,10 +6,10 @@ function EmailValidator(){
     var _local = this;
     
 // modal window to allow users to request credentials by email //    
-    _local.retrievePassword = $('.modal-get-credentials');
+    _local.retrievePassword = $('#get-credentials');
     _local.retrievePassword.modal({ show : false, keyboard : true, backdrop : true });
-    _local.retrievePasswordAlert = $('.modal-get-credentials .alert');
-    _local.retrievePassword.on('show', function(){ $('#retrieve-password-form').resetForm(); _local.retrievePasswordAlert.hide();});
+    _local.retrievePasswordAlert = $('#get-credentials .alert');
+    _local.retrievePassword.on('show', function(){ $('#get-credentials-form').resetForm(); _local.retrievePasswordAlert.hide();});
 
 }
 

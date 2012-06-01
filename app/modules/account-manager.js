@@ -86,6 +86,23 @@ AM.update = function(newData, callback)
 	});
 }
 
+AM.setPassword = function(oldp, newp, callback)
+{
+	AM.accounts.findOne({pass:oldp}, function(e, o){
+		AM.saltAndHash(newp, function(hash){
+			o.pass = hash;
+			AM.accounts.save(o); callback(o);
+		});
+	});	
+}
+
+AM.validateLink = function(pid, callback)
+{
+	AM.accounts.findOne({pass:pid}, function(e, o){
+		callback(o ? 'ok' : null);
+	});
+}
+
 AM.saltAndHash = function(pass, callback)
 {
 	bcrypt.genSalt(10, function(err, salt) {
@@ -102,9 +119,9 @@ AM.delete = function(id, callback)
 
 // auxiliary methods //
 
-AM.getEmail = function(e, callback)
+AM.getEmail = function(email, callback)
 {
-	AM.accounts.findOne({email:e}, function(e, o){ callback(o); });
+	AM.accounts.findOne({email:email}, function(e, o){ callback(o); });
 }
 
 AM.getObjectId = function(id)

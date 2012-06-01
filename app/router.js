@@ -1,8 +1,6 @@
 
 var AM = require('./modules/account-manager');
-require('./modules/email-dispatcher').EmailDispatcher;
-
-var EM = new EmailDispatcher();
+var EM = require('./modules/email-dispatcher');
 var CT = require('./modules/country-list').countries;
 
 module.exports = function(app) {
@@ -30,8 +28,8 @@ module.exports = function(app) {
 		if (req.param('email') != null){
 			AM.getEmail(req.param('email'), function(o){
 				if (o){
-					EM.send(o);
 					res.send('ok', 200);
+					EM.send(o, function(e, m){ console.log('error : '+e, 'msg : '+m)});	
 				}	else{
 					res.send('email-not-found', 400);
 				}
@@ -94,13 +92,7 @@ module.exports = function(app) {
 		}	else if (req.param('logout') == 'true'){
 			res.clearCookie('user');
 			res.clearCookie('pass');
-            req.session.destroy(function(e){
-                if (e == null){
-                    res.send('ok', 200);
-                }   else{
-                    res.send('unable to destory user session', 400);               
-                }
-            });
+			req.session.destroy(function(e){ res.send('ok', 200); });
 		}
 	});	
 	
@@ -127,6 +119,33 @@ module.exports = function(app) {
 			}
 		});
 	});
+
+// password reset //
+
+	app.get('/reset-password', function(req, res) {
+		AM.validateLink(req.query["u"], function(e){
+			if (e != 'ok'){
+				res.redirect('/');
+			} else{
+				res.render('reset', {
+					locals: {
+						title : 'Reset Password', pid : req.query["u"]
+					}
+				});		
+			}
+		})
+	});
+	
+	app.post('/reset-password', function(req, res) {
+		AM.setPassword(req.param('pid'), req.param('pass'), function(o){
+			if (o){
+				res.send('ok', 200);
+			}	else{
+				res.send('unable to update password', 400);
+			}
+		})
+	});	
+	
 	
 // view & delete accounts //
 	
@@ -139,7 +158,9 @@ module.exports = function(app) {
 	app.post('/delete', function(req, res){
 		AM.delete(req.body.id, function(e, obj){
 			if (!e){
-	 			res.send('ok', 200);
+				res.clearCookie('user');
+				res.clearCookie('pass');
+	            req.session.destroy(function(e){ res.send('ok', 200); });
 			}	else{
 				res.send('record not found', 400);
 			}
