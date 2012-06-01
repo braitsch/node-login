@@ -18,7 +18,12 @@ function AccountValidator(){
 	
 	this.validatePassword = function(s)
 	{
-		return s.length >= 6;
+	// if user is logged in and hasn't changed their password, return ok
+		if ($('#userId').val() && s===''){
+			return true;
+		}	else{
+			return s.length >= 6;
+		}
 	}
 	
 	this.validateEmail = function(e)

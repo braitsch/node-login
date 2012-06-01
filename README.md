@@ -16,6 +16,7 @@ Node-Login is built on top of the following libraries :
 * [Node.js](http://nodejs.org/) - Application Server
 * [Express.js](http://expressjs.com/) - Node.js Web Framework
 * [MongoDb](http://www.mongodb.org/) - Database Storage
+* [node.bcrypt.js](https://github.com/ncb000gt/node.bcrypt.js/) Password Cryptography
 * [Jade](http://jade-lang.com/) - HTML Templating Engine
 * [Stylus](http://learnboost.github.com/stylus/) - CSS Preprocessor
 * [EmailJS](http://github.com/eleith/emailjs) - Node.js > SMTP Server Middleware

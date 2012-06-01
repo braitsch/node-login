@@ -1,3 +1,5 @@
+
+var bcrypt = require('bcrypt')
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 
@@ -8,76 +10,141 @@ var dbName = 'login-testing';
 // use moment.js for pretty date-stamping //
 var moment = require('moment');
 
-AccountManager = function() {
-	this.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
-	this.db.open(function(e, d){ console.log('connected to database :: ' + dbName)});
-	this.collection = this.db.collection('accounts');
-};
+module.exports = AM = {};
+AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
+AM.db.open(function(e, d){ console.log('connected to database :: ' + dbName)});
+AM.accounts = AM.db.collection('accounts');
 
-AccountManager.prototype.login = function(credentials, callback) {
-	this.collection.find( { $and : credentials } ).toArray(function(e, results) {
-		if (e) callback(e)
-		else callback(null, results[0])
-	});	
-}
+// logging in //
 
-// record insertion & deletion methods //
-
-AccountManager.prototype.create = function(credentials, callback) {
-// append date stamp when record was created //	
-	credentials.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-	this.collection.insert(credentials, callback);
-}
-
-AccountManager.prototype.update = function(accountData, callback) {
-// it doesn't appear that save takes a callback...	
-	this.collection.save(accountData);
-}
-
-AccountManager.prototype.delete = function(id, callback) {
-	this.collection.remove({_id: this.getObjectId(id)}, callback);
-};
-
-// record lookup methods // 
-
-AccountManager.prototype.findById = function(id, callback) {
-	this.collection.findOne({_id: this.getObjectId(id)}, 
-		function(e, res) {
-		if (e) callback(e)
-		else callback(null, res)
-	});
-};
-
-AccountManager.prototype.findByField = function(o, callback){
-	this.collection.findOne(o,
-		function(e, res) {
-		if (e) callback(e)
-		else callback(null, res)
+AM.autoLogin = function(user, pass, callback)
+{
+	AM.accounts.findOne({user:user}, function(e, o) {
+		if (o){
+			o.pass == pass ? callback(o) : callback(null);
+		}	else{
+			callback(null);
+		}
 	});
 }
 
-AccountManager.prototype.findAll = function(callback) {
-	this.collection.find().toArray(
+AM.manualLogin = function(user, pass, callback)
+{
+	AM.accounts.findOne({user:user}, function(e, o) {
+		if (o == null){
+			callback('user-not-found');
+		}	else{
+			bcrypt.compare(pass, o.pass, function(err, res) {
+				if (res){
+					callback(null, o);
+				}	else{
+					callback('invalid-password');				
+				}
+			});
+		}
+	});
+}
+
+// record insertion, update & deletion methods //
+
+AM.signup = function(newData, callback) 
+{
+	AM.accounts.findOne({user:newData.user}, function(e, o) {	
+		if (o){
+			callback('username-taken');
+		}	else{
+			AM.accounts.findOne({email:newData.email}, function(e, o) {
+				if (o){
+					callback('email-taken');
+				}	else{
+					AM.saltAndHash(newData.pass, function(hash){
+						newData.pass = hash;
+					// append date stamp when record was created //	
+						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+						AM.accounts.insert(newData, callback(null));
+					});
+				}
+			});
+		}
+	});
+}
+
+AM.update = function(newData, callback) 
+{		
+	AM.accounts.findOne({user:newData.user}, function(e, o){
+		o.name 		= newData.name;
+		o.email 	= newData.email;
+		o.country 	= newData.country;
+		if (newData.pass == ''){
+			AM.accounts.save(o); callback(o);
+		}	else{
+			AM.saltAndHash(newData.pass, function(hash){
+				o.pass = hash;
+				AM.accounts.save(o); callback(o);			
+			});
+		}
+	});
+}
+
+AM.saltAndHash = function(pass, callback)
+{
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(pass, salt, function(err, hash) {
+			callback(hash);
+	    });
+	});
+}
+
+AM.delete = function(id, callback) 
+{
+	AM.accounts.remove({_id: this.getObjectId(id)}, callback);
+}
+
+// auxiliary methods //
+
+AM.getEmail = function(e, callback)
+{
+	AM.accounts.findOne({email:e}, function(e, o){ callback(o); });
+}
+
+AM.getObjectId = function(id)
+{
+// this is necessary for id lookups, just passing the id fails for some reason //	
+	return AM.accounts.db.bson_serializer.ObjectID.createFromHexString(id)
+}
+
+AM.getAllRecords = function(callback) 
+{
+	AM.accounts.find().toArray(
 	    function(e, res) {
 		if (e) callback(e)
 		else callback(null, res)
 	});
 };
 
-AccountManager.prototype.findByMultipleFields = function(a, callback){
-// this takes an array of objects to search against {fieldName : 'value'} //	
-	console.log('AccountManager.prototype.lookup : '+a);
-	this.collection.find( { $or : a } ).toArray(
+AM.delAllRecords = function(id, callback) 
+{
+	AM.accounts.remove(); // reset accounts collection for testing //
+}
+
+// just for testing - these are not actually being used //
+
+AM.findById = function(id, callback) 
+{
+	AM.accounts.findOne({_id: this.getObjectId(id)}, 
+		function(e, res) {
+		if (e) callback(e)
+		else callback(null, res)
+	});
+};
+
+
+AM.findByMultipleFields = function(a, callback)
+{
+// this takes an array of name/val pairs to search against {fieldName : 'value'} //
+	AM.accounts.find( { $or : a } ).toArray(
 	    function(e, results) {
 		if (e) callback(e)
 		else callback(null, results)
 	});
 }
-
-AccountManager.prototype.getObjectId = function(id)
-{
-// this is necessary for id lookups, just passing the id fails for some reason //	
-	return this.collection.db.bson_serializer.ObjectID.createFromHexString(id)
-}
-
-exports.AccountManager = AccountManager;
