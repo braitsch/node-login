@@ -5,8 +5,8 @@ module.exports = EM = { }
 EM.server = require("emailjs/email").server.connect({
 	
    	host 	    : 'smtp.gmail.com',
-   	user 	    : 'stephen.braitsch@gmail.com',
-   	password    : 'aelisch76',
+   	user 	    : 'your-email@gmail.com',
+   	password    : 'your-email-password',
     ssl		    : true
 
 });
@@ -14,7 +14,7 @@ EM.server = require("emailjs/email").server.connect({
 EM.send = function(credentials, callback)
 {
 	EM.server.send({
-	   from         : 'Stephen Braitsch <stephen.braitsch@gmail.com>',
+	   from         : 'Your Name <your-email@gmail.com>',
 	   to           : credentials.email,
 	   subject      : 'Password Reset',
 	   text         : 'something went wrong... :(',
@@ -24,7 +24,7 @@ EM.send = function(credentials, callback)
 
 EM.drawEmail = function(o)
 {
-	var link = 'http://node-login.localhost:8080/reset-password?u='+o.pass;
+	var link = 'http://node-login.braitsch.io/reset-password?u='+o.pass;
 	var html = "<html><body>";
 		html += "Hi "+o.name+",<br><br>";
 		html += "Your username is :: <b>"+o.user+"</b><br><br>";
