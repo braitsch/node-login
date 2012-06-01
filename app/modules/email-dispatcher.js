@@ -1,12 +1,12 @@
 
-
-module.exports = EM = { }
+var ES = require('./email-settings');
+module.exports = EM = { };
 
 EM.server = require("emailjs/email").server.connect({
 	
-   	host 	    : 'smtp.gmail.com',
-   	user 	    : 'your-email@gmail.com',
-   	password    : 'your-email-password',
+   	host 	    : ES.host,
+   	user 	    : ES.user,
+   	password    : ES.password,
     ssl		    : true
 
 });
@@ -14,7 +14,7 @@ EM.server = require("emailjs/email").server.connect({
 EM.send = function(credentials, callback)
 {
 	EM.server.send({
-	   from         : 'Your Name <your-email@gmail.com>',
+	   from         : ES.sender,
 	   to           : credentials.email,
 	   subject      : 'Password Reset',
 	   text         : 'something went wrong... :(',
