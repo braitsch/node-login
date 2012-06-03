@@ -1,7 +1,6 @@
-[node-login](http://node-login.braitsch.io)
-======
+##[node-login](http://node-login.braitsch.io)
 
-A basic login & account management system built in Node.js with the following features :
+####A basic login & account management system built in Node.js with the following features :
 
 * New User Account Creation
 * Secure Password Reset via Email
@@ -12,7 +11,7 @@ A basic login & account management system built in Node.js with the following fe
 
 ***
 
-Node-Login is built on top of the following libraries :
+####Node-Login is built on top of the following libraries :
 
 * [Node.js](http://nodejs.org/) - Application Server
 * [Express.js](http://expressjs.com/) - Node.js Web Framework
@@ -26,6 +25,16 @@ Node-Login is built on top of the following libraries :
 
 ***
 
-[Live Demo](http://node-login.braitsch.io)
+A [Live Demo](http://node-login.braitsch.io) and [some thoughts about the app's architecture.](http://www.quietless.com/kitchen/building-a-login-system-in-node-js-and-mongodb/)
 
-This is still a work in progress, more details coming soon.
+***
+
+####Installation & Setup
+This assumes you already have node.js & npm installed.
+`
+git clone git@github.com:braitsch/node-login.git node-login
+cd node-login
+npm install -d
+node app
+`
+Questions and suggestions for improvement are welcome.
