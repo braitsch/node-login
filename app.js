@@ -1,6 +1,6 @@
 
 /**
- * Node.js Bridge Server
+ * Node.js Node Login
  * Author :: Stephen Braitsch
  */
 
@@ -10,10 +10,10 @@ module.exports = function(){
 	var app = exp.createServer();
 
 	app.root = __dirname;
-	
+
 	require('./app/core/config')(app, exp);
 	require('./app/router')(app);
-	
+
 	return app;
-	
+
 }

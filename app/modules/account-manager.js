@@ -10,10 +10,12 @@ var dbName = 'login-testing';
 // use moment.js for pretty date-stamping //
 var moment = require('moment');
 
-module.exports = AM = {};
-AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
-AM.db.open(function(e, d){ console.log('connected to database :: ' + dbName)});
-AM.accounts = AM.db.collection('accounts');
+var AM = {}; 
+	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
+	AM.db.open(function(e, d){ console.log('connected to database :: ' + dbName)});
+	AM.accounts = AM.db.collection('accounts');
+
+module.exports = AM;
 
 // logging in //
 

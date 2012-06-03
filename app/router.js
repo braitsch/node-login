@@ -1,24 +1,24 @@
 
+var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
-var CT = require('./modules/country-list').countries;
 
 module.exports = function(app) {
 
-// main login page //	
-	
+// main login page //
+
 	app.get('/', function(req, res){
-	// check if the user's credentials are saved in a cookie //	
+	// check if the user's credentials are saved in a cookie //
 		if (req.cookies.user == undefined || req.cookies.pass == undefined){
 			res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
 		}	else{
-	// attempt automatic login //			
+	// attempt automatic login //
 			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 				if (o != null){
 				    req.session.user = o;
 					res.redirect('/home');
 				}	else{
-					res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});				
+					res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
 				}
 			});
 		}
@@ -43,7 +43,7 @@ module.exports = function(app) {
 				    req.session.user = o;
 					if (req.param('remember-me') == 'true'){
 						res.cookie('user', o.user, { maxAge: 900000 });
-						res.cookie('pass', o.pass, { maxAge: 900000 });		
+						res.cookie('pass', o.pass, { maxAge: 900000 });
 					}			
 					res.send(o, 200);
 				}
@@ -51,17 +51,17 @@ module.exports = function(app) {
 		}
 	});	
 	
-// logged-in user homepage //	
+// logged-in user homepage //
 	
 	app.get('/home', function(req, res) {
 	    if (req.session.user == null){
-	// if user is not logged-in redirect back to login page //	
+	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
 			res.render('home', {
 				locals: {
 					title : 'Control Panel',
-					countries : CT,					
+					countries : CT,
 					udata : req.session.user
 				}
 			});
@@ -71,7 +71,7 @@ module.exports = function(app) {
 	app.post('/home', function(req, res){
 		if (req.param('user') != undefined) {
 			AM.update({
-				user 		: req.param('user'),			
+				user 		: req.param('user'),
 				name 		: req.param('name'),
 				email 		: req.param('email'),
 				country 	: req.param('country'),
@@ -110,12 +110,12 @@ module.exports = function(app) {
 			email 	: req.param('email'),
 			user 	: req.param('user'),
 			pass	: req.param('pass'),
-			country : req.param('country')			
+			country : req.param('country')
 		}, function(e, o){
 			if (e){
 				res.send(e, 400);
 			}	else{
-				res.send('ok', 200);				
+				res.send('ok', 200);
 			}
 		});
 	});
@@ -131,7 +131,7 @@ module.exports = function(app) {
 					locals: {
 						title : 'Reset Password', pid : req.query["u"]
 					}
-				});		
+				});
 			}
 		})
 	});
@@ -167,11 +167,11 @@ module.exports = function(app) {
 	    });
 	});
 	
-	app.get('/reset', function(req, res) {	
-		AM.delAllRecords( ); 
+	app.get('/reset', function(req, res) {
+		AM.delAllRecords( );
 		res.redirect('/print');
-	});		
+	});
 	
-	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });	
+	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 
 };

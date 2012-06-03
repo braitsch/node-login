@@ -1,9 +1,10 @@
 
 var ES = require('./email-settings');
-module.exports = EM = { };
+var EM = {};
+module.exports = EM;
 
 EM.server = require("emailjs/email").server.connect({
-	
+
    	host 	    : ES.host,
    	user 	    : ES.user,
    	password    : ES.password,
