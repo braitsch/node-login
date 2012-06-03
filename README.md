@@ -1,4 +1,4 @@
-##[node-login](http://node-login.braitsch.io)
+#[Node-Login](http://node-login.braitsch.io)
 
 ####A basic login & account management system built in Node.js with the following features :
 
@@ -31,10 +31,10 @@ A [Live Demo](http://node-login.braitsch.io) and [some thoughts about the app's 
 
 ####Installation & Setup
 This assumes you already have node.js & npm installed.
-`
+```
 git clone git@github.com:braitsch/node-login.git node-login
 cd node-login
 npm install -d
 node app
-`
+```
 Questions and suggestions for improvement are welcome.
