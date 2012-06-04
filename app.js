@@ -4,16 +4,15 @@
  * Author :: Stephen Braitsch
  */
 
-module.exports = function(){
+var exp = require('express');
+var app = exp.createServer();
 
-	var exp = require('express');
-	var app = exp.createServer();
+app.root = __dirname;
+global.host = 'localhost';
 
-	app.root = __dirname;
+require('./app/core/config')(app, exp);
+require('./app/router')(app);
 
-	require('./app/core/config')(app, exp);
-	require('./app/router')(app);
-
-	return app;
-
-}
+app.listen(8080, function(){
+ 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+});
