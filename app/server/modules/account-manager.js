@@ -12,7 +12,13 @@ var moment = require('moment');
 
 var AM = {}; 
 	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
-	AM.db.open(function(e, d){ console.log('connected to database :: ' + dbName)});
+	AM.db.open(function(e, d){
+		if (e) {
+			console.log(e);
+		}	else{
+			console.log('connected to database :: ' + dbName);
+		}
+	});
 	AM.accounts = AM.db.collection('accounts');
 
 module.exports = AM;
