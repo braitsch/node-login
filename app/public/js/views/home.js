@@ -21,7 +21,7 @@ $(document).ready(function(){
 			if (e.responseText == 'email-taken'){
 			    av.showInvalidEmail();
 			}	else if (e.responseText == 'username-taken'){
-			    av.showInvalidUserName();			
+			    av.showInvalidUserName();
 			}
 		}
 	});
@@ -39,11 +39,11 @@ $(document).ready(function(){
 
 // setup the confirm window that displays when the user chooses to delete their account //
 
-    $('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
-    $('.modal-confirm .modal-header h3').text('Delete Account');
-    $('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');	
+	$('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
+	$('.modal-confirm .modal-header h3').text('Delete Account');
+	$('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');
 	$('.modal-confirm .cancel').html('Cancel');
 	$('.modal-confirm .submit').html('Delete');
 	$('.modal-confirm .submit').addClass('btn-danger');
-	
+
 })

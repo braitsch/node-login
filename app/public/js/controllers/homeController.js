@@ -39,7 +39,7 @@ function HomeController()
 			type: "POST",
 			data: {logout : true},
 			success: function(data){
-	 			that.showLockedAlert('Your are now logged out.<br>Redirecting you back to the homepage.');
+	 			that.showLockedAlert('You are now logged out.<br>Redirecting you back to the homepage.');
 			},
 			error: function(jqXHR){
 				console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
