@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 
-	var hc = new HomeController();
+	var hc = new DetailController();
 	var av = new AccountValidator();
 	
 	$('#account-form').ajaxForm({

@@ -15,16 +15,16 @@
     },
     "private": true,
     "dependencies": {
-        "express": "2.5.8",
+        "express": "2.5.x",
         "stylus": ">= 0.0.1",
         "jade": ">= 0.0.1",
-        "bcrypt": ">= 0.5.0",        
+        "passport": ">= 0.1.12",        
         "mongodb": ">= 0.1.0",
         "moment" : ">=1.6.2",        
         "emailjs": ">= 0.2.9"         
   },
     "engines": {
-        "node": "0.6.17",
-        "npm":  "1.0.x"
+        "node": "0.8.x",
+        "npm":  "1.1.x"
     }
 }

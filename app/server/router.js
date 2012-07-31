@@ -54,22 +54,24 @@ module.exports = function(app) {
 	
 // logged-in user homepage //
 	
-	app.get('/home', function(req, res) {
+	app.get('/detail/:user', function(req, res) {
 	    if (req.session.user == null){
 	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			res.render('home', {
-				locals: {
-					title : 'Control Panel',
-					countries : CT,
-					udata : req.session.user
-				}
-			});
+            AM.findByUsername(req.param('user'),function(e,user) {
+                res.render('detail', {
+                    locals: {
+                        title : 'Control Panel',
+                        countries : CT,
+                        udata : user
+                    }
+                });
+            });
 	    }
 	});
-	
-	app.post('/home', function(req, res){
+
+	app.post('/detail', function(req, res){
 		if (req.param('user') != undefined) {
 			AM.update({
 				user 		: req.param('user'),
@@ -79,13 +81,12 @@ module.exports = function(app) {
 				pass		: req.param('pass')
 			}, function(o){
 				if (o){
-					req.session.user = o;
 			// udpate the user's login cookies if they exists //
 					if (req.cookies.user != undefined && req.cookies.pass != undefined){
 						res.cookie('user', o.user, { maxAge: 900000 });
 						res.cookie('pass', o.pass, { maxAge: 900000 });	
 					}
-					res.send('ok', 200);
+					res.redirect('/home');
 				}	else{
 					res.send('error-updating-account', 400);
 				}
@@ -150,9 +151,9 @@ module.exports = function(app) {
 	
 // view & delete accounts //
 	
-	app.get('/print', function(req, res) {
+	app.get('/home', function(req, res) {
 		AM.getAllRecords( function(e, accounts){
-			res.render('print', { locals: { title : 'Account List', accts : accounts } });
+			res.render('list', { locals: { title : 'Account List', accts : accounts } });
 		})
 	});	
 	
