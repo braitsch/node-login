@@ -1,0 +1,34 @@
+div.navbar.navbar-fixed-top
+    div.navbar-inner
+        div.container-fluid
+            ul#global-nav.nav.pull-left
+                a(href='/home').brand Control Panel
+            button#btn-logout.btn.btn-primary
+                i.icon-lock.icon-white
+                | Sign Out
+div#account-list-container
+    table.table.table-bordered.table-striped
+        thead
+            tr
+                th(style='width:40px') #
+                th(style='width:180px') Name
+                th(style='width:200px') Location
+                th(style='width:180px') Username
+                th Account Created
+        tbody
+        - for (var i = 0; i < accts.length; i++)
+            tr
+                td= i+1
+                td
+                    a(href='/detail/#{accts[i].name}') #{accts[i].name}
+                td= accts[i].country
+                td= accts[i].user
+                td= accts[i].date
+
+include modals/alert
+
+script(src='/vendor/jquery.min.js')
+script(src='/vendor/jquery.form.js')
+script(src='/vendor/bootstrap-modal.js')
+script(src='/js/controllers/detailController.js')
+script(src='/js/views/list.js')

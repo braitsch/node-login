@@ -1,5 +1,6 @@
 
-var bcrypt = require('bcrypt')
+var crypto = require('crypto');
+var SaltLength = 10;
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 
@@ -42,7 +43,7 @@ AM.manualLogin = function(user, pass, callback)
 		if (o == null){
 			callback('user-not-found');
 		}	else{
-			bcrypt.compare(pass, o.pass, function(err, res) {
+            AM.hashCompare(pass, o.pass, function(err, res) {
 				if (res){
 					callback(null, o);
 				}	else{
@@ -110,14 +111,29 @@ AM.validateLink = function(pid, callback)
 		callback(o ? 'ok' : null);
 	});
 }
-
+var generateSalt = function(len) {
+    var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ',
+        setLen = set.length,
+        salt = '';
+    for (var i = 0; i < len; i++) {
+        var p = Math.floor(Math.random() * setLen);
+        salt += set[p];
+    }
+    return salt;
+}
+var md5 = function(str) {
+    return crypto.createHash('md5').update(str).digest('hex');
+}
+AM.hashCompare = function(plainPass,hashPass,callback)
+{
+    var salt = hashPass.substr(0, SaltLength);
+    var validHash = salt + md5(plainPass + salt);
+    callback(null,hashPass === validHash);
+}
 AM.saltAndHash = function(pass, callback)
 {
-	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(pass, salt, function(err, hash) {
-			callback(hash);
-	    });
-	});
+    var theSalt = generateSalt(SaltLength);
+    callback(theSalt + md5(pass + theSalt));
 }
 
 AM.delete = function(id, callback) 
@@ -163,6 +179,14 @@ AM.findById = function(id, callback)
 	});
 };
 
+AM.findByUsername = function(username, callback)
+{
+    AM.accounts.findOne({user: username},
+        function(e, res) {
+            if (e) callback(e)
+            else callback(null, res)
+        });
+};
 
 AM.findByMultipleFields = function(a, callback)
 {

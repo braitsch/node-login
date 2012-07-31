@@ -1,5 +1,5 @@
 
-function HomeController()
+function DetailController()
 {	
 	
 // bind event listeners to button clicks //
@@ -35,7 +35,7 @@ function HomeController()
 	{
 		var that = this;
 		$.ajax({
-			url: "/home",
+			url: "/detail",
 			type: "POST",
 			data: {logout : true},
 			success: function(data){
@@ -57,7 +57,7 @@ function HomeController()
 	}
 }
 
-HomeController.prototype.onUpdateSuccess = function()
+DetailController.prototype.onUpdateSuccess = function()
 {
 	$('.modal-alert').modal({ show : false, keyboard : true, backdrop : true });				
 	$('.modal-alert .modal-header h3').text('Success!');
