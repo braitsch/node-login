@@ -1,14 +1,14 @@
 
 function AccountValidator(){
-    		
+
 // build array maps of the form inputs & control groups //
 
-	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf')];    		
+	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf')];
 	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg')];
 	
 // bind the form-error modal window to this controller to display any errors //
 	
-	this.alert = $('.modal-form-errors');	
+	this.alert = $('.modal-form-errors');
 	this.alert.modal({ show : false, keyboard : true, backdrop : true});
 	
 	this.validateName = function(s)
@@ -28,9 +28,9 @@ function AccountValidator(){
 	
 	this.validateEmail = function(e)
 	{
-   		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	return re.test(e);
-	}	
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(e);
+	}
 	
 	this.showErrors = function(a)
 	{
@@ -38,9 +38,9 @@ function AccountValidator(){
 		var ul = $('.modal-form-errors .modal-body ul');
 			ul.empty();
 		for (var i=0; i < a.length; i++) ul.append('<li>'+a[i]+'</li>');
-        this.alert.modal('show');
+		this.alert.modal('show');
 	}
-    
+
 }
 
 AccountValidator.prototype.showInvalidEmail = function()
@@ -51,8 +51,8 @@ AccountValidator.prototype.showInvalidEmail = function()
 
 AccountValidator.prototype.showInvalidUserName = function()
 {
-	this.controlGroups[2].addClass('error');				
-	this.showErrors(['That username is already in use.']);	    
+	this.controlGroups[2].addClass('error');
+	this.showErrors(['That username is already in use.']);
 }
 
 AccountValidator.prototype.validateForm = function()
@@ -66,15 +66,15 @@ AccountValidator.prototype.validateForm = function()
 		this.controlGroups[1].addClass('error'); e.push('Please Enter A Valid Email');
 	}
 	if (this.validateName(this.formFields[2].val()) == false) {
-		this.controlGroups[2].addClass('error'); 			
+		this.controlGroups[2].addClass('error');
 		e.push('Please Choose A Username');
 	}
 	if (this.validatePassword(this.formFields[3].val()) == false) {
-		this.controlGroups[3].addClass('error'); 
+		this.controlGroups[3].addClass('error');
 		e.push('Password Should Be At Least 6 Characters');
 	}
 	if (e.length) this.showErrors(e);
 	return e.length === 0;
 }
-	
+
 	

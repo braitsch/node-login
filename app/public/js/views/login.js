@@ -11,7 +11,7 @@ $(document).ready(function(){
 			if (lv.validateForm() == false){
 				return false;
 			} 	else{
-			// append 'remember-me' option to formData to write local cookie //					
+			// append 'remember-me' option to formData to write local cookie //
 				formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
 				return true;
 			}
@@ -25,11 +25,12 @@ $(document).ready(function(){
 	}); 
 	$('#user-tf').focus();
 	
-// login retrieval form via email //	
+// login retrieval form via email //
 	
-	var ev = new EmailValidator();	
+	var ev = new EmailValidator();
 	
 	$('#get-credentials-form').ajaxForm({
+		url: '/lost-password',
 		beforeSubmit : function(formData, jqForm, options){
 			if (ev.validateEmail($('#email-tf').val())){
 				ev.hideEmailAlert();
@@ -43,7 +44,7 @@ $(document).ready(function(){
 			ev.showEmailSuccess("Check your email on how to reset your password.");
 		},
 		error : function(){
-			ev.showEmailAlert("I'm Sorry. I could not find that email address");
+			ev.showEmailAlert("Sorry. There was a problem, please try again later.");
 		}
 	});
 	

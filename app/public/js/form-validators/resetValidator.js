@@ -1,7 +1,7 @@
 
 function ResetValidator(){
     
-// modal window to allow users to reset their password //    
+// modal window to allow users to reset their password //
     this.setPassword = $('#set-password');
     this.setPassword.modal({ show : false, keyboard : false, backdrop : 'static' });
     this.setPasswordAlert = $('#set-password .alert');
@@ -11,7 +11,7 @@ ResetValidator.prototype.validatePassword = function(s)
 {
 	if (s.length >= 6){
 		return true;
-	}	else{	
+	}	else{
 		this.showAlert('Password Should Be At Least 6 Characters');
 		return false;
 	}
@@ -21,7 +21,7 @@ ResetValidator.prototype.showAlert = function(m)
 {
 	this.setPasswordAlert.attr('class', 'alert alert-error');
 	this.setPasswordAlert.html(m);
-	this.setPasswordAlert.show();			
+	this.setPasswordAlert.show();
 }
 
 ResetValidator.prototype.hideAlert = function()
@@ -35,4 +35,3 @@ ResetValidator.prototype.showSuccess = function(m)
 	this.setPasswordAlert.html(m);
 	this.setPasswordAlert.fadeIn(500);
 }
-	

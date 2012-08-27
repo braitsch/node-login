@@ -9,7 +9,7 @@ $(document).ready(function(){
 			if (av.validateForm() == false){
 				return false;
 			} 	else{
-			// push the disabled username field onto the form data array //	
+			// push the disabled username field onto the form data array //
 				formData.push({name:'user', value:$('#user-tf').val()})
 				return true;
 			}

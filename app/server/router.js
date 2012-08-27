@@ -8,7 +8,6 @@ module.exports = function(app) {
 // main login page //
 
 	app.get('/', function(req, res){
-	console.log('login', req.cookies.user, req.cookies.pass);		
 	// check if the user's credentials are saved in a cookie //
 		if (req.cookies.user == undefined || req.cookies.pass == undefined){
 			res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
@@ -26,31 +25,19 @@ module.exports = function(app) {
 	});
 	
 	app.post('/', function(req, res){
-		if (req.param('email') != null){
-			AM.getEmail(req.param('email'), function(o){
-				if (o){
-					res.send('ok', 200);
-					EM.send(o, function(e, m){ console.log('error : '+e, 'msg : '+m)});	
-				}	else{
-					res.send('email-not-found', 400);
+		AM.manualLogin(req.param('user'), req.param('pass'), function(e, o){
+			if (!o){
+				res.send(e, 400);
+			}	else{
+			    req.session.user = o;
+				if (req.param('remember-me') == 'true'){
+					res.cookie('user', o.user, { maxAge: 900000 });
+					res.cookie('pass', o.pass, { maxAge: 900000 });
 				}
-			});
-		}	else{
-		// attempt manual login //
-			AM.manualLogin(req.param('user'), req.param('pass'), function(e, o){
-				if (!o){
-					res.send(e, 400);
-				}	else{
-				    req.session.user = o;
-					if (req.param('remember-me') == 'true'){
-						res.cookie('user', o.user, { maxAge: 900000 });
-						res.cookie('pass', o.pass, { maxAge: 900000 });
-					}			
-					res.send(o, 200);
-				}
-			});
-		}
-	});	
+				res.send(o, 200);
+			}
+		});
+	});
 	
 // logged-in user homepage //
 	
@@ -95,14 +82,12 @@ module.exports = function(app) {
 			res.clearCookie('pass');
 			req.session.destroy(function(e){ res.send('ok', 200); });
 		}
-	});	
+	});
 	
-// creating new accounts //	
+// creating new accounts //
 	
 	app.get('/signup', function(req, res) {
-		res.render('signup', { 
-			locals: { title: 'Signup', countries : CT }
-		});
+		res.render('signup', {  locals: { title: 'Signup', countries : CT } });
 	});
 	
 	app.post('/signup', function(req, res){
@@ -123,30 +108,55 @@ module.exports = function(app) {
 
 // password reset //
 
+	app.post('/lost-password', function(req, res){
+	// look up the user's account via their email //
+		AM.getEmail(req.param('email'), function(o){
+			if (o){
+				res.send('ok', 200);
+				EM.dispatchResetPasswordLink(o, function(e, m){
+				// this callback takes a moment to return //
+				// should add an ajax loader to give user feedback //
+					if (!e) {
+					//	res.send('ok', 200);
+					}	else{
+						res.send('email-server-error', 400);
+						for (k in e) console.log('error : ', k, e[k]);
+					}
+				});
+			}	else{
+				res.send('email-not-found', 400);
+			}
+		});
+	});
+
 	app.get('/reset-password', function(req, res) {
-		AM.validateLink(req.query["u"], function(e){
+		var email = req.query["e"];
+		var passH = req.query["p"];
+		AM.validateLink(email, passH, function(e){
 			if (e != 'ok'){
 				res.redirect('/');
 			} else{
-				res.render('reset', {
-					locals: {
-						title : 'Reset Password', pid : req.query["u"]
-					}
-				});
+	// save the user's email in a session instead of sending to the client //
+				req.session.reset = { email:email, passHash:passH };
+				res.render('reset', { title : 'Reset Password' });
 			}
 		})
 	});
 	
 	app.post('/reset-password', function(req, res) {
-		AM.setPassword(req.param('pid'), req.param('pass'), function(o){
+		var nPass = req.param('pass');
+	// retrieve the user's email from the session to lookup their account and reset password //
+		var email = req.session.reset.email;
+	// destory the session immediately after retrieving the stored email //
+		req.session.destroy();
+		AM.setPassword(email, nPass, function(o){
 			if (o){
 				res.send('ok', 200);
 			}	else{
 				res.send('unable to update password', 400);
 			}
 		})
-	});	
-	
+	});
 	
 // view & delete accounts //
 	
@@ -154,7 +164,7 @@ module.exports = function(app) {
 		AM.getAllRecords( function(e, accounts){
 			res.render('print', { locals: { title : 'Account List', accts : accounts } });
 		})
-	});	
+	});
 	
 	app.post('/delete', function(req, res){
 		AM.delete(req.body.id, function(e, obj){

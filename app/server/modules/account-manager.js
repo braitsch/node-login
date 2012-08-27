@@ -46,7 +46,7 @@ AM.manualLogin = function(user, pass, callback)
 				if (res){
 					callback(null, o);
 				}	else{
-					callback('invalid-password');				
+					callback('invalid-password');
 				}
 			});
 		}
@@ -55,9 +55,9 @@ AM.manualLogin = function(user, pass, callback)
 
 // record insertion, update & deletion methods //
 
-AM.signup = function(newData, callback) 
+AM.signup = function(newData, callback)
 {
-	AM.accounts.findOne({user:newData.user}, function(e, o) {	
+	AM.accounts.findOne({user:newData.user}, function(e, o) {
 		if (o){
 			callback('username-taken');
 		}	else{
@@ -67,7 +67,7 @@ AM.signup = function(newData, callback)
 				}	else{
 					AM.saltAndHash(newData.pass, function(hash){
 						newData.pass = hash;
-					// append date stamp when record was created //	
+					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 						AM.accounts.insert(newData, callback(null));
 					});
@@ -77,8 +77,8 @@ AM.signup = function(newData, callback)
 	});
 }
 
-AM.update = function(newData, callback) 
-{		
+AM.update = function(newData, callback)
+{
 	AM.accounts.findOne({user:newData.user}, function(e, o){
 		o.name 		= newData.name;
 		o.email 	= newData.email;
@@ -88,25 +88,25 @@ AM.update = function(newData, callback)
 		}	else{
 			AM.saltAndHash(newData.pass, function(hash){
 				o.pass = hash;
-				AM.accounts.save(o); callback(o);			
+				AM.accounts.save(o); callback(o);
 			});
 		}
 	});
 }
 
-AM.setPassword = function(oldp, newp, callback)
+AM.setPassword = function(email, newPass, callback)
 {
-	AM.accounts.findOne({pass:oldp}, function(e, o){
-		AM.saltAndHash(newp, function(hash){
+	AM.accounts.findOne({email:email}, function(e, o){
+		AM.saltAndHash(newPass, function(hash){
 			o.pass = hash;
 			AM.accounts.save(o); callback(o);
 		});
-	});	
+	});
 }
 
-AM.validateLink = function(pid, callback)
+AM.validateLink = function(email, passHash, callback)
 {
-	AM.accounts.findOne({pass:pid}, function(e, o){
+	AM.accounts.find({ $and: [{email:email, pass:passHash}] }, function(e, o){
 		callback(o ? 'ok' : null);
 	});
 }
@@ -114,13 +114,13 @@ AM.validateLink = function(pid, callback)
 AM.saltAndHash = function(pass, callback)
 {
 	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(pass, salt, function(err, hash) {
+		bcrypt.hash(pass, salt, function(err, hash) {
 			callback(hash);
-	    });
+		});
 	});
 }
 
-AM.delete = function(id, callback) 
+AM.delete = function(id, callback)
 {
 	AM.accounts.remove({_id: this.getObjectId(id)}, callback);
 }
@@ -134,29 +134,28 @@ AM.getEmail = function(email, callback)
 
 AM.getObjectId = function(id)
 {
-// this is necessary for id lookups, just passing the id fails for some reason //	
 	return AM.accounts.db.bson_serializer.ObjectID.createFromHexString(id)
 }
 
-AM.getAllRecords = function(callback) 
+AM.getAllRecords = function(callback)
 {
 	AM.accounts.find().toArray(
-	    function(e, res) {
+		function(e, res) {
 		if (e) callback(e)
 		else callback(null, res)
 	});
 };
 
-AM.delAllRecords = function(id, callback) 
+AM.delAllRecords = function(id, callback)
 {
 	AM.accounts.remove(); // reset accounts collection for testing //
 }
 
 // just for testing - these are not actually being used //
 
-AM.findById = function(id, callback) 
+AM.findById = function(id, callback)
 {
-	AM.accounts.findOne({_id: this.getObjectId(id)}, 
+	AM.accounts.findOne({_id: this.getObjectId(id)},
 		function(e, res) {
 		if (e) callback(e)
 		else callback(null, res)
@@ -168,7 +167,7 @@ AM.findByMultipleFields = function(a, callback)
 {
 // this takes an array of name/val pairs to search against {fieldName : 'value'} //
 	AM.accounts.find( { $or : a } ).toArray(
-	    function(e, results) {
+		function(e, results) {
 		if (e) callback(e)
 		else callback(null, results)
 	});

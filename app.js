@@ -15,5 +15,5 @@ require('./app/config')(app, exp);
 require('./app/server/router')(app);
 
 app.listen(8080, function(){
- 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });

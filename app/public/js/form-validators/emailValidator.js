@@ -1,15 +1,15 @@
 
 function EmailValidator(){
-    
-// bind this to _local for anonymous functions //    
-    
+
+// bind this to _local for anonymous functions //
+
     var _local = this;
-    
-// modal window to allow users to request credentials by email //    
-    _local.retrievePassword = $('#get-credentials');
-    _local.retrievePassword.modal({ show : false, keyboard : true, backdrop : true });
-    _local.retrievePasswordAlert = $('#get-credentials .alert');
-    _local.retrievePassword.on('show', function(){ $('#get-credentials-form').resetForm(); _local.retrievePasswordAlert.hide();});
+
+// modal window to allow users to request credentials by email //
+	_local.retrievePassword = $('#get-credentials');
+	_local.retrievePassword.modal({ show : false, keyboard : true, backdrop : true });
+	_local.retrievePasswordAlert = $('#get-credentials .alert');
+	_local.retrievePassword.on('show', function(){ $('#get-credentials-form').resetForm(); _local.retrievePasswordAlert.hide();});
 
 }
 
@@ -23,7 +23,7 @@ EmailValidator.prototype.showEmailAlert = function(m)
 {
 	this.retrievePasswordAlert.attr('class', 'alert alert-error');
 	this.retrievePasswordAlert.html(m);
-	this.retrievePasswordAlert.show();			
+	this.retrievePasswordAlert.show();
 }
 
 EmailValidator.prototype.hideEmailAlert = function()
@@ -37,4 +37,3 @@ EmailValidator.prototype.showEmailSuccess = function(m)
 	this.retrievePasswordAlert.html(m);
 	this.retrievePasswordAlert.fadeIn(500);
 }
-	

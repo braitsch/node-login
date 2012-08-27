@@ -1,8 +1,8 @@
 
 function LoginController()
 {
-	
-// bind event listeners to button clicks //	
+
+// bind event listeners to button clicks //
 	
 	$('#login-form #forgot-password').click(function(){ $('#get-credentials').modal('show');});
 	
@@ -10,5 +10,5 @@ function LoginController()
 
     $('#get-credentials').on('shown', function(){ $('#email-tf').focus(); });
 	$('#get-credentials').on('hidden', function(){ $('#user-tf').focus(); });
-	
+
 }

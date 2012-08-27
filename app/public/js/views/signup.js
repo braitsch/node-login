@@ -15,7 +15,7 @@ $(document).ready(function(){
 			if (e.responseText == 'email-taken'){
 			    av.showInvalidEmail();
 			}	else if (e.responseText == 'username-taken'){
-			    av.showInvalidUserName();			
+			    av.showInvalidUserName();
 			}
 		}
 	});
@@ -28,12 +28,12 @@ $(document).ready(function(){
 	$('#account-form #sub2').text('Choose your username & password');
 	$('#account-form-btn1').html('Cancel');
 	$('#account-form-btn2').html('Submit');
-	$('#account-form-btn2').addClass('btn-primary');	
+	$('#account-form-btn2').addClass('btn-primary');
 	
 // setup the alert that displays when an account is successfully created //
-	
-    $('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
-    $('.modal-alert .modal-header h3').text('Success!');
-    $('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');
+
+	$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
+	$('.modal-alert .modal-header h3').text('Success!');
+	$('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');
 
 })
