@@ -11,7 +11,7 @@ var dbName = 'login-testing';
 var moment = require('moment');
 
 var AM = {}; 
-	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
+        AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}), {safe:false});
 	AM.db.open(function(e, d){
 		if (e) {
 			console.log(e);
@@ -118,6 +118,11 @@ AM.saltAndHash = function(pass, callback)
 			callback(hash);
 		});
 	});
+}
+
+AM.deleteByEmail = function(email, callback)
+{
+        AM.accounts.remove({email: email}, callback); 
 }
 
 AM.delete = function(id, callback)
