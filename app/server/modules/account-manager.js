@@ -120,6 +120,11 @@ AM.saltAndHash = function(pass, callback)
 	});
 }
 
+AM.deleteByEmail = function(email, callback)
+{
+        AM.accounts.remove({email: email}, callback); 
+}
+
 AM.delete = function(id, callback)
 {
 	AM.accounts.remove({_id: this.getObjectId(id)}, callback);

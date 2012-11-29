@@ -23,6 +23,11 @@
 		"moment" : ">=1.7.x",
 		"emailjs": ">= 0.3.x"
 	},
+  	"devDependencies": {
+                "mocha": "*",
+		"zombie": "*",
+		"readyness": "*"
+  	},
 	"engines": {
 		"node": "0.8.x",
 		"npm":  "1.1.x"
