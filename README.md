@@ -40,4 +40,15 @@ node app
 For testing purposes, I've provided a [database dump of all accounts here.](http://node-login.braitsch.io/print)  
 Please note this list and the entire database automatically resets every 24 hours.
 
+####Testing
+Basic browser-based smoke tests validate that login behavior is functioning correctly.  Tests currently require app to be running.
+```
+make test
+```
+
+You can also continuously run the tests with
+```
+make test-w
+```
+
 Questions and suggestions for improvement are welcome.
