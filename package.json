@@ -1,17 +1,17 @@
 {
-	"name": "node-login",
-	"version": "1.1.0",
+	"name": "aplsm",
+	"version": "0.0.1",
 	"description": "A template for quickly building login systems on top of Node.js & MongoDb",
 	"author": {
-		"name": "Stephen Braitsch",
-		"email": "stephen@braitsch.io"
+		"name": "Jorge Serrano",
+		"email": "enderunicode@gmail.com"
 	},
 	"website":{
-		"url": "node-login.braitsch.io"
+		"url": "apocalypsim.com"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/braitsch/node-login.git"
+		"url": "git://github.com/Manyroots/aplsm.git"
 	},
 	"private": true,
 	"dependencies": {
