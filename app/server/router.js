@@ -58,23 +58,23 @@ module.exports = function(app) {
 	
 	app.post('/home', function(req, res){
 		if (req.param('user') != undefined) {
-			AM.update({
+			AM.updateAccount({
 				user 		: req.param('user'),
 				name 		: req.param('name'),
 				email 		: req.param('email'),
 				country 	: req.param('country'),
 				pass		: req.param('pass')
-			}, function(o){
-				if (o){
+			}, function(e, o){
+				if (e){
+					res.send('error-updating-account', 400);
+				}	else{
 					req.session.user = o;
-			// udpate the user's login cookies if they exists //
+			// update the user's login cookies if they exists //
 					if (req.cookies.user != undefined && req.cookies.pass != undefined){
 						res.cookie('user', o.user, { maxAge: 900000 });
 						res.cookie('pass', o.pass, { maxAge: 900000 });	
 					}
 					res.send('ok', 200);
-				}	else{
-					res.send('error-updating-account', 400);
 				}
 			});
 		}	else if (req.param('logout') == 'true'){
@@ -91,13 +91,13 @@ module.exports = function(app) {
 	});
 	
 	app.post('/signup', function(req, res){
-		AM.signup({
+		AM.addNewAccount({
 			name 	: req.param('name'),
 			email 	: req.param('email'),
 			user 	: req.param('user'),
 			pass	: req.param('pass'),
 			country : req.param('country')
-		}, function(e, o){
+		}, function(e){
 			if (e){
 				res.send(e, 400);
 			}	else{
@@ -110,7 +110,7 @@ module.exports = function(app) {
 
 	app.post('/lost-password', function(req, res){
 	// look up the user's account via their email //
-		AM.getEmail(req.param('email'), function(o){
+		AM.getAccountByEmail(req.param('email'), function(o){
 			if (o){
 				res.send('ok', 200);
 				EM.dispatchResetPasswordLink(o, function(e, m){
@@ -132,7 +132,7 @@ module.exports = function(app) {
 	app.get('/reset-password', function(req, res) {
 		var email = req.query["e"];
 		var passH = req.query["p"];
-		AM.validateLink(email, passH, function(e){
+		AM.validateResetLink(email, passH, function(e){
 			if (e != 'ok'){
 				res.redirect('/');
 			} else{
@@ -149,7 +149,7 @@ module.exports = function(app) {
 		var email = req.session.reset.email;
 	// destory the session immediately after retrieving the stored email //
 		req.session.destroy();
-		AM.setPassword(email, nPass, function(o){
+		AM.updatePassword(email, nPass, function(o){
 			if (o){
 				res.send('ok', 200);
 			}	else{
@@ -167,7 +167,7 @@ module.exports = function(app) {
 	});
 	
 	app.post('/delete', function(req, res){
-		AM.delete(req.body.id, function(e, obj){
+		AM.deleteAccount(req.body.id, function(e, obj){
 			if (!e){
 				res.clearCookie('user');
 				res.clearCookie('pass');
@@ -179,8 +179,9 @@ module.exports = function(app) {
 	});
 	
 	app.get('/reset', function(req, res) {
-		AM.delAllRecords( );
-		res.redirect('/print');
+		AM.delAllRecords(function(){
+			res.redirect('/print');	
+		});
 	});
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });

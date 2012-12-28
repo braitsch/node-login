@@ -1,33 +1,30 @@
 
-var bcrypt = require('bcrypt')
-var Db = require('mongodb').Db;
-var Server = require('mongodb').Server;
+var crypto 		= require('crypto')
+var MongoDB 	= require('mongodb').Db;
+var Server 		= require('mongodb').Server;
+var moment 		= require('moment');
 
-var dbPort = 27017;
-var dbHost = global.host;
-var dbName = 'login-testing';
+var dbPort 		= 27017;
+var dbHost 		= global.host;
+var dbName 		= 'node-login';
 
-// use moment.js for pretty date-stamping //
-var moment = require('moment');
+/* establish the database connection */
 
-var AM = {}; 
-	AM.db = new Db(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
-	AM.db.open(function(e, d){
-		if (e) {
-			console.log(e);
-		}	else{
-			console.log('connected to database :: ' + dbName);
-		}
-	});
-	AM.accounts = AM.db.collection('accounts');
+var db = new MongoDB(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}), {w: 1});
+	db.open(function(e, d){
+	if (e) {
+		console.log(e);
+	}	else{
+		console.log('connected to database :: ' + dbName);
+	}
+});
+var accounts = db.collection('accounts');
 
-module.exports = AM;
+/* login validation methods */
 
-// logging in //
-
-AM.autoLogin = function(user, pass, callback)
+exports.autoLogin = function(user, pass, callback)
 {
-	AM.accounts.findOne({user:user}, function(e, o) {
+	accounts.findOne({user:user}, function(e, o) {
 		if (o){
 			o.pass == pass ? callback(o) : callback(null);
 		}	else{
@@ -36,13 +33,13 @@ AM.autoLogin = function(user, pass, callback)
 	});
 }
 
-AM.manualLogin = function(user, pass, callback)
+exports.manualLogin = function(user, pass, callback)
 {
-	AM.accounts.findOne({user:user}, function(e, o) {
+	accounts.findOne({user:user}, function(e, o) {
 		if (o == null){
 			callback('user-not-found');
 		}	else{
-			bcrypt.compare(pass, o.pass, function(err, res) {
+			validatePassword(pass, o.pass, function(err, res) {
 				if (res){
 					callback(null, o);
 				}	else{
@@ -53,23 +50,23 @@ AM.manualLogin = function(user, pass, callback)
 	});
 }
 
-// record insertion, update & deletion methods //
+/* record insertion, update & deletion methods */
 
-AM.signup = function(newData, callback)
+exports.addNewAccount = function(newData, callback)
 {
-	AM.accounts.findOne({user:newData.user}, function(e, o) {
+	accounts.findOne({user:newData.user}, function(e, o) {
 		if (o){
 			callback('username-taken');
 		}	else{
-			AM.accounts.findOne({email:newData.email}, function(e, o) {
+			accounts.findOne({email:newData.email}, function(e, o) {
 				if (o){
 					callback('email-taken');
 				}	else{
-					AM.saltAndHash(newData.pass, function(hash){
+					saltAndHash(newData.pass, function(hash){
 						newData.pass = hash;
 					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-						AM.accounts.insert(newData, callback(null));
+						accounts.insert(newData, {safe: true}, callback);
 					});
 				}
 			});
@@ -77,85 +74,106 @@ AM.signup = function(newData, callback)
 	});
 }
 
-AM.update = function(newData, callback)
+exports.updateAccount = function(newData, callback)
 {
-	AM.accounts.findOne({user:newData.user}, function(e, o){
+	accounts.findOne({user:newData.user}, function(e, o){
 		o.name 		= newData.name;
 		o.email 	= newData.email;
 		o.country 	= newData.country;
 		if (newData.pass == ''){
-			AM.accounts.save(o); callback(o);
+			accounts.save(o, {safe: true}, callback);
 		}	else{
-			AM.saltAndHash(newData.pass, function(hash){
+			saltAndHash(newData.pass, function(hash){
 				o.pass = hash;
-				AM.accounts.save(o); callback(o);
+				accounts.save(o, {safe: true}, callback);
 			});
 		}
 	});
 }
 
-AM.setPassword = function(email, newPass, callback)
+exports.updatePassword = function(email, newPass, callback)
 {
-	AM.accounts.findOne({email:email}, function(e, o){
-		AM.saltAndHash(newPass, function(hash){
+	accounts.findOne({email:email}, function(e, o){
+		saltAndHash(newPass, function(hash){
 			o.pass = hash;
-			AM.accounts.save(o); callback(o);
+			accounts.save(o, {safe: true}, callback);
 		});
 	});
 }
 
-AM.validateLink = function(email, passHash, callback)
+/* account lookup methods */
+
+exports.deleteAccount = function(id, callback)
 {
-	AM.accounts.find({ $and: [{email:email, pass:passHash}] }, function(e, o){
+	accounts.remove({_id: getObjectId(id)}, callback);
+}
+
+exports.getAccountByEmail = function(email, callback)
+{
+	accounts.findOne({email:email}, function(e, o){ callback(o); });
+}
+
+exports.validateResetLink = function(email, passHash, callback)
+{
+	accounts.find({ $and: [{email:email, pass:passHash}] }, function(e, o){
 		callback(o ? 'ok' : null);
 	});
 }
 
-AM.saltAndHash = function(pass, callback)
+exports.getAllRecords = function(callback)
 {
-	bcrypt.genSalt(10, function(err, salt) {
-		bcrypt.hash(pass, salt, function(err, hash) {
-			callback(hash);
-		});
-	});
-}
-
-AM.delete = function(id, callback)
-{
-	AM.accounts.remove({_id: this.getObjectId(id)}, callback);
-}
-
-// auxiliary methods //
-
-AM.getEmail = function(email, callback)
-{
-	AM.accounts.findOne({email:email}, function(e, o){ callback(o); });
-}
-
-AM.getObjectId = function(id)
-{
-	return AM.accounts.db.bson_serializer.ObjectID.createFromHexString(id)
-}
-
-AM.getAllRecords = function(callback)
-{
-	AM.accounts.find().toArray(
+	accounts.find().toArray(
 		function(e, res) {
 		if (e) callback(e)
 		else callback(null, res)
 	});
 };
 
-AM.delAllRecords = function(id, callback)
+exports.delAllRecords = function(callback)
 {
-	AM.accounts.remove(); // reset accounts collection for testing //
+	accounts.remove({}, callback); // reset accounts collection for testing //
 }
 
-// just for testing - these are not actually being used //
+/* private encryption & validation methods */
 
-AM.findById = function(id, callback)
+var generateSalt = function()
 {
-	AM.accounts.findOne({_id: this.getObjectId(id)},
+	var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ';
+	var salt = '';
+	for (var i = 0; i < 10; i++) {
+		var p = Math.floor(Math.random() * set.length);
+		salt += set[p];
+	}
+	return salt;
+}
+
+var md5 = function(str) {
+	return crypto.createHash('md5').update(str).digest('hex');
+}
+
+var saltAndHash = function(pass, callback)
+{
+	var salt = generateSalt();
+	callback(salt + md5(pass + salt));
+}
+
+var validatePassword = function(plainPass, hashedPass, callback)
+{
+	var salt = hashedPass.substr(0, 10);
+	var validHash = salt + md5(plainPass + salt);
+	callback(null, hashedPass === validHash);
+}
+
+/* auxiliary methods */
+
+var getObjectId = function(id)
+{
+	return accounts.db.bson_serializer.ObjectID.createFromHexString(id)
+}
+
+var findById = function(id, callback)
+{
+	accounts.findOne({_id: getObjectId(id)},
 		function(e, res) {
 		if (e) callback(e)
 		else callback(null, res)
@@ -163,10 +181,10 @@ AM.findById = function(id, callback)
 };
 
 
-AM.findByMultipleFields = function(a, callback)
+var findByMultipleFields = function(a, callback)
 {
 // this takes an array of name/val pairs to search against {fieldName : 'value'} //
-	AM.accounts.find( { $or : a } ).toArray(
+	accounts.find( { $or : a } ).toArray(
 		function(e, results) {
 		if (e) callback(e)
 		else callback(null, results)
