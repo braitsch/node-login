@@ -10,7 +10,6 @@ module.exports = function(app, exp) {
 		app.use(exp.session({ secret: 'super-duper-secret-secret' }));
 		app.use(exp.methodOverride());
 		app.use(require('stylus').middleware({ src: app.root + '/app/public' }));
-		app.use(exp.static(app.root + '/app/server'));
 		app.use(exp.static(app.root + '/app/public'));
 	});
 	
