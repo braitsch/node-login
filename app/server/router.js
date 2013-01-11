@@ -10,7 +10,7 @@ module.exports = function(app) {
 	app.get('/', function(req, res){
 	// check if the user's credentials are saved in a cookie //
 		if (req.cookies.user == undefined || req.cookies.pass == undefined){
-			res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
+			res.render('login', { title: 'Hello - Please Login To Your Account' });
 		}	else{
 	// attempt automatic login //
 			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
@@ -18,7 +18,7 @@ module.exports = function(app) {
 				    req.session.user = o;
 					res.redirect('/home');
 				}	else{
-					res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
+					res.render('login', { title: 'Hello - Please Login To Your Account' });
 				}
 			});
 		}
@@ -47,11 +47,9 @@ module.exports = function(app) {
 	        res.redirect('/');
 	    }   else{
 			res.render('home', {
-				locals: {
-					title : 'Control Panel',
-					countries : CT,
-					udata : req.session.user
-				}
+				title : 'Control Panel',
+				countries : CT,
+				udata : req.session.user
 			});
 	    }
 	});
@@ -87,7 +85,7 @@ module.exports = function(app) {
 // creating new accounts //
 	
 	app.get('/signup', function(req, res) {
-		res.render('signup', {  locals: { title: 'Signup', countries : CT } });
+		res.render('signup', {  title: 'Signup', countries : CT });
 	});
 	
 	app.post('/signup', function(req, res){
@@ -162,7 +160,7 @@ module.exports = function(app) {
 	
 	app.get('/print', function(req, res) {
 		AM.getAllRecords( function(e, accounts){
-			res.render('print', { locals: { title : 'Account List', accts : accounts } });
+			res.render('print', { title : 'Account List', accts : accounts });
 		})
 	});
 	

@@ -5,7 +5,7 @@ var Server 		= require('mongodb').Server;
 var moment 		= require('moment');
 
 var dbPort 		= 27017;
-var dbHost 		= global.host;
+var dbHost 		= 'localhost';
 var dbName 		= 'node-login';
 
 /* establish the database connection */

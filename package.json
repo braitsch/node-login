@@ -15,7 +15,7 @@
 	},
 	"private": true,
 	"dependencies": {
-		"express": "2.5.11",
+		"express": "3.0.6",
 		"stylus": "0.31.0",
 		"jade": "0.27.7",
 		"mongodb": "1.2.7",

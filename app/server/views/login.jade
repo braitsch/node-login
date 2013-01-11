@@ -1,31 +1,35 @@
 
-#login-container
-    form( method="post")#login-form.well.span4
-        h1 Hello!
-        p.subheading Please Login To Your Account
-        label Username 
-        input(type="text", name="user", id='user-tf').span4.required
-        label Password
-        input(type="password", name="pass", id='pass-tf').span4.required
-        button(type="submit")#btn-login.btn.btn-primary
-            i.icon-lock.icon-white
-            | Sign in
-        label#remember-me.checkbox Remember Me
-            input(type="checkbox", checked='checked')
-        div.clear-fix
-        hr
-        div.btm-links
-            a(href='#')#forgot-password Forgot Your Password? 
-            a(href='/signup')#create-account Create An Account
-    
-include modals/alert
-include modals/lost-password
+extends layout
 
-script(src='/vendor/jquery.min.js')
-script(src='/vendor/jquery.form.js')
-script(src='/vendor/bootstrap-modal.js')
-script(src='/vendor/bootstrap-transition.js')
-script(src='/js/views/login.js')
-script(src='/js/controllers/loginController.js')
-script(src='/js/form-validators/loginValidator.js')
-script(src='/js/form-validators/emailValidator.js')
+block content
+	#login-container
+		form( method="post")#login-form.well.span4
+			h1 Hello!
+			p.subheading Please Login To Your Account
+			label Username 
+			input(type="text", name="user", id='user-tf').span4.required
+			label Password
+			input(type="password", name="pass", id='pass-tf').span4.required
+			button(type="submit")#btn-login.btn.btn-primary
+				i.icon-lock.icon-white
+				| Sign in
+			label#remember-me.checkbox Remember Me
+				input(type="checkbox", checked='checked')
+			div.clear-fix
+			hr
+			div.btm-links
+				a(href='#')#forgot-password Forgot Your Password?
+				a(href='/signup')#create-account Create An Account
+
+	include modals/alert
+	include modals/lost-password
+
+block scripts
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/js/views/login.js')
+	script(src='/js/controllers/loginController.js')
+	script(src='/js/form-validators/loginValidator.js')
+	script(src='/js/form-validators/emailValidator.js')

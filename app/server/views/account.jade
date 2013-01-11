@@ -1,6 +1,6 @@
 
 // preset form values if we receive a userdata object //
-- user = typeof(udata) != 'undefined' ? udata : {}
+- user = typeof(udata) != 'undefined' ? udata : { }
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 
@@ -41,9 +41,3 @@ input(type='hidden', value= user._id)#userId
 // display form errors in a custom modal window //
 
 include modals/form-errors
-
-script(src='/vendor/jquery.min.js')
-script(src='/vendor/jquery.form.js')
-script(src='/vendor/bootstrap-modal.js')
-script(src='/vendor/bootstrap-transition.js')
-script(src='/js/form-validators/accountValidator.js')
