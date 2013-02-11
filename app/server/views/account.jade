@@ -34,6 +34,10 @@ input(type='hidden', value= user._id)#userId
 				label.control-label(for='pass-tf') Password
 				.controls
 					input#pass-tf.input-xlarge(type='password', name='pass', value='')
+			#pass-confirm-cg.control-group
+				label.control-label(for='pass-confirm-tf') Confirm
+				.controls
+					input#pass-confirm-tf.input-xlarge(type='password', name='pass-confirm', value='')
 			.form-actions
 				button(type='button')#account-form-btn1.btn
 				button(type='submit')#account-form-btn2.btn
