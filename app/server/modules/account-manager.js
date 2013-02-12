@@ -24,7 +24,7 @@ var accounts = db.collection('accounts');
 
 exports.autoLogin = function(user, pass, callback)
 {
-	accounts.findOne({user:user}, function(e, o) {
+	accounts.findOne({user:user, activated:true}, function(e, o) {
 		if (o){
 			o.pass == pass ? callback(o) : callback(null);
 		}	else{
@@ -35,7 +35,7 @@ exports.autoLogin = function(user, pass, callback)
 
 exports.manualLogin = function(user, pass, callback)
 {
-	accounts.findOne({user:user}, function(e, o) {
+	accounts.findOne({user:user, activated:true}, function(e, o) {
 		if (o == null){
 			callback('user-not-found');
 		}	else{
@@ -64,9 +64,19 @@ exports.addNewAccount = function(newData, callback)
 				}	else{
 					saltAndHash(newData.pass, function(hash){
 						newData.pass = hash;
-					// append date stamp when record was created //
-						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-						accounts.insert(newData, {safe: true}, callback);
+						saltAndHash(newData.user, function(hash){
+							newData.activationCode = hash;
+							newData.activated = false;
+							// append date stamp when record was created //
+							newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+							accounts.insert(newData, {safe: true}, function(e,o){
+								if (o.length > 0){
+									callback(e,o[0]);
+								}	else{
+									callback(e, null);
+								}
+							});
+						});
 					});
 				}
 			});
@@ -74,9 +84,23 @@ exports.addNewAccount = function(newData, callback)
 	});
 }
 
+exports.activateAccount = function(activationCode, callback)
+{
+	accounts.findOne({activationCode:activationCode, activated:false}, function(e, o) {
+		if(!o){
+			callback('invalid-activation-code', null);
+		} else{
+			o.activated = true;
+			accounts.save(o, {safe: true}, function(err, o){
+				callback(err, o);
+			});
+		}
+	});
+}
+
 exports.updateAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o){
+	accounts.findOne({user:newData.user, activated:true}, function(e, o){
 		o.name 		= newData.name;
 		o.email 	= newData.email;
 		o.country 	= newData.country;
@@ -151,10 +175,10 @@ var md5 = function(str) {
 	return crypto.createHash('md5').update(str).digest('hex');
 }
 
-var saltAndHash = function(pass, callback)
+var saltAndHash = function(data, callback)
 {
 	var salt = generateSalt();
-	callback(salt + md5(pass + salt));
+	callback(salt + md5(data + salt));
 }
 
 var validatePassword = function(plainPass, hashedPass, callback)
