@@ -76,19 +76,32 @@ exports.addNewAccount = function(newData, callback)
 
 exports.updateAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o){
-		o.name 		= newData.name;
-		o.email 	= newData.email;
-		o.country 	= newData.country;
-		if (newData.pass == ''){
-			accounts.save(o, {safe: true}, callback);
-		}	else{
-			saltAndHash(newData.pass, function(hash){
-				o.pass = hash;
-				accounts.save(o, {safe: true}, callback);
-			});
-		}
-	});
+	var newSet = {
+		name: newData.name,
+		email: newData.email,
+		country: newData.country
+	};
+
+	if(newData.pass == '') {
+		accounts.findAndModify(
+			{ user: newData.user },
+			[['_id','asc']],
+			{ $set: newSet },
+			{ new:true },
+			callback
+		);
+	} else {
+		saltAndHash(newData.pass, function(hash){
+			newSet.pass = hash;
+			accounts.findAndModify(
+				{ user: newData.user },
+				[['_id','asc']],
+				{ $set: newSet },
+				{ new: true },
+				callback
+			);
+		});
+	}
 }
 
 exports.updatePassword = function(email, newPass, callback)
