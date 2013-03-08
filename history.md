@@ -1,3 +1,6 @@
+####1.3.1 / 2013-03-07
+	* adding MIT license
+
 ####1.3.0 / 2013-01-10
 	* updating to express.js v3.0.6
 
