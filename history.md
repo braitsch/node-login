@@ -1,3 +1,6 @@
+####1.3.2 / 2013-03-11
+	* fixed bug on password reset
+
 ####1.3.1 / 2013-03-07
 	* adding MIT license
 

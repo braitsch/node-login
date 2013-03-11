@@ -94,10 +94,14 @@ exports.updateAccount = function(newData, callback)
 exports.updatePassword = function(email, newPass, callback)
 {
 	accounts.findOne({email:email}, function(e, o){
-		saltAndHash(newPass, function(hash){
-			o.pass = hash;
-			accounts.save(o, {safe: true}, callback);
-		});
+		if (e){
+			callback(e, null);
+		}	else{
+			saltAndHash(newPass, function(hash){
+		        o.pass = hash;
+		        accounts.save(o, {safe: true}, callback);
+			});
+		}
 	});
 }
 

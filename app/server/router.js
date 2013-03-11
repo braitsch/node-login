@@ -147,7 +147,7 @@ module.exports = function(app) {
 		var email = req.session.reset.email;
 	// destory the session immediately after retrieving the stored email //
 		req.session.destroy();
-		AM.updatePassword(email, nPass, function(o){
+		AM.updatePassword(email, nPass, function(e, o){
 			if (o){
 				res.send('ok', 200);
 			}	else{
