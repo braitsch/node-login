@@ -197,6 +197,7 @@ module.exports = [
     {short:"SO" , name:"Somalia"},
     {short:"ZA" , name:"South Africa"},
     {short:"GS" , name:"South Georgia and the South Sandwich Islands"},
+    {short:"SS" , name:"South Sudan"},
     {short:"ES" , name:"Spain"},
     {short:"LK" , name:"Sri Lanka"},
     {short:"SH" , name:"St. Helena"},
