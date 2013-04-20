@@ -4,40 +4,43 @@
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 
-#account-form-container
-	form( method="post")#account-form.form-horizontal.well.span6
-		h1
-		p#sub1.subheading Please tell us a little about yourself.
-		hr
-		fieldset
-			#name-cg.control-group
-				label.control-label(for='name-tf') Name
-				.controls
-					input#name-tf.input-xlarge(type='text', name='name', value= user.name)
-			#email-cg.control-group
-				label.control-label(for='email-tf') Email
-				.controls
-					input#email-tf.input-xlarge(type='text', name='email', value= user.email)
-			#clist-cg.control-group
-				label.control-label(for='country-list') Location
-				.controls
-					select#country-list(name='country')
-						each item in countries
-							option(selected=item.name == user.country)= item.name
-			hr
-			p#sub2.subheading
-			#user-cg.control-group
-				label.control-label(for='user-tf') Username
-				.controls
-					input#user-tf.input-xlarge.disabled(type='text', name='user', value= user.user)
-			#pass-cg.control-group
-				label.control-label(for='pass-tf') Password
-				.controls
-					input#pass-tf.input-xlarge(type='password', name='pass', value='')
-			.form-actions
-				button(type='button')#account-form-btn1.btn
-				button(type='submit')#account-form-btn2.btn
-
-// display form errors in a custom modal window //
-
-include modals/form-errors
+.row
+  .small-6.small-centered.columns(ng-controller="SignupController2")
+    form.css-form(name="form", novalidate)
+      h1
+      fieldset
+        legend Please fill out your information.
+        .row
+          .small-6.columns
+          label Name
+          input(name='name', type='text', ng-model='user.name', required)
+          small.error.ng-cloak(ng-show='form.name.$dirty && form.name.$error.required') Name is required.
+        .row
+          label(ng-class='{error: form.email.$dirty && form.email.$invalid}') Email
+          input(name='email', type='email', ng-model='user.email',
+	    ng-class='{error: form.email.$dirty && form.email.$invalid}', 
+            required, ng-change='form.email.$setValidity("taken",true)')
+          small.error.ng-cloak(ng-show='form.email.$error.taken') Email is already in use.
+          small.error.ng-cloak(ng-show='form.email.$dirty && form.email.$error.required') Email is required.
+          small.error.ng-cloak(ng-show='form.email.$error.email') This is not a valid email
+        .row
+          label Location
+          select(name='country', required)
+            each item in countries
+              option(selected=item.name == user.country)= item.name
+          small.error.ng-cloak(ng-show='form.country.$invalid') Select a country.
+        hr
+        .row
+          label Username
+          input(type='text', name='user', ng-model='user.user', required, ng-change='form.user.$setValidity("taken",true)')
+          small.error.ng-cloak(ng-show='form.user.$error.taken') Username is taken.
+        .row
+          label Password
+          input(type='password', name='password', ng-model='user.password', ng-change='checkPassword()', required)
+        .row
+          label Password Again
+          input(type='password', name='password2', ng-model='user.password2', ng-change='checkPassword()', required)
+          small.error.ng-cloak(ng-show='form.password.$dirty && form.password2.$dirty && form.password.$error.dontMatch') Passwords don't match.
+        .form-actions
+          button(type='button')#account-form-btn1.btn
+          button(ng-disabled='form.$invalid || isUnchanged(user)', ng-click='update(user)')#account-form-btn2.btn
