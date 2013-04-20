@@ -7,13 +7,13 @@ input(type='hidden', value= user._id)#userId
 .row
   .small-6.small-centered.columns(ng-controller="SignupController2")
     form.css-form(name="form", novalidate)
-      h1
-      fieldset
+      h1 Signup
+      fieldset(ng-disabled='form_disabled')
         legend Please fill out your information.
         .row
           .small-6.columns
           label Name
-          input(name='name', type='text', ng-model='user.name', required)
+          input(name='name', type='text', ng-model='user.name', required, autofocus)
           small.error.ng-cloak(ng-show='form.name.$dirty && form.name.$error.required') Name is required.
         .row
           label(ng-class='{error: form.email.$dirty && form.email.$invalid}') Email
@@ -42,5 +42,11 @@ input(type='hidden', value= user._id)#userId
           input(type='password', name='password2', ng-model='user.password2', ng-change='checkPassword()', required)
           small.error.ng-cloak(ng-show='form.password.$dirty && form.password2.$dirty && form.password.$error.dontMatch') Passwords don't match.
         .form-actions
-          button(type='button')#account-form-btn1.btn
-          button(ng-disabled='form.$invalid || isUnchanged(user)', ng-click='update(user)')#account-form-btn2.btn
+          button(type='button')#account-form-btn1.btn Cancel
+          button(ng-disabled='form.$invalid || isUnchanged(user)', ng-click='update(user)')#account-form-btn2.btn Submit
+
+#success.reveal-modal
+  h2 You've signed up!
+  p Thanks for registering with us.  Next, we'll go to the login page...
+  a.close-reveal-modal &#215;
+

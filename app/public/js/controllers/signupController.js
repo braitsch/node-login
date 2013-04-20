@@ -10,7 +10,11 @@ app.controller('SignupController2', function ($scope, Signup) {
   };
 
   $scope.update = function(user) {
-    Signup.save(user, angular.noop, function(response){
+    $scope.form_disabled=true;
+      Signup.save(user, function() { // Success
+      $('#success').foundation('reveal', 'open');
+    }, function(response) { // Failure
+      $scope.form_disabled=false;
       if (response.data == 'username-taken') {
         $scope.form.user.$setValidity('taken',false);
       } else if (response.data == 'email-taken') {
