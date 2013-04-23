@@ -18,6 +18,7 @@ app.configure(function(){
 	app.use(express.cookieParser());
 	app.use(express.session({ secret: 'super-duper-secret-secret' }));
 	app.use(express.methodOverride());
+        app.use(require('connect-assets')({src: 'app/public'}));
 	app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
 	app.use(express.static(__dirname + '/app/public'));
 });

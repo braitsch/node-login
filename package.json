@@ -20,7 +20,8 @@
 		"jade": "0.27.7",
 		"mongodb": "1.2.7",
 		"moment" : "1.7.2",
-		"emailjs": "0.3.3"
+		"emailjs": "0.3.3",
+		"connect-assets": "2.4.1"
 	},
 	"engines": {
 		"node": "0.8.14",
