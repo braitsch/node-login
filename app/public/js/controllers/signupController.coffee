@@ -6,7 +6,7 @@ app.factory 'window', ($window) ->
 app.factory 'Signup', ($resource) ->
    $resource '/signup';
 
-app.controller 'SignupController2', ($scope, window, Signup) ->
+app.controller 'SignupController', ($scope, window, Signup) ->
   $scope.checkPassword = ->
     $scope.form.password.$setValidity 'dontMatch', $scope.user.password == $scope.user.password2
 
@@ -25,8 +25,6 @@ app.controller 'SignupController2', ($scope, window, Signup) ->
         $scope.form.email.$setValidity 'taken', false
 
 #function SignupController() {
-# redirect to homepage when cancel button is clicked //
-#  $('#account-form-btn1').click(function(){ window.location.href = '/';});
 #
 # redirect to homepage on new account creation, add short delay so user can read alert window //
 #  $('.modal-alert #ok').click(function(){ setTimeout(function(){window.location.href = '/';}, 300)});
