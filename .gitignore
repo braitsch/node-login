@@ -2,3 +2,4 @@
 node_modules
 app/server/modules/email-settings-mine.js
 app/public/css/style.css
+*~
