@@ -42,7 +42,7 @@ input(type='hidden', value= user._id)#userId
             input(type='password', name='password2', ng-model='user.password2', ng-change='checkPassword()', required)
             small.error.ng-cloak(ng-show='form.password.$dirty && form.password2.$dirty && form.password.$error.dontMatch') Passwords don't match.
           .form-actions
-            button(type='button')#account-form-btn1.btn Cancel
+            button(type='button', ng-click='goto("/")')#account-form-btn1.btn Cancel
             button(ng-disabled='form.$invalid || isUnchanged(user)', ng-click='update(user)')#account-form-btn2.btn Submit
 
 #success.reveal-modal

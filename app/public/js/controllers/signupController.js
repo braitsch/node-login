@@ -1,14 +1,22 @@
 var app = angular.module('signup', ['ngResource']);
 
+app.factory('window', function($window) {
+  return $window;
+});
+
 app.factory('Signup', function($resource){  
   return $resource('/signup');
 });
 
-app.controller('SignupController2', function ($scope, Signup) {
+app.controller('SignupController2', function ($scope, window, Signup) {
   $scope.checkPassword = function () {
     $scope.form.password.$setValidity('dontMatch',$scope.user.password == $scope.user.password2);
   };
 
+  $scope.goto = function (url) {
+    window.location.href = '/';
+  };
+ 
   $scope.update = function(user) {
     $scope.form_disabled=true;
       Signup.save(user, function() { // Success
