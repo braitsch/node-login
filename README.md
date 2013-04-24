@@ -1,5 +1,11 @@
 #[Node-Login](http://node-login.braitsch.io)
 
+This now runs under coffeescript.  To start the server:
+
+```
+node_modules/coffee-script/bin/coffee app.coffee
+```
+
 ####A basic login & account management system built in Node.js with the following features :
 
 * New User Account Creation
