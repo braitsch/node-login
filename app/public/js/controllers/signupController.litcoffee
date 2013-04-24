@@ -1,11 +1,13 @@
 Signup Code
 ===========
 
-This actually sets up an app.  I'm guessing this'll end up further up
-the chain eventually.
+This module handles validating and submitting a signup form.
+
+First, we set up an app.  I'm guessing this'll end up further up the
+chain eventually.
 
     app = angular.module 'signup', ['ngResource']
-  
+
 <A id="signupresource"></a>Point to the server resource
 -------------------------------------------------
 
@@ -17,7 +19,7 @@ error, a 200 response is expected.
 
     app.factory 'Signup', ($resource) ->
       $resource '/signup'
-  
+
 `errormsg` directive
 ------------------
 
@@ -58,7 +60,7 @@ the validitor-key based on an external response.
 It's useful for when you don't confirm if an input is valid until form
 submission, but you don't want to confuse the user by keeping the
 server's message up while they are correcting this field.
-  
+
     app.directive 'clearOnInput', ->
       require: 'ngModel'
       link: (scope, elm, attrs, ctrl) ->
@@ -69,7 +71,7 @@ server's message up while they are correcting this field.
 `shouldEqual` validation directive
 ----------------------------------
 
-Usage: 
+Usage:
 ```
     <input type='password' name='password2' ng-model='user.password2'
            should-equal='password' required>
@@ -93,10 +95,10 @@ If they aren't equal, the `equal` validator on this input's
             myValue
           else
             ctrl.$setValidity 'equal', false
-    
+
         ctrl.$parsers.push (viewValue) ->
           validateEqual viewValue, otherControl.$viewValue
-    
+
         otherControl.$parsers.push (viewValue) ->
           validateEqual viewValue, ctrl.$viewValue
 
@@ -118,27 +120,47 @@ message show up while typing in an email address.
 
       $scope.form_submitted = true # false
 
-This is used in the validators
+We use this on the cancel button in the form to force the user to go
+to the home page.  It's a hack.
 
-      $scope.checkPassword = ->
-        $scope.form.password.$setValidity 'dontMatch', $scope.user.password == $scope.user.password2
-  
       $scope.goto = (url) ->
         $window.location.href = '/'
-  
+
+I don't think we should be bothering users with rapidly-changing and
+flashing validation messages while they're typing things in the first
+time around.  But that becomes somewhat useful after the form is
+submitted.  This is used to delay various validation tests until after
+the form is submitted once.
+
       $scope.delay = (test) ->
         test if $scope.form_submitted
-   
+
+This function (named in Pittsburghese) is used to disable the submit
+button if the user needs to fix something.  It only shuts off submit
+if they use already tried it and has stuff they need to fix.
+
       $scope.needsFixed = ->
-        $scope.form_submitted and $scope.form.$invalid
-  
-      $scope.errorUnlessValid = (name) ->
-        {error: $scope.delay($scope.form[name].$invalid)}
-   
-      $scope.resetValidity = (type) ->
-        [field, status] = type.split('/')
-        $scope.form[field].$setValidity(status,true)
-  
+        $scope.delay $scope.form.$invalid
+
+This is a helper function used in conjunction with the `ng-class`
+attribute.  It checks to see if the named control is valid.  If it
+isn't, it'll return the error class as true, and ng-class will add it
+to this tag's class list.  This is generally used on labels that will
+turn red if their associated inputs are invalid.
+
+      $scope.errorUnlessValid = (ctrl) ->
+        {error: $scope.delay($scope.form[ctrl].$invalid)}
+
+Update the model.  This sends the stuff input in the form off to the
+server.  We do the `needsFixed()` check after truing `form_submitted`
+so we aren't submitting invalid data.
+
+Currently, it marks success by having a `#success` overlay pop up on
+the screen.  This ain't so great, and probably shouldn't be stuck in
+the middle of this method anyways.
+
+The server-side validation parsing also probably oughta go somewhere else.
+
       $scope.update = (user) ->
         $scope.form_submitted = true
         return if $scope.needsFixed()
@@ -151,9 +173,3 @@ This is used in the validators
             $scope.form.user.$setValidity 'taken', false
           else if response.data == 'email-taken'
             $scope.form.email.$setValidity 'taken', false
-  
-    #function SignupController() {
-    #
-    # redirect to homepage on new account creation, add short delay so user can read alert window //
-    #  $('.modal-alert #ok').click(function(){ setTimeout(function(){window.location.href = '/';}, 300)});
-    #}
