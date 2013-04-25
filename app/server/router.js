@@ -93,7 +93,7 @@ module.exports = function(app) {
 			name 	: req.param('name'),
 			email 	: req.param('email'),
 			user 	: req.param('user'),
-			pass	: req.param('pass'),
+			pass	: req.param('password'),
 			country : req.param('country')
 		}, function(e){
 			if (e){
