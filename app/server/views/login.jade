@@ -1,35 +1,41 @@
-
 extends layout
 
-block content
-	#login-container
-		form( method="post")#login-form.well.span4
-			h1 Hello!
-			p.subheading Please Login To Your Account
-			label Username 
-			input(type="text", name="user", id='user-tf').span4.required
-			label Password
-			input(type="password", name="pass", id='pass-tf').span4.required
-			button(type="submit")#btn-login.btn.btn-primary
-				i.icon-lock.icon-white
-				| Sign in
-			label#remember-me.checkbox Remember Me
-				input(type="checkbox", checked='checked')
-			div.clear-fix
-			hr
-			div.btm-links
-				a(href='#')#forgot-password Forgot Your Password?
-				a(href='/signup')#create-account Create An Account
+prepend html
+  html(ng-app="login")
 
-	include modals/alert
-	include modals/lost-password
+block content
+  .row
+    .small-6.small-centered.columns(ng-controller="LoginController")
+      form.panel.css-form(name="form")
+        h1 Hello!
+        fieldset
+          legend Please Login To Your Account
+          .row
+            label Username
+            input(name="user", ng-model="user.user", type="text", required, autofocus)
+          .row
+            label Password
+            input(type="password", name="pass", ng-model="user.pass", required)
+          .row.text-center
+            button(ng-click='login(user)') Sign In
+            label Remember Me
+              input(type="checkbox", checked='checked')
+        .row.text-center
+          ul.large-block-grid-2
+            li: a(href='#', data-reveal-id='getCredentials') Forgot Your Password?
+            li: a(href='/signup') Create An Account
+
+  include modals/alert
+  include modals/lost-password
 
 block scripts
-	script(src='/vendor/jquery.min.js')
-	script(src='/vendor/jquery.form.js')
-	script(src='/vendor/bootstrap-modal.js')
-	script(src='/vendor/bootstrap-transition.js')
-	!= js('/js/controllers/loginController.js')
-	script(src='/js/views/login.js')
-	script(src='/js/form-validators/loginValidator.js')
-	script(src='/js/form-validators/emailValidator.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/zepto.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular-resource.min.js')
+  != js('/js/controllers/loginController.js')
+  script(src='/js/views/login.js')
+  script(src='/js/form-validators/loginValidator.js')
+  script(src='/js/form-validators/emailValidator.js')
+  script
+    $(document).foundation();
