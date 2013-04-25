@@ -1,5 +1,8 @@
 extends layout
 
+prepend html
+  html(ng-app="signup")
+
 block content
   include account
   include modals/alert
