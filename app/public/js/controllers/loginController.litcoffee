@@ -30,9 +30,6 @@ This is the actual login method, called from the login form's submit handler.
 
 
 #    window.LoginController = ->
-      # bind event listeners to button clicks
-    #      $('#login-form #forgot-password').click -> 
-    #        $('#get-credentials').modal('show')
 
       # automatically toggle focus between the email modal window and the login form
     #      $('#get-credentials').on 'shown', -> 

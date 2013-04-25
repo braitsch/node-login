@@ -92,9 +92,9 @@ If they aren't equal, the `equal` validator on this input's
         validateEqual = (myValue, otherValue) ->
           if myValue == otherValue
             ctrl.$setValidity 'equal', true
-            myValue
           else
             ctrl.$setValidity 'equal', false
+          myValue # We're only checking for errors, not for the model value.
 
         ctrl.$parsers.push (viewValue) ->
           validateEqual viewValue, otherControl.$viewValue
@@ -118,7 +118,7 @@ the real-time validation process until the user hits the submit button
 the first time.  It's disconcerting to see an invalid email error
 message show up while typing in an email address.
 
-      $scope.form_submitted = true # false
+      $scope.form_submitted = false
 
 We use this on the cancel button in the form to force the user to go
 to the home page.  It's a hack.
