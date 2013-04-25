@@ -46,7 +46,7 @@ input(type='hidden', value= user._id)#userId
             input(type='password', name='password2', ng-model='user.password2', 
                   ng-class="errorUnlessValid('password2')", should-equal='password', required)
             errormsg(type='password2/equal') Passwords don't match.
-            errormsg(type='password/required') Password is required
+            errormsg(type='password2/required') Password again is required
           .form-actions
             button(type='button', ng-click='goto("/")')#account-form-btn1.btn Cancel
             button(ng-disabled='needsFixed()', ng-click='update(user)')#account-form-btn2.btn Submit
