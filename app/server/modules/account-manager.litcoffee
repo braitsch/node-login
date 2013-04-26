@@ -58,9 +58,9 @@
     
     exports.updateAccount = (newData, callback) ->
       accounts.findOne user:newData.user, (e, o) ->
-        o.name = newData.name;
-        o.email = newData.email;
-        o.country = newData.country;
+        o.name = newData.name
+        o.email = newData.email
+        o.country = newData.country
         if newData.pass == ''
           accounts.save o, safe: true, callback
         else
@@ -103,8 +103,10 @@
     generateSalt = () ->
       set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ'
       salt = ''
+
+The `| 0` does a bit-wise OR with 0.  This has a similar effect to Math.floor.
     
-      salt += set[Math.floor(Math.random() * set.length)] for i in [1..10]
+      salt += set[(Math.random() * set.length) | 0] for [1..10]
       salt
     
     md5 = (str) ->
