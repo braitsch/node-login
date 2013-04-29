@@ -1,8 +1,8 @@
     CT = require './modules/country-list'
-    AM = require './modules/account-manager'
     EM = require './modules/email-dispatcher'
 
-    module.exports = (app) ->
+    module.exports = (app, callback) ->
+      AM = require('./modules/account-manager')
 
     # main login page
 
@@ -21,13 +21,13 @@
       app.post '/', (req, res) ->
         AM.manualLogin req.param('user'), req.param('pass'), (e, o) ->
           if o?
+            req.session.user = o
             if req.param('remember-me') == 'true'
               res.cookie 'user', o.user, maxAge: 900000
               res.cookie 'pass', o.pass, maxAge: 900000
             res.send o, 200
-            res.send e, 400
           else
-            req.session.user = o
+            res.send e, 400
   
     # logged-in user homepage
   
@@ -141,3 +141,4 @@
   
       app.get '*', (req, res) -> res.render '404', title: 'Page Not Found'
 
+      AM callback

@@ -6,21 +6,33 @@
     dbPort          = 27017
     dbHost          = 'localhost'
     dbName          = 'node-login'
-    
-    # establish the database connection
-    
-    db = new MongoDB dbName, new Server(dbHost, dbPort, auto_reconnect: true), w: 1
 
-    db.open (e, d) ->
-      if e
-        console.log e
-      else
-        console.log 'connected to database :: ' + dbName
+    hashAlg         = 'sha512'
+    saltLength      = 64
+
+    accounts        = {}
+
+    module.exports = exports = (callback) ->
     
-    accounts = db.collection 'accounts'
-    
-    # login validation methods
-    
+  
+Prepare the database.
+
+      db = new MongoDB dbName, new Server(dbHost, dbPort, auto_reconnect: true), w: 1
+  
+Create a connection to the database, which we'll hang onto for the
+rest of the session.  After that, send a reference back 
+  
+      db.open (e, d) ->
+        if e
+          console.log e
+        else
+          console.log 'connected to database :: ' + dbName
+        accounts = db.collection 'accounts'
+        callback exports
+  
+      
+      # login validation methods
+      
     exports.autoLogin = (user, pass, callback) ->
       accounts.findOne user: user, (e, o) ->
         if o and o.pass == pass 
@@ -106,19 +118,19 @@
 
 The `| 0` does a bit-wise OR with 0.  This has a similar effect to Math.floor.
     
-      salt += set[(Math.random() * set.length) | 0] for [1..10]
+      salt += set[(Math.random() * set.length) | 0] for [1..saltLength]
       salt
     
-    md5 = (str) ->
-      crypto.createHash('md5').update(str).digest 'hex'
+    hash = (str) ->
+      crypto.createHash('sha512').update(str).digest 'hex'
     
     saltAndHash = (pass, callback) ->
       salt = generateSalt()
-      callback salt + md5 pass + salt
+      callback salt + hash pass + salt
     
     validatePassword = (plainPass, hashedPass, callback) ->
-      salt = hashedPass.substr 0, 10
-      validHash = salt + md5 plainPass + salt
+      salt = hashedPass.substr 0, saltLength
+      validHash = salt + hash plainPass + salt
       callback null, hashedPass == validHash
     
     #  auxiliary methods 
