@@ -29,7 +29,8 @@
 	        "sinon": "1.6.0"
         },
         "scripts": {
-          "test": "cake test"
+          "test": "cake test",
+	  "start": "coffee app.litcoffee"
         },
 	"engines": {
 		"node": "0.8.14",
