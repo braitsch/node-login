@@ -1,37 +1,35 @@
-    crypto          = require 'crypto'
-    MongoDB         = require('mongodb').Db
-    Server          = require('mongodb').Server
-    moment          = require 'moment'
-    
-    dbPort          = 27017
-    dbHost          = 'localhost'
-    dbName          = 'node-login'
+    crypto = require 'crypto'
+    MongoDB = require('mongodb').Db
+    Server = require('mongodb').Server
+    moment = require 'moment'
+    assert = require 'assert'
+    dbPort = 27017
+    dbHost = 'localhost'
+    dbName = 'node-login'
 
-    hashAlg         = 'sha512'
-    saltLength      = 64
+    hashAlg = 'sha512'
+    saltLength = 64
 
-    accounts        = {}
+    accounts = {}
+
+This module expects a callback that continues mainline execution.  The
+app should not start until the database is open, as everything that
+relies on the db will fail.  Any calls to any db-reliant functions
+should occur only after this callback is run.
 
     module.exports = exports = (callback) ->
     
-  
-Prepare the database.
-
       db = new MongoDB dbName, new Server(dbHost, dbPort, auto_reconnect: true), w: 1
   
-Create a connection to the database, which we'll hang onto for the
-rest of the session.  After that, send a reference back 
-  
-      db.open (e, d) ->
-        if e
-          console.log e
-        else
-          console.log 'connected to database :: ' + dbName
+      db.open (err, dbh) ->
+        assert.equal null, err, "Opening database: #{err}"
+        console.log 'connected to database :: ' + dbName
         accounts = db.collection 'accounts'
         callback exports
-  
       
-      # login validation methods
+Check to see if the user has auth cookies.  If so, validate them and
+log the user in.  XXX We really need to switch these to using a hash
+for a cookie, instead of having cleartext password!
       
     exports.autoLogin = (user, pass, callback) ->
       accounts.findOne user: user, (e, o) ->
@@ -39,6 +37,8 @@ rest of the session.  After that, send a reference back
           callback o
         else
           callback null
+
+For when we're presented with a username and password.
     
     exports.manualLogin = (user, pass, callback) ->
       accounts.findOne user: user, (e, o) ->
@@ -51,7 +51,7 @@ rest of the session.  After that, send a reference back
         else
           callback 'user-not-found'
     
-    # record insertion, update & deletion methods
+Validate and create account.
     
     exports.addNewAccount = (newData, callback) ->
       accounts.findOne user: newData.user, (e, o) ->
@@ -67,7 +67,9 @@ rest of the session.  After that, send a reference back
                 # append date stamp when record was created 
                 newData.date = moment().format 'MMMM Do YYYY, h:mm:ss a'
                 accounts.insert newData, safe: true, callback
-    
+
+Update user information, including password, on an existing account.
+
     exports.updateAccount = (newData, callback) ->
       accounts.findOne user:newData.user, (e, o) ->
         o.name = newData.name
@@ -79,6 +81,8 @@ rest of the session.  After that, send a reference back
           saltAndHash newData.pass, (hash) ->
             o.pass = hash
             accounts.save o, safe: true, callback
+
+Only update password, without requiring anything
     
     exports.updatePassword = (email, newPass, callback) ->
       accounts.findOne email:email, (e, o) ->
@@ -88,8 +92,6 @@ rest of the session.  After that, send a reference back
           saltAndHash newPass, (hash) ->
           o.pass = hash
           accounts.save o, safe: true, callback
-    
-    # account lookup methods
     
     exports.deleteAccount = (id, callback) ->
       accounts.remove _id: getObjectId(id), callback
@@ -109,8 +111,6 @@ rest of the session.  After that, send a reference back
     
     exports.delAllRecords = (callback) ->
       accounts.remove {}, callback # reset accounts collection for testing 
-    
-    # private encryption & validation methods
     
     generateSalt = () ->
       set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ'
