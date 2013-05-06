@@ -2,7 +2,7 @@
     http = require 'http'
     app = express()
     CoffeeScript = require 'coffee-script'
-    
+
     connectConfig =
       src: 'app/public'
       jsCompilers: 
@@ -29,7 +29,6 @@
       app.use express.errorHandler()
     
     require('./app/server/router') app, ->
-    
       http.createServer(app).listen app.get('port'), ->
         console.log "Express server listening on port " + app.get 'port'
 
