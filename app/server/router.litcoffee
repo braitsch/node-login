@@ -4,19 +4,11 @@
     module.exports = (app, callback) ->
       AM = require('./modules/account-manager')
 
-    # main login page
+The main page.  We don't care if we're logged in at this point.  The
+getters on the main page will do some AJAX that'll work, or not.
 
       app.get '/', (req, res) ->
-      # check if the user's credentials are saved in a cookie 
-        if req.cookies.user == undefined || req.cookies.pass == undefined
-          res.render 'login', title: 'Hello - Please Login To Your Account'
-        else # attempt automatic login
-          AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
-            if o?
-              req.session.user = o
-              res.redirect '/home'
-            else
-              res.render 'login', title: 'Hello - Please Login To Your Account'
+        res.render 'index'
   
       app.post '/', (req, res) ->
         AM.manualLogin req.param('user'), req.param('pass'), (e, o) ->
@@ -28,7 +20,31 @@
             res.send o, 200
           else
             res.send e, 400
-  
+
+Dedicated login form page.
+
+      app.get '/login', (req, res) ->
+        if req.cookies.user == undefined || req.cookies.pass == undefined
+          res.render 'login', title: 'Hello - Please Login To Your Account'
+        else # attempt automatic login
+          AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
+            if o?
+              req.session.user = o
+              res.redirect '/home'
+            else
+              res.render 'login', title: 'Hello - Please Login To Your Account'
+
+       app.post '/login', (req, res) ->
+        AM.manualLogin req.param('user'), req.param('pass'), (e, o) ->
+          if o?
+            req.session.user = o
+            if req.param('remember-me') == 'true'
+              res.cookie 'user', o.user, maxAge: 900000
+              res.cookie 'pass', o.pass, maxAge: 900000
+            res.send o, 200
+          else
+            res.send e, 400
+ 
     # logged-in user homepage
   
       app.get '/home', (req, res) ->

@@ -1,12 +1,20 @@
-Login Code
-==========
+Login
+=====
 
-Defines the controller for the login page.
+This is for the login app.
 
     app = angular.module 'login', ['ngResource']
 
+Before this file is evaluated, `utils.js` must be loaded.  We pass our
+Angular app into it so it can pick up directives we need.
+
+    formUtils app
+
+This is the place on the server that'll handle anything having to do
+with a login, including a post to it to see if we can log in.
+
     app.factory 'Login', ($resource) ->
-      $resource '/'
+      $resource '/login'
 
 The Login Controller
 ====================
