@@ -139,6 +139,8 @@
       app.get '/reset', (req, res) ->
         AM.delAllRecords () -> res.redirect '/print'
   
-      app.get '*', (req, res) -> res.render '404', title: 'Page Not Found'
+      app.get '*', (req, res) -> 
+        res.status 404
+        res.render '404', title: 'Page Not Found'
 
       AM callback
