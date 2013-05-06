@@ -21,7 +21,7 @@
 		"mongodb": "1.2.7",
 		"moment" : "1.7.2",
 		"emailjs": "0.3.3",
-		"connect-assets": "2.4.1",
+		"connect-assets": "2.4.2",
                 "coffee-script": "1.6.2"
 	},
         "devDependencies": {
