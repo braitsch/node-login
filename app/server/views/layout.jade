@@ -4,10 +4,10 @@ head
   meta(charset='utf-8')
   meta(name='viewport', content='width=device-width')
   title Abuxi Login
-  link(rel='stylesheet', href='/css/style.css')
-  link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.min.css')
-  link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.min.css')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/custom.modernizr.min.js')
+  != css('/css/style.css')
+  != cdn_css('foundation/4.1.2/css/normalize.min.css')
+  != cdn_css('foundation/4.1.2/css/foundation.min.css')
+  != cdn_js('foundation/4.1.2/js/vendor/custom.modernizr.min.js')
 body
   block content
   block scripts

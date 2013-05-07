@@ -29,12 +29,12 @@ block content
   include modals/lost-password
 
 block scripts
-  script(src='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/zepto.min.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation.min.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular-resource.min.js')
-  != js('/js/controllers/loginController.js')
-  script(src='/js/views/login.js')
+  != cdn_js('foundation/4.1.2/js/vendor/zepto.min')
+  != cdn_js('foundation/4.1.2/js/foundation.min')
+  != cdn_js('angular.js/1.1.1/angular.min')
+  != cdn_js('angular.js/1.1.1/angular-resource.min')
+  != js('utils')
+  != js('controllers/loginController')
   script(src='/js/form-validators/loginValidator.js')
   script(src='/js/form-validators/emailValidator.js')
   script

@@ -8,10 +8,10 @@ block content
   include modals/alert
 
 block scripts
-  script(src='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/zepto.min.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation.min.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular-resource.min.js')
+  != cdn_js('foundation/4.1.2/js/vendor/zepto.min.js')
+  != cdn_js('foundation/4.1.2/js/foundation.min.js')
+  != cdn_js('angular.js/1.1.1/angular.min.js')
+  != cdn_js('angular.js/1.1.1/angular-resource.min.js')
   != js('utils')
   != js('controllers/signupController')
   script(src='/js/form-validators/accountValidator.js')

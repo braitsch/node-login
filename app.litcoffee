@@ -3,6 +3,12 @@
     app = express()
     CoffeeScript = require 'coffee-script'
 
+    global.cdn_js = (url) ->
+      js("#{js_libs_path}/#{url}")
+
+    global.cdn_css = (url) ->
+      css("#{css_libs_path}/#{url}")
+
     connectConfig =
       src: 'app/public'
       jsCompilers: 
@@ -25,11 +31,17 @@
       app.use require('stylus').middleware src: __dirname + '/app/public'
       app.use express.static __dirname + '/app/public'
     
+    app.configure 'production', ->
+      global.js_libs_path = '//cdnjs.cloudflare.com/ajax/libs/'
+      global.css_libs_path = '//cdnjs.cloudflare.com/ajax/libs/'
+
     app.configure 'development', ->
+      global.js_libs_path = 'cdn'
+      global.css_libs_path = 'cdn'
       app.use express.errorHandler()
     
     require('./app/server/router') app, ->
       http.createServer(app).listen app.get('port'), ->
         console.log "Express server listening on port " + app.get 'port'
 
- 
+    
