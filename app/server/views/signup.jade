@@ -10,11 +10,7 @@ block content
           h1 Signup
           fieldset(ng-disabled='form_disabled')
             legend Please fill out your information.
-            .row
-              label(ng-class="errorUnlessValid('name')") Name
-              input(name='name', type='text', ng-model='user.name', 
-                    ng-class="errorUnlessValid('name')", required, autofocus)
-              errormsg(type='name/required') Name is required.
+            inputrow(name='name', required)
             .row
               label(ng-class="errorUnlessValid('email')") Email
               input(name='email', type='email', ng-model='user.email',

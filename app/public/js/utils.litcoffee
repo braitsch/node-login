@@ -93,6 +93,55 @@ If they aren't equal, the `equal` validator on this input's
           otherControl.$parsers.push (viewValue) ->
             validateEqual viewValue, ctrl.$viewValue
 
+`inputRow` directive
+--------------------
+
+Usage: `inputrow(name="fieldname" [, attrs="[required][autofocus][taken][email]])`
+
+This directive spits out an input field instrumented with error
+checking and messaging.  The output looks like:
+
+```html
+<div class="row">
+  <label ng-class="errorUnlessValid('fieldname')">Fieldname</label>
+    <input name="fieldname" type="text" ng-model="user.fieldname" ng-class="errorUnlessValid('fieldname')">
+    errormsg(type='fieldname/required') Fieldname is required.
+</div>
+```
+
+The optional attributes provide:
+
+`required`
+``autofocus][taken][email]])`
+
+      app.directive 'inputrow', ($compile) ->
+        restrict: 'E'
+        link: (scope, elm, attrs) ->
+          capped = attrs.name.substring(0,1).toUpperCase()+attrs.name.substring(1);
+          outer = angular.element('<div>')
+            .addClass 'row'
+          outer.append angular.element('<label>')
+            .attr
+              'ng-class': "errorUnlessValid('#{attrs.name}')"
+            .html capped
+          input = angular.element('<input>')
+            .attr
+              'name': attrs.name
+              'type': 'text'
+              'ng-model': "user.#{attrs.name}"
+              'ng-class': "errorUnlessValid('#{attrs.name}')"
+              'clear-on-input': 'taken'
+          if attrs.required == ""
+            input.prop 'required', true 
+            errormsg = angular.element('<errormsg>')
+              .attr
+                'type': 'name/required'
+              .html 'It is required'
+            $compile(errormsg) scope
+            outer.html errormsg
+          outer.append input
+          elm.replaceWith outer
+
 ### Scope Members
 
 At the top of the Angular controller call, call formScopeUtils() with
