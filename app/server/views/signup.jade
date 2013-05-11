@@ -23,7 +23,7 @@ block content
               label Location
               select(name='country', required)
                 each item in countries
-                  option(selected=item.name == user.country)= item.name
+                  option= item.name
             hr
             .row
               label(ng-class="errorUnlessValid('user')") Username
