@@ -25,14 +25,20 @@ Handles getting the user logged in.
 
 This is the actual login method, called from the login form's submit handler.
 
+Pick up the form scope utils.
+
+      formScopeUtils $scope
+
       $scope.login = (user) ->
+        $scope.form_submitted = true
+        return if $scope.needsFixed()
         $scope.form_disabled=true
         Login.save user, -> # Success
           $('#success').foundation 'reveal', 'open'
         , (response) -> # Failure
           $scope.form_disabled=false
           if response.data == 'invalid-password'
-            $scope.form.password.$setValidity 'bad', false
+            $scope.form.password.$setValidity 'invalid', false
           else if response.data == 'user-not-found'
             $scope.form.user.$setValidity 'notfound', false
 
