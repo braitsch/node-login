@@ -32,7 +32,7 @@ This is the actual login method, called from the login form's submit handler.
         , (response) -> # Failure
           $scope.form_disabled=false
           if response.data == 'invalid-password'
-            $scope.form.pass.$setValidity 'bad', false
+            $scope.form.password.$setValidity 'bad', false
           else if response.data == 'user-not-found'
             $scope.form.user.$setValidity 'notfound', false
 

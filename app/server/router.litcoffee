@@ -11,12 +11,12 @@ getters on the main page will do some AJAX that'll work, or not.
         res.render 'index'
   
       app.post '/', (req, res) ->
-        AM.manualLogin req.param('user'), req.param('pass'), (e, o) ->
+        AM.manualLogin req.param('user'), req.param('password'), (e, o) ->
           if o?
             req.session.user = o
             if req.param('remember-me') == 'true'
               res.cookie 'user', o.user, maxAge: 900000
-              res.cookie 'pass', o.pass, maxAge: 900000
+              res.cookie 'password', o.password, maxAge: 900000
             res.send o, 200
           else
             res.send e, 400
@@ -24,10 +24,10 @@ getters on the main page will do some AJAX that'll work, or not.
 Dedicated login form page.
 
       app.get '/login', (req, res) ->
-        if req.cookies.user == undefined || req.cookies.pass == undefined
+        if req.cookies.user == undefined || req.cookies.password == undefined
           res.render 'login', title: 'Hello - Please Login To Your Account'
         else # attempt automatic login
-          AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
+          AM.autoLogin req.cookies.user, req.cookies.password, (o) ->
             if o?
               req.session.user = o
               res.redirect '/home'
@@ -35,12 +35,12 @@ Dedicated login form page.
               res.render 'login', title: 'Hello - Please Login To Your Account'
 
        app.post '/login', (req, res) ->
-        AM.manualLogin req.param('user'), req.param('pass'), (e, o) ->
+        AM.manualLogin req.param('user'), req.param('password'), (e, o) ->
           if o?
             req.session.user = o
             if req.param('remember-me') == 'true'
               res.cookie 'user', o.user, maxAge: 900000
-              res.cookie 'pass', o.pass, maxAge: 900000
+              res.cookie 'password', o.password, maxAge: 900000
             res.send o, 200
           else
             res.send e, 400
@@ -64,20 +64,20 @@ Dedicated login form page.
             name      : req.param 'name'
             email     : req.param 'email'
             country   : req.param 'country'
-            pass      : req.param 'pass'
+            password      : req.param 'password'
           , (e, o) ->
             if e
               res.send 'error-updating-account', 400
             else
               req.session.user = o
           # update the user's login cookies if they exist [YUCK!!!!!]
-            if req.cookies.user? and req.cookies.pass?
+            if req.cookies.user? and req.cookies.password?
               res.cookie 'user', o.user, maxAge: 900000
-              res.cookie 'pass', o.pass, maxAge: 900000
+              res.cookie 'password', o.password, maxAge: 900000
             res.send 'ok', 200
         else if  req.param('logout') == 'true'
           res.clearCookie 'user'
-          res.clearCookie 'pass'
+          res.clearCookie 'password'
           req.session.destroy (e) -> res.send 'ok', 200
   
     # creating new accounts
@@ -90,7 +90,7 @@ Dedicated login form page.
           name    : req.param 'name'
           email   : req.param 'email'
           user    : req.param 'user'
-          pass    : req.param 'password'
+          password    : req.param 'password'
           country : req.param 'country'
         , (e) ->
           if e
@@ -126,7 +126,7 @@ Dedicated login form page.
             res.render 'reset', title : 'Reset Password'
   
       app.post '/reset-password', (req, res) ->
-        nPass = req.param 'pass'
+        nPass = req.param 'password'
         # retrieve the user's email from the session to lookup their account and reset password 
         email = req.session.reset.email
         # destory the session immediately after retrieving the stored email
@@ -147,7 +147,7 @@ Dedicated login form page.
         AM.deleteAccount req.body.id, (e, obj) ->
           unless e?
             res.clearCookie 'user'
-            res.clearCookie 'pass'
+            res.clearCookie 'password'
             req.session.destroy (e) -> res.send 'ok', 200
           else
             res.send 'record not found', 400

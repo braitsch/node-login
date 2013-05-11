@@ -15,7 +15,10 @@ block content
             input(name="user", ng-model="user.user", type="text", required, autofocus)
           .row
             label Password
-            input(type="password", name="pass", ng-model="user.pass", required)
+            label(ng-class="errorUnlessValid('password')") Password
+            input(type='password', name='password', ng-model='user.password', 
+                  ng-class="errorUnlessValid('password')", required)
+            errormsg(type='password/required') Password is required
           .row.text-center
             button(ng-click='login(user)') Sign In
             label Remember Me
