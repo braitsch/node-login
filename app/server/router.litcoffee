@@ -1,6 +1,33 @@
     CT = require './modules/country-list'
     EM = require './modules/email-dispatcher'
 
+
+    getProperties = (obj, properties) ->
+        properties = properties || {}
+        # Get the prototype's properties
+        prototype = Object.getPrototypeOf obj
+        if prototype?
+            getProperties prototype, properties
+
+        # Get obj's own properties
+        names = Object.getOwnPropertyNames obj
+        for name in names
+            properties[name] = obj[name]
+
+        properties
+
+    iterate = (obj) ->
+        obj = Object obj
+
+        properties = getProperties obj
+
+        for name, prop of properties
+            if typeof prop != "function"
+                console.log "property: #{name}"
+        for name,prop of properties
+            if typeof prop == "function"
+                console.log "function: #{name}"
+
     module.exports = (app, callback) ->
       AM = require('./modules/account-manager')
 
