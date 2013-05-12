@@ -1,19 +1,10 @@
 {renderable, script, div, form, legend, js, button, select, option,
-input, label, tag, fieldset, h1, h2 hr, a, p, raw} = require 'teacup'
+input, label, tag, fieldset, h1, h2, hr, a, p, raw} = require 'teacup'
 
 layout = require './layout'
 utils = require './utils'
 
 module.exports = renderable ({title, countries}) ->
-  scripts = ->
-    cdn_js 'foundation/4.1.2/js/vendor/zepto.min.js'
-    cdn_js 'foundation/4.1.2/js/foundation.min.js'
-    cdn_js 'angular.js/1.1.1/angular.min.js'
-    cdn_js 'angular.js/1.1.1/angular-resource.min.js'
-    js 'utils'
-    js 'controllers/signupController'
-    script "$(document).foundation();"
-
   inputrow = renderable (name, args...) ->
     {attrname, attrs} = utils.normalizeArgs args
     properName = attrs.properName ? name.slice(0,1).toUpperCase() + name.slice(1)
@@ -70,6 +61,15 @@ module.exports = renderable ({title, countries}) ->
       h2 "You've signed up!"
       p "Thanks for registering with us.  Next, we'll go to the login page..."
       a ".close-reveal-modal", -> raw "&#215;"
+
+  scripts = ->
+    cdn_js 'foundation/4.1.2/js/vendor/zepto.min.js'
+    cdn_js 'foundation/4.1.2/js/foundation.min.js'
+    cdn_js 'angular.js/1.1.1/angular.min.js'
+    cdn_js 'angular.js/1.1.1/angular-resource.min.js'
+    js 'utils'
+    js 'controllers/signupController'
+    script "$(document).foundation();"
 
   layout 'signup', content, scripts
 
