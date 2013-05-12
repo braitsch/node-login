@@ -96,10 +96,10 @@ If they aren't equal, the `equal` validator on this input's
 `inputRow` directive
 --------------------
 
-Usage: `inputrow(name="fieldname" [, attrs="[required][autofocus][taken][email]])`
+Usage: `inputrow(name="fieldname" [, required] [, autofocus] [, taken] [ ,email])`
 
 This directive spits out an input field instrumented with error
-checking and messaging.  The output looks like:
+checking and messaging.  The output can look something like:
 
 ```html
 <div class="row">
@@ -109,38 +109,36 @@ checking and messaging.  The output looks like:
 </div>
 ```
 
-The optional attributes provide:
+Optional arguments
 
-`required`
-``autofocus][taken][email]])`
++ `required` and `autofocus` mean to add this attribute onto the input field
++ `taken` means to add a 'already in use' error message and clear-on-input="taken"
++ `email` means this is an email type input.
++ `password` means this is a password type input.
 
       app.directive 'inputrow', ($compile) ->
         restrict: 'E'
-        link: (scope, elm, attrs) ->
-          capped = attrs.name.substring(0,1).toUpperCase()+attrs.name.substring(1);
-          outer = angular.element('<div>')
-            .addClass 'row'
-          outer.append angular.element('<label>')
-            .attr
-              'ng-class': "errorUnlessValid('#{attrs.name}')"
-            .html capped
-          input = angular.element('<input>')
-            .attr
-              'name': attrs.name
-              'type': 'text'
-              'ng-model': "user.#{attrs.name}"
-              'ng-class': "errorUnlessValid('#{attrs.name}')"
-              'clear-on-input': 'taken'
-          if attrs.required == ""
-            input.prop 'required', true 
-            errormsg = angular.element('<errormsg>')
-              .attr
-                'type': 'name/required'
-              .html 'It is required'
-            $compile(errormsg) scope
-            outer.html errormsg
-          outer.append input
-          elm.replaceWith outer
+        compile: (elm, attrs) ->
+          errors = specs = ""
+          capped = attrs.name.slice(0,1).toUpperCase() + attrs.name.slice(1)
+          if attrs.hasOwnProperty 'required'
+            specs += " required"
+            errors += """
+              <errormsg type='#{attrs.name}/required'>
+                #{capped} is required.
+              </errormsg>
+            """
+          template = """
+            <div class="row">
+              <label ng-class="errorUnlessValid('#{attrs.name}')">#{capped}</label>
+                <input name="#{attrs.name}" type="text"
+                  ng-model="user.#{attrs.name}" #{specs}
+                  ng-class="errorUnlessValid('#{attrs.name}')">
+                #{errors}
+            </div>
+          """
+          elm.replaceWith template
+
 
 ### Scope Members
 
