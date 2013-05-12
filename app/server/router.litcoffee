@@ -89,7 +89,7 @@ Dedicated login form page.
         AM.addNewAccount
           name    : req.param 'name'
           email   : req.param 'email'
-          user    : req.param 'user'
+          username: req.param 'username'
           password    : req.param 'password'
           country : req.param 'country'
         , (e) ->

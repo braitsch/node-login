@@ -58,6 +58,6 @@ The server-side validation parsing also probably oughta go somewhere else.
         , (response) -> # Failure
           $scope.form_disabled=false
           if response.data == 'username-taken'
-            $scope.form.user.$setValidity 'taken', false
+            $scope.form.username.$setValidity 'taken', false
           else if response.data == 'email-taken'
             $scope.form.email.$setValidity 'taken', false
