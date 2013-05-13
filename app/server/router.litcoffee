@@ -38,11 +38,11 @@ getters on the main page will do some AJAX that'll work, or not.
         res.render 'index'
   
       app.post '/', (req, res) ->
-        AM.manualLogin req.param('user'), req.param('password'), (e, o) ->
+        AM.manualLogin req.param('username'), req.param('password'), (e, o) ->
           if o?
             req.session.user = o
             if req.param('remember-me') == 'true'
-              res.cookie 'user', o.user, maxAge: 900000
+              res.cookie 'username', o.username, maxAge: 900000
               res.cookie 'password', o.password, maxAge: 900000
             res.send o, 200
           else
@@ -51,10 +51,10 @@ getters on the main page will do some AJAX that'll work, or not.
 Dedicated login form page.
 
       app.get '/login', (req, res) ->
-        if req.cookies.user == undefined || req.cookies.password == undefined
+        if req.cookies.username == undefined || req.cookies.password == undefined
           res.render 'login', title: 'Hello - Please Login To Your Account'
         else # attempt automatic login
-          AM.autoLogin req.cookies.user, req.cookies.password, (o) ->
+          AM.autoLogin req.cookies.username, req.cookies.password, (o) ->
             if o?
               req.session.user = o
               res.redirect '/home'
@@ -62,11 +62,11 @@ Dedicated login form page.
               res.render 'login', title: 'Hello - Please Login To Your Account'
 
        app.post '/login', (req, res) ->
-        AM.manualLogin req.param('user'), req.param('password'), (e, o) ->
+        AM.manualLogin req.param('username'), req.param('password'), (e, o) ->
           if o?
             req.session.user = o
             if req.param('remember-me') == 'true'
-              res.cookie 'user', o.user, maxAge: 900000
+              res.cookie 'username', o.username, maxAge: 900000
               res.cookie 'password', o.password, maxAge: 900000
             res.send o, 200
           else
@@ -85,9 +85,9 @@ Dedicated login form page.
           res.redirect('/');
   
       app.post '/home', (req, res) ->
-        if req.param('user')?
+        if req.param('username')?
           AM.updateAccount
-            user      : req.param 'user'
+            username      : req.param 'username'
             name      : req.param 'name'
             email     : req.param 'email'
             country   : req.param 'country'
@@ -98,12 +98,12 @@ Dedicated login form page.
             else
               req.session.user = o
           # update the user's login cookies if they exist [YUCK!!!!!]
-            if req.cookies.user? and req.cookies.password?
-              res.cookie 'user', o.user, maxAge: 900000
+            if req.cookies.username? and req.cookies.password?
+              res.cookie 'username', o.username, maxAge: 900000
               res.cookie 'password', o.password, maxAge: 900000
             res.send 'ok', 200
         else if  req.param('logout') == 'true'
-          res.clearCookie 'user'
+          res.clearCookie 'username'
           res.clearCookie 'password'
           req.session.destroy (e) -> res.send 'ok', 200
   
@@ -173,7 +173,7 @@ Dedicated login form page.
       app.post '/delete', (req, res) ->
         AM.deleteAccount req.body.id, (e, obj) ->
           unless e?
-            res.clearCookie 'user'
+            res.clearCookie 'username'
             res.clearCookie 'password'
             req.session.destroy (e) -> res.send 'ok', 200
           else

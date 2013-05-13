@@ -32,7 +32,7 @@ log the user in.  XXX We really need to switch these to using a hash
 for a cookie, instead of having cleartext password!
       
     exports.autoLogin = (user, pass, callback) ->
-      accounts.findOne user: username, (e, o) ->
+      accounts.findOne username: username, (e, o) ->
         if o and o.pass == pass 
           callback o
         else
@@ -40,10 +40,10 @@ for a cookie, instead of having cleartext password!
 
 For when we're presented with a username and password.
     
-    exports.manualLogin = (user, pass, callback) ->
-      accounts.findOne user: username, (e, o) ->
+    exports.manualLogin = (username, password, callback) ->
+      accounts.findOne username: username, (e, o) ->
         if o?
-          validatePassword pass, o.pass, (err, res) ->
+          validatePassword password, o.password, (err, res) ->
             if res
               callback null, o
             else
@@ -54,7 +54,7 @@ For when we're presented with a username and password.
 Validate and create account.
     
     exports.addNewAccount = (newData, callback) ->
-      accounts.findOne user: newData.username, (e, o) ->
+      accounts.findOne username: newData.username, (e, o) ->
         if o
           callback 'username-taken'
         else
@@ -71,7 +71,7 @@ Validate and create account.
 Update user information, including password, on an existing account.
 
     exports.updateAccount = (newData, callback) ->
-      accounts.findOne user:newData.username, (e, o) ->
+      accounts.findOne username:newData.username, (e, o) ->
         o.name = newData.name
         o.email = newData.email
         o.country = newData.country
