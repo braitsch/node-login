@@ -1,3 +1,5 @@
+{renderable, div, input, label, tag} = require 'teacup'
+
 module.exports = exports = 
   normalizeArgs: (args) ->
     attrs = {}
@@ -26,4 +28,36 @@ module.exports = exports =
       attrs.class = classes.join(' ') if classes?.length
 
     return {attrs, contents}
+
+  inputrow: renderable (name, args...) ->
+    {attrname, attrs} = exports.normalizeArgs args
+    properName = attrs.properName ? name.slice(0,1).toUpperCase() + name.slice(1)
+    errorfields =
+      required: "#{properName} is required."
+      email: "This is not a valid email."
+      equal: "Passwords don't match."
+      
+    type = if attrs.type? then attrs.type else 'text'
+
+    specs =  'ng-model': "user.#{name}", 'ng-class': "errorUnlessValid('#{name}')"
+    specs['required'] = true if attrs.required?
+    specs['should-equal'] = attrs['should-equal'] ? null
+    specs['clear-on-input'] = if attrs['taken']? then 'taken' else null
+    specs['name'] = name
+    specs['type'] = type
+    if attrs['clear-on-input']?
+      errtag = attrs['clear-on-input'][0]
+      specs['clear-on-input'] = errtag
+      errorfields[errtag] = attrs['clear-on-input'][1]
+      attrs[errtag] = true
+    div '.row', ->
+      label 'ng-class': "errorUnlessValid('#{name}')", properName
+      input specs
+      if type == 'email'
+        tag 'errormsg', type: "#{name}/email", errorfields.email
+      if attrs['should-equal']?
+        tag 'errormsg', type: "#{name}/equal", errorfields.equal
+      for errtag, text of errorfields
+        if attrs[errtag]?
+          tag 'errormsg', type: "#{name}/#{errtag}", text
 
