@@ -109,9 +109,6 @@ Only update password, without requiring anything
           callback e
         else callback null, res
     
-    exports.delAllRecords = (callback) ->
-      accounts.remove {}, callback # reset accounts collection for testing 
-    
     generateSalt = () ->
       set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ'
       salt = ''
