@@ -1,0 +1,33 @@
+{
+    'username': {
+	'name': 'User Name',
+	'primaryID': true,
+	'required': true,
+    },
+    'password': {
+	'name': 'Password',
+	'required': true,
+	'type': 'password'
+    },
+    'email': {
+	'name': 'Email',
+	'required': 'true',
+	'type': 'email',
+	'validate': true
+    },
+    'firstname': {
+	'name': 'First Name',
+    },
+    'lastname': {
+	'name': 'First Name',
+    },
+    'address': {
+	'name': 'Address',
+	'type': 'address'
+    },
+    'paymentinfo': {
+	'name': 'Payment Information',
+	'type': 'paymentinfo',
+	'forms': ['mastercard','visa','paypal','bitcoin']
+    }
+}    
