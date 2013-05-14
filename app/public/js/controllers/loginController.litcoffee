@@ -40,7 +40,7 @@ Pick up the form scope utils.
           if response.data == 'invalid-password'
             $scope.form.password.$setValidity 'invalid', false
           else if response.data == 'user-not-found'
-            $scope.form.user.$setValidity 'notfound', false
+            $scope.form.username.$setValidity 'notfound', false
 
 
 #    window.LoginController = ->

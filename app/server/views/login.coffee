@@ -13,8 +13,9 @@ module.exports = renderable ({title}) ->
           fieldset 'ng-disabled': 'form_disabled', ->
             legend 'Please Login To Your Account'
             inputrow 'username', required: true,
-            'clear-on-input': ['notfound', 'That username was not found']
-            inputrow 'password', required: true, type: 'password'
+            'clear-on-input': ['notfound', 'That username was not found.']
+            inputrow 'password', required: true, type: 'password',
+            'clear-on-input': ['invalid', 'The password is invalid.']
             div '.form-actions', ->
               button 'ng-disabled': 'needsFixed()', 'ng-click': 'login(user)', 'Log In'
             label 'Remember Me', ->
