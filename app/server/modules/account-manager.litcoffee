@@ -3,6 +3,7 @@
     Server = require('mongodb').Server
     moment = require 'moment'
     assert = require 'assert'
+
     dbPort = 27017
     dbHost = 'localhost'
     dbName = 'node-login'
@@ -10,7 +11,6 @@
     hashAlg = 'sha512'
     saltLength = 64
 
-    accounts = {}
 
 This module expects a callback that continues mainline execution.  The
 app should not start until the database is open, as everything that
@@ -18,6 +18,7 @@ relies on the db will fail.  Any calls to any db-reliant functions
 should occur only after this callback is run.
 
     module.exports = exports = (callback) ->
+      accounts = {}
     
       db = new MongoDB dbName, new Server(dbHost, dbPort, auto_reconnect: true), w: 1
   
@@ -134,16 +135,3 @@ The `| 0` does a bit-wise OR with 0.  This has a similar effect to Math.floor.
     
     getObjectId = (id) ->
       accounts.db.bson_serializer.ObjectID.createFromHexString id
-    
-    findById = (id, callback) ->
-      accounts.findOne _id: getObjectId(id), (e, res) ->
-        if e
-          callback e
-        else callback null, res
-    
-    findByMultipleFields = (a, callback) ->
-    # this takes an array of name/val pairs to search against {fieldName : 'value'} 
-      accounts.find($or: a).toArray (e, results) ->
-        if e
-          callback e
-        else callback null, results
