@@ -10,6 +10,8 @@
 
     hashAlg = 'sha512'
     saltLength = 64
+    
+    accounts = {}
 
 
 This module expects a callback that continues mainline execution.  The
@@ -18,10 +20,8 @@ relies on the db will fail.  Any calls to any db-reliant functions
 should occur only after this callback is run.
 
     module.exports = exports = (callback) ->
-      accounts = {}
-    
       db = new MongoDB dbName, new Server(dbHost, dbPort, auto_reconnect: true), w: 1
-  
+
       db.open (err, dbh) ->
         assert.equal null, err, "Opening database: #{err}"
         console.log 'connected to database :: ' + dbName
@@ -32,9 +32,9 @@ Check to see if the user has auth cookies.  If so, validate them and
 log the user in.  XXX We really need to switch these to using a hash
 for a cookie, instead of having cleartext password!
       
-    exports.autoLogin = (user, pass, callback) ->
+    exports.autoLogin = (username, password, callback) ->
       accounts.findOne username: username, (e, o) ->
-        if o and o.pass == pass 
+        if o and o.password == password
           callback o
         else
           callback null
@@ -55,12 +55,12 @@ For when we're presented with a username and password.
 Validate and create account.
     
     exports.addNewAccount = (newData, callback) ->
-      accounts.findOne username: newData.username, (e, o) ->
-        if o
+      accounts.findOne username: newData.username, (err, doc) ->
+        if doc
           callback 'username-taken'
         else
-          accounts.findOne email:newData.email , (e, o) ->
-            if o
+          accounts.findOne email: newData.email, (err, doc) ->
+            if doc
               callback 'email-taken'
             else
               saltAndHash newData.pass, (hash) ->
