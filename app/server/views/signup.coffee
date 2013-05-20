@@ -8,7 +8,7 @@ module.exports = renderable ({title, countries}) ->
   content = -> 
     div '.row', ->
       div '.small-6.small-centered.columns', 'ng-controller': 'SignupController', ->
-        form '.panel.css-form', name: 'form', ->
+        form name: 'form', ->
           h1 'Sign Up'
           fieldset 'ng-disabled': 'form_disabled', ->
             legend 'Please fill out your information.'

@@ -45,13 +45,14 @@ module.exports = exports =
     specs['clear-on-input'] = if attrs['taken']? then 'taken' else null
     specs['name'] = name
     specs['type'] = type
+    specs['id'] = name
     if attrs['clear-on-input']?
       errtag = attrs['clear-on-input'][0]
       specs['clear-on-input'] = errtag
       errorfields[errtag] = attrs['clear-on-input'][1]
       attrs[errtag] = true
     div '.row', ->
-      label 'ng-class': "errorUnlessValid('#{name}')", properName
+      label for: name, 'ng-class': "errorUnlessValid('#{name}')", properName
       input specs
       if type == 'email'
         tag 'errormsg', type: "#{name}/email", errorfields.email
