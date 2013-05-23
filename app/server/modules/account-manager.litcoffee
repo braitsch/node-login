@@ -3,14 +3,16 @@
     Server = require('mongodb').Server
     moment = require 'moment'
     assert = require 'assert'
+
     dbPort = 27017
     dbHost = 'localhost'
     dbName = 'node-login'
 
     hashAlg = 'sha512'
     saltLength = 64
-
+    
     accounts = {}
+
 
 This module expects a callback that continues mainline execution.  The
 app should not start until the database is open, as everything that
@@ -18,9 +20,8 @@ relies on the db will fail.  Any calls to any db-reliant functions
 should occur only after this callback is run.
 
     module.exports = exports = (callback) ->
-    
       db = new MongoDB dbName, new Server(dbHost, dbPort, auto_reconnect: true), w: 1
-  
+
       db.open (err, dbh) ->
         assert.equal null, err, "Opening database: #{err}"
         console.log 'connected to database :: ' + dbName
@@ -31,9 +32,9 @@ Check to see if the user has auth cookies.  If so, validate them and
 log the user in.  XXX We really need to switch these to using a hash
 for a cookie, instead of having cleartext password!
       
-    exports.autoLogin = (user, pass, callback) ->
+    exports.autoLogin = (username, password, callback) ->
       accounts.findOne username: username, (e, o) ->
-        if o and o.pass == pass 
+        if o and o.password == password
           callback o
         else
           callback null
@@ -54,12 +55,12 @@ For when we're presented with a username and password.
 Validate and create account.
     
     exports.addNewAccount = (newData, callback) ->
-      accounts.findOne username: newData.username, (e, o) ->
-        if o
+      accounts.findOne username: newData.username, (err, doc) ->
+        if doc
           callback 'username-taken'
         else
-          accounts.findOne email:newData.email , (e, o) ->
-            if o
+          accounts.findOne email: newData.email, (err, doc) ->
+            if doc
               callback 'email-taken'
             else
               saltAndHash newData.pass, (hash) ->
@@ -134,16 +135,3 @@ The `| 0` does a bit-wise OR with 0.  This has a similar effect to Math.floor.
     
     getObjectId = (id) ->
       accounts.db.bson_serializer.ObjectID.createFromHexString id
-    
-    findById = (id, callback) ->
-      accounts.findOne _id: getObjectId(id), (e, res) ->
-        if e
-          callback e
-        else callback null, res
-    
-    findByMultipleFields = (a, callback) ->
-    # this takes an array of name/val pairs to search against {fieldName : 'value'} 
-      accounts.find($or: a).toArray (e, results) ->
-        if e
-          callback e
-        else callback null, results
