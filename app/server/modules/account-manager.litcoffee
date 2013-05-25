@@ -48,9 +48,9 @@ For when we're presented with a username and password.
             if res
               callback null, o
             else
-              callback 'invalid-password'
+              callback 'invalidlogin'
         else
-          callback 'user-not-found'
+          callback 'invalidlogin'
     
 Validate and create account.
     

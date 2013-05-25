@@ -37,10 +37,9 @@ Pick up the form scope utils.
           $('#success').foundation 'reveal', 'open'
         , (response) -> # Failure
           $scope.form_disabled=false
-          if response.data == 'invalid-password'
-            $scope.form.password.$setValidity 'invalid', false
-          else if response.data == 'user-not-found'
-            $scope.form.username.$setValidity 'notfound', false
+          if response.data == 'invalidlogin'
+            $scope.form.password.$setValidity 'invalidlogin', false
+            $scope.form.username.$setValidity 'invalidlogin', false
 
 
 #    window.LoginController = ->

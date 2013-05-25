@@ -41,7 +41,8 @@ submit.
 `clearOnInput` directive
 -----------------
 
-Usage: `<input name="userid" type="text" required clear-on-input="validator-key">`
+Usage: `<input name="userid" type="text" required clear-on-input="validator-key"
+         clear-other="other-input-name">`
 
 This is a (quasi-)validation attribute.  It doesn't actually validate
 the input.  It trues the given validator key on the given input's
@@ -52,12 +53,20 @@ It's useful for when you don't confirm if an input is valid until form
 submission, but you don't want to confuse the user by keeping the
 server's message up while they are correcting this field.
 
+The `clear-other` attribute is optional.  It tells Angular to clear
+another control when this one is cleared.  This is useful for clearing
+the errors on both username and password when the use starts typing
+into either.
+
       app.directive 'clearOnInput', ->
         require: 'ngModel'
         link: (scope, elm, attrs, ctrl) ->
           ctrl.$parsers.unshift (viewValue) ->
-              ctrl.$setValidity attrs.clearOnInput, true
-              viewValue
+            ctrl.$setValidity attrs.clearOnInput, true
+            if attrs.clearOther
+              otherControl = elm.inheritedData('$formController')[attrs.clearOther]
+              otherControl.$setValidity attrs.clearOnInput, true
+            viewValue
 
 `shouldEqual` validation directive
 ----------------------------------

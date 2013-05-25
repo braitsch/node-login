@@ -45,6 +45,8 @@ module.exports = exports =
     specs['clear-on-input'] = if attrs['taken']? then 'taken' else null
     specs['name'] = name
     specs['type'] = type
+    if attrs['clear-other'] # Other element to clear on input
+      specs['clear-other'] = attrs['clear-other']
     specs['id'] = name
     if attrs['clear-on-input']?
       errtag = attrs['clear-on-input'][0]
