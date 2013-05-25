@@ -93,53 +93,6 @@ If they aren't equal, the `equal` validator on this input's
           otherControl.$parsers.push (viewValue) ->
             validateEqual viewValue, ctrl.$viewValue
 
-`inputRow` directive
---------------------
-
-Usage: `inputrow(name="fieldname" [, required] [, autofocus] [, taken] [ ,email])`
-
-This directive spits out an input field instrumented with error
-checking and messaging.  The output can look something like:
-
-```html
-<div class="row">
-  <label ng-class="errorUnlessValid('fieldname')">Fieldname</label>
-    <input name="fieldname" type="text" ng-model="user.fieldname" ng-class="errorUnlessValid('fieldname')">
-    errormsg(type='fieldname/required') Fieldname is required.
-</div>
-```
-
-Optional arguments
-
-+ `required` and `autofocus` mean to add this attribute onto the input field
-+ `taken` means to add a 'already in use' error message and clear-on-input="taken"
-+ `email` means this is an email type input.
-+ `password` means this is a password type input.
-
-      app.directive 'inputrow', ($compile) ->
-        restrict: 'E'
-        compile: (elm, attrs) ->
-          errors = specs = ""
-          capped = attrs.name.slice(0,1).toUpperCase() + attrs.name.slice(1)
-          if attrs.hasOwnProperty 'required'
-            specs += " required"
-            errors += """
-              <errormsg type='#{attrs.name}/required'>
-                #{capped} is required.
-              </errormsg>
-            """
-          template = """
-            <div class="row">
-              <label ng-class="errorUnlessValid('#{attrs.name}')">#{capped}</label>
-                <input name="#{attrs.name}" type="text"
-                  ng-model="user.#{attrs.name}" #{specs}
-                  ng-class="errorUnlessValid('#{attrs.name}')">
-                #{errors}
-            </div>
-          """
-          elm.replaceWith template
-
-
 ### Scope Members
 
 At the top of the Angular controller call, call formScopeUtils() with
