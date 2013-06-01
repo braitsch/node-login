@@ -44,6 +44,7 @@ For when we're presented with a username and password.
     exports.manualLogin = (username, password, callback) ->
       accounts.findOne username: username, (e, o) ->
         if o?
+          console.log "PW is " + password + " and " + o.password
           validatePassword password, o.password, (err, res) ->
             if res
               callback null, o
@@ -63,8 +64,8 @@ Validate and create account.
             if doc
               callback 'email-taken'
             else
-              saltAndHash newData.pass, (hash) ->
-                newData.pass = hash
+              saltAndHash newData.password, (hash) ->
+                newData.password = hash
                 # append date stamp when record was created 
                 newData.date = moment().format 'MMMM Do YYYY, h:mm:ss a'
                 accounts.insert newData, safe: true, callback
@@ -76,11 +77,11 @@ Update user information, including password, on an existing account.
         o.name = newData.name
         o.email = newData.email
         o.country = newData.country
-        if newData.pass == ''
+        if newData.password == ''
           accounts.save o, safe: true, callback
         else
-          saltAndHash newData.pass, (hash) ->
-            o.pass = hash
+          saltAndHash newData.password, (hash) ->
+            o.password = hash
             accounts.save o, safe: true, callback
 
 Only update password, without requiring anything
@@ -91,7 +92,7 @@ Only update password, without requiring anything
           callback e, null
         else
           saltAndHash newPass, (hash) ->
-          o.pass = hash
+          o.password = hash
           accounts.save o, safe: true, callback
     
     exports.deleteAccount = (id, callback) ->
@@ -101,7 +102,7 @@ Only update password, without requiring anything
       accounts.findOne email:email, (e, o) -> callback o
     
     exports.validateResetLink = (email, passHash, callback) ->
-      accounts.find  $and: [email: email, pass: passHash], (e, o) ->
+      accounts.find  $and: [email: email, password: passHash], (e, o) ->
         callback if o then 'ok' else null
     
     exports.getAllRecords = (callback) ->
@@ -122,13 +123,14 @@ The `| 0` does a bit-wise OR with 0.  This has a similar effect to Math.floor.
     hash = (str) ->
       crypto.createHash('sha512').update(str).digest 'hex'
     
-    saltAndHash = (pass, callback) ->
+    saltAndHash = (password, callback) ->
       salt = generateSalt()
-      callback salt + hash pass + salt
+      callback salt + hash password + salt
     
     validatePassword = (plainPass, hashedPass, callback) ->
       salt = hashedPass.substr 0, saltLength
       validHash = salt + hash plainPass + salt
+      console.log "Got: " + validHash + " for " + plainPass + " and " + hashedPass
       callback null, hashedPass == validHash
     
     #  auxiliary methods 
