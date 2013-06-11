@@ -1,5 +1,5 @@
 
-var crypto 		= require('crypto')
+var crypto 		= require('crypto');
 var MongoDB 	= require('mongodb').Db;
 var Server 		= require('mongodb').Server;
 var moment 		= require('moment');
