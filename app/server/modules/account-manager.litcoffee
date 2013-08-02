@@ -13,7 +13,6 @@
     
     accounts = {}
 
-
 This module expects a callback that continues mainline execution.  The
 app should not start until the database is open, as everything that
 relies on the db will fail.  Any calls to any db-reliant functions
@@ -44,7 +43,6 @@ For when we're presented with a username and password.
     exports.manualLogin = (username, password, callback) ->
       accounts.findOne username: username, (e, o) ->
         if o?
-          console.log "PW is " + password + " and " + o.password
           validatePassword password, o.password, (err, res) ->
             if res
               callback null, o
@@ -121,7 +119,7 @@ The `| 0` does a bit-wise OR with 0.  This has a similar effect to Math.floor.
       salt
     
     hash = (str) ->
-      crypto.createHash('sha512').update(str).digest 'hex'
+      crypto.createHash(hashAlg).update(str).digest 'hex'
     
     saltAndHash = (password, callback) ->
       salt = generateSalt()
@@ -130,7 +128,6 @@ The `| 0` does a bit-wise OR with 0.  This has a similar effect to Math.floor.
     validatePassword = (plainPass, hashedPass, callback) ->
       salt = hashedPass.substr 0, saltLength
       validHash = salt + hash plainPass + salt
-      console.log "Got: " + validHash + " for " + plainPass + " and " + hashedPass
       callback null, hashedPass == validHash
     
     #  auxiliary methods 

@@ -7,7 +7,7 @@
 This replaces the MongoDB module with a Mockery mock.  This way, we
 don't worry about maintaining database state.  We also can check
 expectations on the calls to the module, and send back fabricated data
-ein support of the tests.
+in support of the tests.
       
       dbMock = (dbname, server) =>
 
@@ -56,9 +56,8 @@ Our typical user record.
       @findOneUsernameDoc = null
       @findOneEmailDoc = null
 
-Test the autoLogin function.  This function is 
-hooked up through the main route, and is triggered if
-a session cookie is presented.
+Test the autoLogin function.  This function is hooked up through the
+main route, and is triggered if a session cookie is presented.
 
     describe 'autoLogin', ->
       it 'logs in properly', (done) ->
@@ -68,7 +67,7 @@ a session cookie is presented.
           assert.equal o.password, @user.password
           done()
 
-      it 'find different pasword', (done) ->
+      it 'finds a different password', (done) ->
         @findOneUsernameDoc =
           password: 'wrong' + @user.password
         @AM.autoLogin @user.username, @user.password, (o) ->

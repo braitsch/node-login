@@ -7,7 +7,7 @@ module.exports = renderable (app, content, scripts) ->
     head ->
       meta charset: 'utf-8'
       meta name: 'viewport', content: 'width=device-width'
-      title 'Abuxi Login'
+      title 'Login'
       css '/css/style.css'
       cdn_css 'foundation/4.1.2/css/normalize.min.css'
       cdn_css 'foundation/4.1.2/css/foundation.min.css'

@@ -1,12 +1,18 @@
+TODO:
+
++ Make a more secure cookie-based auto-auth.
++ Make a secure cookie-based "remember me" system
+
+
 #Node-Login
 
-This now runs under coffeescript.  To start the server:
+To start the server:
 
 ```
 node_modules/coffee-script/bin/coffee app.coffee
 ```
 
-####A login & account management system built in Node.js
+####A login & account management system in Coffeescript for Node.js
 
 Features include:
 
@@ -28,14 +34,15 @@ Features include:
 * [EmailJS](http://github.com/eleith/emailjs) - Node.js > SMTP Server Middleware
 * [Foundation](http://foundation.zurb.com) - UI Component & Layout Library
 
-
 ***
 
 ####Installation & Setup
+
 This assumes you already have node.js & npm installed.
+
 ```
 git clone git://github.com/dougluce/node-login.git node-login
 cd node-login
 npm install -d
-node_modules/coffee-script/bin/coffee app.coffee
+npm start
 ```
