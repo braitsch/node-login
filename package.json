@@ -16,14 +16,13 @@
 	"private": true,
 	"dependencies": {
 		"express": "3.0.6",
-		"stylus": "0.31.0",
-		"jade": "0.27.7",
+		"stylus": "0.50.0",
+		"jade": "1.9.2",
 		"mongodb": "1.2.7",
 		"moment" : "1.7.2",
 		"emailjs": "0.3.3"
 	},
 	"engines": {
-		"node": "0.8.14",
-		"npm":  "1.1.65"
+		"node": "0.10.29"
 	}
 }
