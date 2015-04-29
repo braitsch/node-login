@@ -95,13 +95,40 @@ module.exports = function(app) {
 			user 	: req.param('user'),
 			pass	: req.param('pass'),
 			country : req.param('country')
-		}, function(e){
+		}, function(e,o){
 			if (e){
 				res.send(e, 400);
 			}	else{
 				res.send('ok', 200);
+				EM.dispatchActivationLink(o, function(e, m){
+					// this callback takes a moment to return //
+					// should add an ajax loader to give user feedback //
+					if (!e) {
+						//	res.send('ok', 200);
+					}	else{
+						res.send('email-server-error', 400);
+						for (k in e) console.log('error : ', k, e[k]);
+					}
+				});
 			}
 		});
+	});
+
+// activating account //
+
+	app.get('/activation', function(req, res) {
+		if (req.param('c', null))
+		{
+			AM.activateAccount(req.param('c'),function(e, o){
+				if (o){
+					res.render('activated', { title: 'Activation'});
+				} else{
+					res.render('activation-failed', { title: 'Activation' });
+				}
+			});
+		} else{
+			res.send("activation code required", 400);
+		}
 	});
 
 // password reset //

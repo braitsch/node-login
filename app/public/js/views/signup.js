@@ -34,6 +34,6 @@ $(document).ready(function(){
 
 	$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
 	$('.modal-alert .modal-header h3').text('Success!');
-	$('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');
+	$('.modal-alert .modal-body p').html('Please check your email for a verification link which will confirm your email address.</br>Click OK to return to the login page.');
 
 })
