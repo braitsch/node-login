@@ -3,7 +3,7 @@ function EmailValidator(){
 
 // bind this to _local for anonymous functions //
 
-    var _local = this;
+	var _local = this;
 
 // modal window to allow users to request credentials by email //
 	_local.retrievePassword = $('#get-credentials');
@@ -28,7 +28,7 @@ EmailValidator.prototype.showEmailAlert = function(m)
 
 EmailValidator.prototype.hideEmailAlert = function()
 {
-    this.retrievePasswordAlert.hide();
+	this.retrievePasswordAlert.hide();
 }
 
 EmailValidator.prototype.showEmailSuccess = function(m)

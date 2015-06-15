@@ -13,11 +13,11 @@ input(type='hidden', value= user._id)#userId
 			#name-cg.control-group
 				label.control-label(for='name-tf') Name
 				.controls
-					input#name-tf.input-xlarge(type='text', name='name', value= user.name)
+					input#name-tf(type='text', name='name', value= user.name)
 			#email-cg.control-group
 				label.control-label(for='email-tf') Email
 				.controls
-					input#email-tf.input-xlarge(type='text', name='email', value= user.email)
+					input#email-tf(type='text', name='email', value= user.email)
 			#clist-cg.control-group
 				label.control-label(for='country-list') Location
 				.controls
@@ -29,12 +29,13 @@ input(type='hidden', value= user._id)#userId
 			#user-cg.control-group
 				label.control-label(for='user-tf') Username
 				.controls
-					input#user-tf.input-xlarge.disabled(type='text', name='user', value= user.user)
+					input#user-tf.disabled(type='text', name='user', value= user.user)
 			#pass-cg.control-group
 				label.control-label(for='pass-tf') Password
 				.controls
-					input#pass-tf.input-xlarge(type='password', name='pass', value='')
-			.form-actions
+					input#pass-tf(type='password', name='pass', value='')
+			hr
+			.form-buttons
 				button(type='button')#account-form-btn1.btn
 				button(type='submit')#account-form-btn2.btn
 

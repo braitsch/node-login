@@ -1,3 +1,7 @@
+####1.4.0 / 2015-06-14
+	* updating to express v4.12.4
+	* adding connect-mongo for db session store 
+
 ####1.3.2 / 2013-03-11
 	* fixed bug on password reset
 
@@ -5,7 +9,7 @@
 	* adding MIT license
 
 ####1.3.0 / 2013-01-10
-	* updating to express.js v3.0.6
+	* updating to express v3.0.6
 
 ####1.2.1 / 2013-01-03
 	* moving vendor libs to /public/vendor

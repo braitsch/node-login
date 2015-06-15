@@ -178,7 +178,7 @@ var validatePassword = function(plainPass, hashedPass, callback)
 
 var getObjectId = function(id)
 {
-	return accounts.db.bson_serializer.ObjectID.createFromHexString(id)
+	return new require('mongodb').ObjectID(id);
 }
 
 var findById = function(id, callback)

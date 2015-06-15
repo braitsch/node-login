@@ -43,7 +43,7 @@ body {
   margin: 100px auto;
 }
 #country-list {
-  width: 280px;
+  width: 310px;
 }
 .modal-form-errors li {
   color: #808080;
@@ -63,11 +63,6 @@ body {
   -webkit-text-shadow: -1px 1px 0 #fff;
   margin-bottom: 0;
 }
-.modal-single-input form button {
-  width: 80px;
-  top: 213px;
-  position: absolute;
-}
 .modal-single-input form #cancel {
   right: 110px;
 }
@@ -75,19 +70,24 @@ body {
   right: 18px;
 }
 .modal-single-input .modal-body {
-  height: 140px;
+  height: 120px;
   overflow: hidden;
   padding-bottom: 0;
 }
 .modal-single-input .modal-footer {
   height: 20px;
 }
+.modal-single-input .modal-footer button {
+  width: 80px;
+  margin-top: -4px;
+  margin-right: 2px;
+}
 .modal-alert {
-  width: 310px;
+  width: 400px;
   margin: -200px 0 0 -150px;
 }
 #btn-logout {
-  width: 100px;
+  width: 120px;
   top: 1px;
   right: 8px;
   position: absolute;
@@ -111,8 +111,16 @@ body {
 .form-horizontal .controls {
   margin-left: 120px;
 }
-.form-horizontal .form-actions {
-  padding: 17px 0 0 270px;
+.form-horizontal .form-buttons {
+  float: right;
+  margin-right: 30px;
+}
+.form-horizontal .form-buttons .btn {
+  width: 80px;
+  margin-left: 8px;
+}
+.form-horizontal input {
+  width: 300px;
 }
 label {
   color: #808080;
