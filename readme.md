@@ -1,6 +1,6 @@
 #[Node-Login](http://node-login.braitsch.io)
 
-####A basic login & account management system built in Node.js with the following features :
+###A basic account management system built in Node.js with the following features :
 
 * New User Account Creation
 * Secure Password Reset via Email
@@ -11,7 +11,7 @@
 
 ***
 
-####Node-Login is built on top of the following libraries :
+###Node-Login is built on top of the following libraries :
 
 * [Node.js](http://nodejs.org/) - Application Server
 * [Express.js](http://expressjs.com/) - Node.js Web Framework
@@ -24,18 +24,27 @@
 
 ***
 
+###Installation & Setup
+1. Install [Node.js](https://nodejs.org/) & [MongoDB](https://www.mongodb.org/) if you haven't already.
+2. Clone this repository and install its dependencies.
+		
+		> git clone git://github.com/braitsch/node-login.git node-login
+		> cd node-login
+		> npm install -d
+		
+3. (Optional) Add your gmail credentials to [/app/server/modules/email-settings.js](https://github.com/braitsch/node-login/blob/master/app/server/modules/email-settings.js) if you want to enable the password retrieval feature.
+4. In a separate shell start the MongoDB daemon.
+
+		> mongod
+
+5. From within the node-login directory, start the server.
+
+		> node app
+
+---
+
 A [Live Demo](http://node-login.braitsch.io) and [some thoughts about the app's architecture.](http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/)
 
-***
-
-####Installation & Setup
-This assumes you already have node.js & npm installed.
-```
-git clone git://github.com/braitsch/node-login.git node-login
-cd node-login
-npm install -d
-node app
-```
 For testing purposes, I've provided a [database dump of all accounts here.](http://node-login.braitsch.io/print)  
 Please note this list and the entire database automatically resets every 24 hours.
 
