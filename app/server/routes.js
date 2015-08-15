@@ -1,9 +1,20 @@
 
 var CT = require('./modules/country-list');
-var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 
 module.exports = function(app) {
+
+	var AM;
+	if (app.settings["node-login db backend"] === "mongo") {
+		AM = require('./modules/account-manager');
+	} else if (app.settings["node-login db backend"] === "sequelize") {
+		AM = require('./modules/account-manager-sequelize');
+	} else if (app.settings["node-login db backend"] === "memory") {
+		AM = require('./modules/account-manager-memory');
+	} else {
+		throw new Error("Unknown db backend '" + app.settings["node-login db backend"] + "'");
+	}
+
 
 // main login page //
 
@@ -29,6 +40,7 @@ module.exports = function(app) {
 			if (!o){
 				res.status(400).send(e);
 			}	else{
+				console.log("POSTED, got user", o);
 				req.session.user = o;
 				if (req.body['remember-me'] == 'true'){
 					res.cookie('user', o.user, { maxAge: 900000 });
@@ -46,6 +58,7 @@ module.exports = function(app) {
 	// if user is not logged-in redirect back to login page //
 			res.redirect('/');
 		}	else{
+			console.log("user is", req.session.user);
 			res.render('home', {
 				title : 'Control Panel',
 				countries : CT,

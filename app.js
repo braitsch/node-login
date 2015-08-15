@@ -11,9 +11,27 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
-var MongoStore = require('connect-mongo')(session);
 
 var app = express();
+
+// Set your database back end here (to "mongo", "memory", or "sequelize")
+app.set("node-login db backend", "sequelize");
+
+var store;
+if (app.settings["node-login db backend"] == "mongo") {
+	var MongoStore = require('connect-mongo')(session);
+	store = new MongoStore({ host: 'localhost', port: 27017, db: 'node-login'});
+} else if (app.settings["node-login db backend"] == "sequelize") {
+	var Sequelize = require("sequelize");
+	var SequelizeStore = require('connect-session-sequelize')(session.Store);
+	var sequelize = new Sequelize(process.env.DATABASE_URL);
+	store = new SequelizeStore({db: sequelize});
+	store.sync();
+} else if (app.settings["node-login db backend"] == "memory") {
+	store = session.MemoryStore();
+} else {
+	throw new Error("Unknown db backend '" + app.settings["node-login db backend"] + "'");
+}
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/app/server/views');
@@ -24,7 +42,7 @@ app.use(session({
 	proxy: true,
 	resave: true,
 	saveUninitialized: true,
-	store: new MongoStore({ host: 'localhost', port: 27017, db: 'node-login'})
+	store: store
 	})
 );
 app.use(bodyParser.json());
