@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 
 // Set your database back end here (to "mongo", "memory", or "sequelize")
-app.set("node-login db backend", "sequelize");
+app.set("node-login db backend", "mongo");
 
 var store;
 if (app.settings["node-login db backend"] == "mongo") {
