@@ -40,7 +40,6 @@ module.exports = function(app) {
 			if (!o){
 				res.status(400).send(e);
 			}	else{
-				console.log("POSTED, got user", o);
 				req.session.user = o;
 				if (req.body['remember-me'] == 'true'){
 					res.cookie('user', o.user, { maxAge: 900000 });
@@ -58,7 +57,6 @@ module.exports = function(app) {
 	// if user is not logged-in redirect back to login page //
 			res.redirect('/');
 		}	else{
-			console.log("user is", req.session.user);
 			res.render('home', {
 				title : 'Control Panel',
 				countries : CT,
