@@ -1,7 +1,7 @@
 
 /**
 	* Node.js Login Boilerplate
-	* More Info : http://bit.ly/LsODY8
+	* More Info : http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/
 	* Copyright (c) 2013-2015 Stephen Braitsch
 **/
 
