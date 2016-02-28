@@ -1,6 +1,6 @@
 #[Node-Login](http://node-login.braitsch.io)
 
-###A basic account management system built in Node.js with the following features :
+###A basic account management system built in Node.js with the following features:
 
 * New User Account Creation
 * Secure Password Reset via Email
@@ -9,7 +9,6 @@
 * Local Cookie Storage for Returning Users
 * Blowfish-based Scheme Password Encryption
 
-***
 
 ###Node-Login is built on top of the following libraries :
 
@@ -22,30 +21,42 @@
 * [Moment.js](http://momentjs.com/) - Lightweight Date Library
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) - UI Component & Layout Library
 
-***
 
-###Installation & Setup
+##Installation & Setup
 1. Install [Node.js](https://nodejs.org/) & [MongoDB](https://www.mongodb.org/) if you haven't already.
 2. Clone this repository and install its dependencies.
 		
 		> git clone git://github.com/braitsch/node-login.git node-login
 		> cd node-login
-		> npm install -d
+		> npm install
 		
-3. (Optional) Add your gmail credentials to [/app/server/modules/email-settings.js](https://github.com/braitsch/node-login/blob/master/app/server/modules/email-settings.js) if you want to enable the password retrieval feature.
-4. In a separate shell start the MongoDB daemon.
+3. In a separate shell start the MongoDB daemon.
 
 		> mongod
 
-5. From within the node-login directory, start the server.
+4. From within the node-login directory, start the server.
 
 		> node app
+		
+5. Open a browser window and navigate to: [http://localhost:3000](http://localhost:3000)
 
----
+##Password Retrieval
+
+To enable the password retrieval feature it is recommended that you create environment variables for your credentials instead of hard codring them into the [email dispatcher module](https://github.com/braitsch/node-login/blob/master/app/server/modules/email-dispatcher.js).
+
+To do this on OSX you can simply add them to your .profile or .bashrc file.
+
+	export EMAIL_HOST='smtp.gmail.com'
+	export EMAIL_USER='your.email@gmail.com'
+	export EMAIL_PASS='1234'
+
+##Live Demo
 
 A [Live Demo](http://node-login.braitsch.io) and [some thoughts about the app's architecture.](http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/)
 
-For testing purposes, I've provided a [database dump of all accounts here.](http://node-login.braitsch.io/print)  
-Please note this list and the entire database automatically resets every 24 hours.
+For testing purposes you can view a [database dump of all accounts here](http://node-login.braitsch.io/print).    
+Note this database automatically resets every 24 hours.
+
+##Contributing
 
 Questions and suggestions for improvement are welcome.
