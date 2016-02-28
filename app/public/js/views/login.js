@@ -41,9 +41,13 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
+			$('#cancel').html('OK');
+			$('#retrieve-password-submit').hide();
 			ev.showEmailSuccess("Check your email on how to reset your password.");
 		},
 		error : function(){
+			$('#cancel').html('OK');
+			$('#retrieve-password-submit').hide();
 			ev.showEmailAlert("Sorry. There was a problem, please try again later.");
 		}
 	});
