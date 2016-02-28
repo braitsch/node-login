@@ -67,14 +67,13 @@ body {
   right: 110px;
 }
 .modal-single-input form #submit {
-  right: 18px;
+  float: right;
 }
 .modal-single-input .modal-body {
-  height: 120px;
-  overflow: hidden;
-  padding-bottom: 0;
+  height: 100%;
 }
 .modal-single-input .modal-footer {
+  clear: both;
   height: 20px;
 }
 .modal-single-input .modal-footer button {

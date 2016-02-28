@@ -1,29 +1,29 @@
 {
-	"name": "node-login",
-	"version": "1.4.1",
-	"description": "A template for quickly building login systems on top of Node.js & MongoDb",
-	"author": "Stephen Braitsch <stephen@braitsch.io>",
-	"website":{
-		"url": "http://node-login.braitsch.io"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:braitsch/node-login.git"
-	},
-	"dependencies": {
-		"express": "4.13.3",
-		"jade": "1.11.0",
-		"stylus": "0.52.4",
-		"body-parser": "1.14.1",
-		"mongodb": "2.0.45",
-		"cookie-parser": "1.4.0",
-		"express-session": "1.11.3",
-		"moment" : "2.10.3",
-		"emailjs": "1.0.0",
-		"connect-mongo": "0.8.2",
-		"errorhandler": "1.4.2"
-	},
-	"engines": {
-		"node": "4.2.1"
-	}
+  "name": "node-login",
+  "version": "1.4.1",
+  "description": "A template for quickly building login systems on top of Node.js & MongoDb",
+  "author": "Stephen Braitsch <stephen@braitsch.io>",
+  "website": {
+    "url": "http://node-login.braitsch.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:braitsch/node-login.git"
+  },
+  "dependencies": {
+    "body-parser": "1.14.1",
+    "connect-mongo": "0.8.2",
+    "cookie-parser": "1.4.0",
+    "emailjs": "^1.0.4",
+    "errorhandler": "1.4.2",
+    "express": "4.13.3",
+    "express-session": "1.11.3",
+    "jade": "1.11.0",
+    "moment": "2.10.3",
+    "mongodb": "2.0.45",
+    "stylus": "0.52.4"
+  },
+  "engines": {
+    "node": "4.2.1"
+  }
 }
