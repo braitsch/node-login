@@ -1,3 +1,7 @@
+####1.4.1 / 2016-02-27
+	* calls to logout now route to /logout instead of /home
+	* accounts are now looked up by session.id instead of username
+	
 ####1.4.0 / 2015-06-14
 	* updating to express v4.12.4
 	* adding connect-mongo for db session store 

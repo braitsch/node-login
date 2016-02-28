@@ -6,7 +6,6 @@ var EM = require('./modules/email-dispatcher');
 module.exports = function(app) {
 
 // main login page //
-
 	app.get('/', function(req, res){
 	// check if the user's credentials are saved in a cookie //
 		if (req.cookies.user == undefined || req.cookies.pass == undefined){
@@ -55,13 +54,15 @@ module.exports = function(app) {
 	});
 	
 	app.post('/home', function(req, res){
-		if (req.body['user'] != undefined) {
+		if (req.session.user == null){
+			res.redirect('/');
+		}	else{
 			AM.updateAccount({
-				user 	: req.body['user'],
-				name 	: req.body['name'],
-				email 	: req.body['email'],
+				id		: req.session.user._id,
+				name	: req.body['name'],
+				email	: req.body['email'],
 				pass	: req.body['pass'],
-				country : req.body['country']
+				country	: req.body['country']
 			}, function(e, o){
 				if (e){
 					res.status(400).send('error-updating-account');
@@ -75,12 +76,14 @@ module.exports = function(app) {
 					res.status(200).send('ok');
 				}
 			});
-		}	else if (req.body['logout'] == 'true'){
-			res.clearCookie('user');
-			res.clearCookie('pass');
-			req.session.destroy(function(e){ res.status(200).send('ok'); });
 		}
 	});
+
+	app.post('/logout', function(req, res){
+		res.clearCookie('user');
+		res.clearCookie('pass');
+		req.session.destroy(function(e){ res.status(200).send('ok'); });
+	})
 	
 // creating new accounts //
 	

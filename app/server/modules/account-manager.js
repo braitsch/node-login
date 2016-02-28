@@ -76,20 +76,20 @@ exports.addNewAccount = function(newData, callback)
 
 exports.updateAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o){
+	accounts.findOne({_id:getObjectId(newData.id)}, function(e, o){
 		o.name 		= newData.name;
 		o.email 	= newData.email;
 		o.country 	= newData.country;
 		if (newData.pass == ''){
-			accounts.save(o, {safe: true}, function(err) {
-				if (err) callback(err);
+			accounts.save(o, {safe: true}, function(e) {
+				if (e) callback(e);
 				else callback(null, o);
 			});
 		}	else{
 			saltAndHash(newData.pass, function(hash){
 				o.pass = hash;
-				accounts.save(o, {safe: true}, function(err) {
-					if (err) callback(err);
+				accounts.save(o, {safe: true}, function(e) {
+					if (e) callback(e);
 					else callback(null, o);
 				});
 			});
@@ -137,7 +137,7 @@ exports.getAllRecords = function(callback)
 		if (e) callback(e)
 		else callback(null, res)
 	});
-};
+}
 
 exports.delAllRecords = function(callback)
 {
@@ -174,8 +174,6 @@ var validatePassword = function(plainPass, hashedPass, callback)
 	callback(null, hashedPass === validHash);
 }
 
-/* auxiliary methods */
-
 var getObjectId = function(id)
 {
 	return new require('mongodb').ObjectID(id);
@@ -188,8 +186,7 @@ var findById = function(id, callback)
 		if (e) callback(e)
 		else callback(null, res)
 	});
-};
-
+}
 
 var findByMultipleFields = function(a, callback)
 {

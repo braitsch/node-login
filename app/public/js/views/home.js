@@ -46,4 +46,4 @@ $(document).ready(function(){
 	$('.modal-confirm .submit').html('Delete');
 	$('.modal-confirm .submit').addClass('btn-danger');
 
-})
+});

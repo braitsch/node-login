@@ -1,7 +1,6 @@
 
 function HomeController()
 {
-
 // bind event listeners to button clicks //
 	var that = this;
 
@@ -35,7 +34,7 @@ function HomeController()
 	{
 		var that = this;
 		$.ajax({
-			url: "/home",
+			url: "/logout",
 			type: "POST",
 			data: {logout : true},
 			success: function(data){

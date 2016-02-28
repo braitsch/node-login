@@ -36,4 +36,4 @@ $(document).ready(function(){
 	$('.modal-alert .modal-header h3').text('Success!');
 	$('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');
 
-})
+});

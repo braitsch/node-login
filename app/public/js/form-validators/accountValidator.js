@@ -1,6 +1,6 @@
 
-function AccountValidator(){
-
+function AccountValidator()
+{
 // build array maps of the form inputs & control groups //
 
 	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf')];

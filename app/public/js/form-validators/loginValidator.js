@@ -1,8 +1,7 @@
 
-function LoginValidator(){
-
+function LoginValidator()
+{
 // bind a simple alert window to this controller to display any errors //
-
 	this.loginErrors = $('.modal-alert');
 	this.loginErrors.modal({ show : false, keyboard : true, backdrop : true });
 
@@ -12,7 +11,6 @@ function LoginValidator(){
 		$('.modal-alert .modal-body p').text(m);
 		this.loginErrors.modal('show');
 	}
-
 }
 
 LoginValidator.prototype.validateForm = function()

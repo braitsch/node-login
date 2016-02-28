@@ -1,6 +1,6 @@
 
-function ResetValidator(){
-
+function ResetValidator()
+{
 // modal window to allow users to reset their password //
 	this.setPassword = $('#set-password');
 	this.setPassword.modal({ show : false, keyboard : false, backdrop : 'static' });
