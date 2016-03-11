@@ -1,9 +1,20 @@
 
 var CT = require('./modules/country-list');
-var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 
 module.exports = function(app) {
+
+	var AM;
+	if (app.settings["node-login db backend"] === "mongo") {
+		AM = require('./modules/account-manager');
+	} else if (app.settings["node-login db backend"] === "sequelize") {
+		AM = require('./modules/account-manager-sequelize');
+	} else if (app.settings["node-login db backend"] === "memory") {
+		AM = require('./modules/account-manager-memory');
+	} else {
+		throw new Error("Unknown db backend '" + app.settings["node-login db backend"] + "'");
+	}
+
 
 // main login page //
 	app.get('/', function(req, res){
