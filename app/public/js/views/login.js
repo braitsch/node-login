@@ -6,13 +6,13 @@ $(document).ready(function(){
 
 // main login form //
 
-	$('#login-form').ajaxForm({
+	$('#login').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (lv.validateForm() == false){
 				return false;
 			} 	else{
 			// append 'remember-me' option to formData to write local cookie //
-				formData.push({name:'remember-me', value:$("input:checkbox:checked").length == 1})
+				formData.push({name:'remember-me', value:$('.button-rememember-me-glyph').hasClass('glyphicon-ok')});
 				return true;
 			}
 		},
@@ -36,7 +36,7 @@ $(document).ready(function(){
 				ev.hideEmailAlert();
 				return true;
 			}	else{
-				ev.showEmailAlert("<b> Error!</b> Please enter a valid email address");
+				ev.showEmailAlert("<b>Error!</b> Please enter a valid email address");
 				return false;
 			}
 		},
@@ -45,10 +45,14 @@ $(document).ready(function(){
 			$('#retrieve-password-submit').hide();
 			ev.showEmailSuccess("Check your email on how to reset your password.");
 		},
-		error : function(){
-			$('#cancel').html('OK');
-			$('#retrieve-password-submit').hide();
-			ev.showEmailAlert("Sorry. There was a problem, please try again later.");
+		error : function(e){
+			if (e.responseText == 'email-not-found'){
+				ev.showEmailAlert("Email not found. Are you sure you entered it correctly?");
+			}	else{
+				$('#cancel').html('OK');
+				$('#retrieve-password-submit').hide();
+				ev.showEmailAlert("Sorry. There was a problem, please try again later.");
+			}
 		}
 	});
 	

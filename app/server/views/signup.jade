@@ -3,18 +3,13 @@ extends layout
 
 block content
 
-	.github-fork-ribbon-wrapper.right
-		.github-fork-ribbon(style='background-color: #333;')
-			a(href="https://github.com/braitsch/node-login") View On Github
-
 	include account
 	include modals/alert
 
 block scripts
 	script(src='/vendor/jquery-2.2.3.min.js')
 	script(src='/vendor/jquery.form.min.js')
-	script(src='/vendor/bootstrap-modal.js')
-	script(src='/vendor/bootstrap-transition.js')
+	script(src='/vendor/bootstrap.min.js')
 	script(src='/js/views/signup.js')
 	script(src='/js/controllers/signupController.js')
 	script(src='/js/form-validators/accountValidator.js')

@@ -19,7 +19,7 @@ ResetValidator.prototype.validatePassword = function(s)
 
 ResetValidator.prototype.showAlert = function(m)
 {
-	this.setPasswordAlert.attr('class', 'alert alert-error');
+	this.setPasswordAlert.attr('class', 'alert alert-danger');
 	this.setPasswordAlert.html(m);
 	this.setPasswordAlert.show();
 }

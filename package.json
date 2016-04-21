@@ -1,6 +1,6 @@
 {
   "name": "node-login",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A template for quickly building login systems on top of Node.js & MongoDb",
   "author": "Stephen Braitsch <stephen@braitsch.io>",
   "website": {

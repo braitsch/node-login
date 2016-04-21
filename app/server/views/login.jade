@@ -3,28 +3,31 @@ extends layout
 
 block content
 
-	.github-fork-ribbon-wrapper.right
-		.github-fork-ribbon(style='background-color: #333;')
-			a(href="https://github.com/braitsch/node-login") View On Github
-
-	#login-container
-		form( method="post")#login-form.well.span4
-			h1 Hello!
-			p.subheading Please Login To Your Account
-			label Username 
-			input(type="text", name="user", id='user-tf').span4.required
-			label Password
-			input(type="password", name="pass", id='pass-tf').span4.required
-			button(type="submit")#btn-login.btn.btn-primary
-				i.icon-lock.icon-white
-				| Sign in
-			label#remember-me.checkbox Remember Me
-				input(type="checkbox", checked='checked')
-			div.clear-fix
+	#login
+		form.well(id='form-login', method='post')
+			h2 Hello!
+			h6 Please Login To Your Account
+			.form-group
+				label Username
+				input.form-control(type='text', id='user-tf', name='user')
+			.form-group
+				label Password
+				input.form-control(type='password', id='pass-tf', name='pass')
+			.controls
+				button(type='button').btn.btn-default.button-rememember-me
+					span.glyphicon.glyphicon-unchecked.button-rememember-me-glyph
+					| Remember Me
+				button(type='submit').btn.btn-primary.button-sign-in
+					span.glyphicon.glyphicon-lock
+					| Sign In
+			.clearfix
 			hr
-			div.btm-links
-				a(href='#')#forgot-password Forgot Your Password?
-				a(href='/signup')#create-account Create An Account
+			.btm-links
+				#forgot-password
+					a(href='#') Forgot Your Password?
+				#create-account
+					a(href='/signup') Create An Account
+			.clearfix
 
 	include modals/alert
 	include modals/lost-password
@@ -32,8 +35,7 @@ block content
 block scripts
 	script(src='/vendor/jquery-2.2.3.min.js')
 	script(src='/vendor/jquery.form.min.js')
-	script(src='/vendor/bootstrap-modal.js')
-	script(src='/vendor/bootstrap-transition.js')
+	script(src='/vendor/bootstrap.min.js')
 	script(src='/js/views/login.js')
 	script(src='/js/controllers/loginController.js')
 	script(src='/js/form-validators/loginValidator.js')

@@ -1,3 +1,12 @@
+**v1.5.0** –– 04-21-2016
+
+* redesigned login window
+* improved error handling on password reset
+* updating client side libraries: 
+	* jQuery –– v2.2.3
+	* jQuery.form –– v3.51.0
+	* Twitter Bootstrap –– v3.3.6
+
 **v1.4.1** –– 02-27-2016
 
 * calls to logout now route to /logout instead of /home
@@ -9,7 +18,7 @@
 --
 **v1.4.0** –– 06-14-2015
 
-* updating to express v4.12.4
+* updating to Express v4.12.4
 * adding connect-mongo for db session store 
 
 --
@@ -25,7 +34,7 @@
 --
 **v1.3.0** –– 01-10-2013
 
-* updating to express v3.0.6
+* updating to Express v3.0.6
 
 --
 **v1.2.1** –– 01-03-2013
@@ -35,7 +44,7 @@
 --
 **v1.2.0** –– 12-27-2012
 
-* updating mongodb driver to 1.2.7
+* updating MongoDB driver to 1.2.7
 * replacing bcrypt module with native crypto
 
 --

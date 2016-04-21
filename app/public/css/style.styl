@@ -15,109 +15,138 @@ body
 	background -o-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* Opera 12+ */
 	background -ms-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* IE10+ */
 	background radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* W3C */
-	
-	
-// login form //
 
-#login-container
-	width 340px
-	margin 160px auto
-	label
-		margin 15px 0 5px 5px
-	button
-		width 150px
-		padding 6px 40px 6px 40px
-		float left
-		margin-top 15px
-	.checkbox
-		margin 23px 0 0 180px
-	.btm-links
-		text-align center
-		margin-top 10px
-	#create-account
-		float right
-		margin-right 13px
-	#forgot-password
-		float left
-		margin-left 10px
+h2{
+	margin: 0 0 6px 0;
+	font-weight: bold; 
+}
 
-// account form on signup & home page //
+h6{
+	margin: 2px 0 20px 0;
+}
+
+hr{
+	margin 14px 0
+	border-top: 1px solid rgb(238, 238, 238);
+	border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+ul{
+	margin: 4px 0 0 0;
+}
+
+label, h6 {
+	color: #808080;
+	font-size: 13px;
+	font-weight: normal;
+	line-height: 18px;
+	text-shadow: -1px 1px 0 #fff;
+}
+
+.well{
+	background: #f8f8f8;
+	.tab-title{
+		float:left;
+		margin-left: 10px;
+	}
+	.button-top-right{
+		float:right;
+		margin: 0 10px 20px 0;
+	}
+	margin-bottom 0;
+}
+
+.glyphicon{
+	margin-right: 8px;
+}
+
+/*
+	login window
+*/
+
+#login{
+	height:100vh;
+	label{
+		margin-left: 2px;
+	}
+	form{
+		top: 45%;
+		width:320px;
+		margin:auto;
+		position: relative;
+		-webkit-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+	.controls{
+		margin-top: 20px;
+		.button-rememember-me{
+			float: left;
+			width: 150px;
+		}
+		.button-sign-in{
+			float: right;
+			width: 120px;
+		}
+	}
+	.btm-links{
+		font-size: .9em;
+		margin 2px 0 0 0
+		#forgot-password{
+			float left
+			margin-left 10px;
+		}
+		#create-account{
+			float right
+			margin-right 5px;
+		}
+	}
+}
+
+/*
+	modal windows
+*/
+
+.modal{
+	.modal-dialog{
+		width:480px;
+	}
+	.form-group{
+		margin-bottom: 0px;
+	}
+	.alert{
+		margin-top 10px;
+		margin-bottom: 0
+		padding 8px 15px 8px 15px
+	}
+	.alert-dismissable, .close{
+		right -4px;
+	}
+	p{
+		margin:0;
+		padding:0;
+	}
+	.modal-footer{
+		button{
+			width:80px;
+		}
+	}
+}
+
+
+/*
+	account signup & home page
+*/
 
 #account-form-container
 	width 460px
 	margin 100px auto
-#country-list
-	width 310px
-.modal-form-errors li
-	raiseText()
-	color #D8000C
 
-// retrieve password window //
-
-.modal-single-input
-	width 452px
-	margin -200px 0 0 -232px
-	form
-		raiseText()
-		margin-bottom 0
-		#cancel
-			right 110px
-		#submit
-			float:right
-	.modal-body
-		height:100%
-	.modal-footer
-		clear:both
-		height 20px
-		button
-			width 80px
-			margin-top -4px
-			margin-right 2px
-
-.modal-alert
-	width 400px
-	margin -200px 0 0 -150px
-
-// logged-in page //
-
-#btn-logout
-	width 120px
-	top 1px
-	right 8px
-	position absolute
-
-// support pages //
-
-#print
-	padding 20px
-#four04
-	padding 20px
-
-// general shared rules //
-
-.clear-fix
-	clear both
-.well
-	margin-left 0
-	border 1px solid #CCC
 .form-horizontal
-	.control-label
-		width 80px
-	.controls
-		margin-left 120px
 	.form-buttons
 		float right
-		margin-right 30px
 		.btn
 			width 80px
-			margin-left 8px
-	input
-		width 300px
-label
-	raiseText()
-.subheading
-	raiseText()
-	margin-top 3px
-button i
-	padding-left 8px
-
+			margin-left 6px
+	input, select
+		height 30px

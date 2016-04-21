@@ -6,9 +6,8 @@ function EmailValidator()
 
 // modal window to allow users to request credentials by email //
 	_local.retrievePassword = $('#get-credentials');
-	_local.retrievePassword.modal({ show : false, keyboard : true, backdrop : true });
 	_local.retrievePasswordAlert = $('#get-credentials .alert');
-	_local.retrievePassword.on('show', function(){ $('#get-credentials-form').resetForm(); _local.retrievePasswordAlert.hide();});
+	_local.retrievePassword.on('show.bs.modal', function(){ $('#get-credentials-form').resetForm(); _local.retrievePasswordAlert.hide();});
 }
 
 EmailValidator.prototype.validateEmail = function(e)
@@ -19,7 +18,7 @@ EmailValidator.prototype.validateEmail = function(e)
 
 EmailValidator.prototype.showEmailAlert = function(m)
 {
-	this.retrievePasswordAlert.attr('class', 'alert alert-error');
+	this.retrievePasswordAlert.attr('class', 'alert alert-danger');
 	this.retrievePasswordAlert.html(m);
 	this.retrievePasswordAlert.show();
 }

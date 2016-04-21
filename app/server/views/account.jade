@@ -4,40 +4,44 @@
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 
-#account-form-container
-	form( method="post")#account-form.form-horizontal.well.span6
-		h1
-		p#sub1.subheading Please tell us a little about yourself.
+#account-form-container.well
+	form(method="post")#account-form.form-horizontal
+		h2
+		h6#sub1 Please tell us a little about yourself.
 		hr
-		fieldset
-			#name-cg.control-group
-				label.control-label(for='name-tf') Name
-				.controls
-					input#name-tf(type='text', name='name', value= user.name)
-			#email-cg.control-group
-				label.control-label(for='email-tf') Email
-				.controls
-					input#email-tf(type='text', name='email', value= user.email)
-			#clist-cg.control-group
-				label.control-label(for='country-list') Location
-				.controls
-					select#country-list(name='country')
-						each item in countries
-							option(selected=item.name == user.country)= item.name
-			hr
-			p#sub2.subheading
-			#user-cg.control-group
-				label.control-label(for='user-tf') Username
-				.controls
-					input#user-tf.disabled(type='text', name='user', value= user.user)
-			#pass-cg.control-group
-				label.control-label(for='pass-tf') Password
-				.controls
-					input#pass-tf(type='password', name='pass', value='')
-			hr
-			.form-buttons
-				button(type='button')#account-form-btn1.btn
-				button(type='submit')#account-form-btn2.btn
+		.form-group
+			label.control-label.col-sm-3 Name
+			.col-sm-9
+				input.form-control#name-tf(type='text', name='name', value= user.name)
+
+		.form-group
+			label.control-label.col-sm-3 Email
+			.col-sm-9
+				input.form-control#email-tf(type='text', name='email', value= user.email)
+
+		.form-group
+			label.control-label.col-sm-3 Location
+			.col-sm-9
+				select.form-control#country-list(name='country')
+					each item in countries
+						option(selected=item.name == user.country)= item.name
+		hr
+		h6#sub2
+		.form-group
+			label.control-label.col-sm-3 Username
+			.col-sm-9
+				input.form-control#user-tf(type='text', name='user', value= user.user).disabled
+
+		.form-group
+			label.control-label.col-sm-3 Password
+			.col-sm-9
+				input.form-control#pass-tf(type='password', name='pass', value='')
+
+		hr
+		.form-buttons
+			button(type='button')#account-form-btn1.btn.btn-default
+			button(type='submit')#account-form-btn2.btn.btn-primary
+		.clearfix
 
 // display form errors in a custom modal window //
 

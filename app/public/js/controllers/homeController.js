@@ -48,7 +48,7 @@ function HomeController()
 
 	this.showLockedAlert = function(msg){
 		$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
-		$('.modal-alert .modal-header h3').text('Success!');
+		$('.modal-alert .modal-header h4').text('Success!');
 		$('.modal-alert .modal-body p').html(msg);
 		$('.modal-alert').modal('show');
 		$('.modal-alert button').click(function(){window.location.href = '/';})
@@ -59,7 +59,7 @@ function HomeController()
 HomeController.prototype.onUpdateSuccess = function()
 {
 	$('.modal-alert').modal({ show : false, keyboard : true, backdrop : true });
-	$('.modal-alert .modal-header h3').text('Success!');
+	$('.modal-alert .modal-header h4').text('Success!');
 	$('.modal-alert .modal-body p').html('Your account has been updated.');
 	$('.modal-alert').modal('show');
 	$('.modal-alert button').off('click');
