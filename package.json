@@ -25,5 +25,8 @@
   },
   "engines": {
     "node": "4.2.1"
+  },
+  "scripts": {
+    "start": "node app.js"
   }
 }
