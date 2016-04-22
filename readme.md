@@ -1,4 +1,6 @@
-#[Node-Login](http://node-login.braitsch.io)
+#[Node-Login](http://nodejs-login.herokuapp.com)
+
+[![node-login](./readme.img/node-login.jpg?raw=true)](http://nodejs-login.herokuapp.com)
 
 ###A basic account management system built in Node.js with the following features:
 
@@ -14,9 +16,9 @@
 
 * [Node.js](http://nodejs.org/) - Application Server
 * [Express.js](http://expressjs.com/) - Node.js Web Framework
-* [MongoDb](http://www.mongodb.org/) - Database Storage
+* [MongoDb](http://mongodb.org/) - Database Storage
 * [Jade](http://jade-lang.com/) - HTML Templating Engine
-* [Stylus](http://learnboost.github.com/stylus/) - CSS Preprocessor
+* [Stylus](http://stylus-lang.com/) - CSS Preprocessor
 * [EmailJS](http://github.com/eleith/emailjs) - Node.js > SMTP Server Middleware
 * [Moment.js](http://momentjs.com/) - Lightweight Date Library
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) - UI Component & Layout Library
@@ -50,11 +52,13 @@ To do this on OSX you can simply add them to your .profile or .bashrc file.
 	export EMAIL_USER='your.email@gmail.com'
 	export EMAIL_PASS='1234'
 
+[![node-login](./readme.img/retrieve-password.jpg?raw=true)](http://nodejs-login.herokuapp.com)
+
 ##Live Demo
 
-A [Live Demo](http://node-login.braitsch.io) and [some thoughts about the app's architecture.](http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/)
+A [Live Demo](http://nodejs-login.herokuapp.com) and [some thoughts about the app's architecture.](http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/)
 
-For testing purposes you can view a [database dump of all accounts here](http://node-login.braitsch.io/print).    
+For testing purposes you can view a [database dump of all accounts here](http://nodejs-login.herokuapp.com/print).    
 Note this database automatically resets every 24 hours.
 
 ##Contributing

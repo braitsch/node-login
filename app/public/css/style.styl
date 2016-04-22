@@ -1,3 +1,4 @@
+
 raiseText()
 	color grey
 	text-shadow  -1px 1px 0 white
@@ -39,7 +40,6 @@ label, h6 {
 	color: #808080;
 	font-size: 13px;
 	font-weight: normal;
-	line-height: 18px;
 	text-shadow: -1px 1px 0 #fff;
 }
 
@@ -56,6 +56,14 @@ label, h6 {
 	margin-bottom 0;
 }
 
+.navbar-btn{
+	min-width: 100px
+	margin-right: 8px;
+	.btn{
+		min-width: 100px
+	}
+}
+
 .glyphicon{
 	margin-right: 8px;
 }
@@ -65,18 +73,11 @@ label, h6 {
 */
 
 #login{
-	height:100vh;
 	label{
 		margin-left: 2px;
 	}
 	form{
-		top: 45%;
 		width:320px;
-		margin:auto;
-		position: relative;
-		-webkit-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		transform: translateY(-50%);
 	}
 	.controls{
 		margin-top: 20px;
@@ -100,6 +101,12 @@ label, h6 {
 			float right
 			margin-right 5px;
 		}
+	}
+}
+
+#account-form-container{
+	form{
+		width:460px;
 	}
 }
 
@@ -133,20 +140,29 @@ label, h6 {
 	}
 }
 
+.center-vertical{
+	height:100vh;
+	form{
+		top: 50%;
+		margin:auto;
+		position: relative;
+		-webkit-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+}
 
-/*
-	account signup & home page
-*/
-
-#account-form-container
-	width 460px
-	margin 100px auto
-
-.form-horizontal
-	.form-buttons
-		float right
-		.btn
+.form-horizontal{
+	.form-buttons{
+		float right;
+		.btn{
 			width 80px
 			margin-left 6px
-	input, select
+		}
+	}
+	input, select{
 		height 30px
+	}
+}
+
+		

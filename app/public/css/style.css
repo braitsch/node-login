@@ -30,7 +30,6 @@ h6 {
   color: #808080;
   font-size: 13px;
   font-weight: normal;
-  line-height: 18px;
   text-shadow: -1px 1px 0 #fff;
 }
 .well {
@@ -45,26 +44,24 @@ h6 {
   float: right;
   margin: 0 10px 20px 0;
 }
+.navbar-btn {
+  min-width: 100px;
+  margin-right: 8px;
+}
+.navbar-btn .btn {
+  min-width: 100px;
+}
 .glyphicon {
   margin-right: 8px;
 }
 /*
 	login window
 */
-#login {
-  height: 100vh;
-}
 #login label {
   margin-left: 2px;
 }
 #login form {
-  top: 45%;
   width: 320px;
-  margin: auto;
-  position: relative;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
 }
 #login .controls {
   margin-top: 20px;
@@ -88,6 +85,9 @@ h6 {
 #login .btm-links #create-account {
   float: right;
   margin-right: 5px;
+}
+#account-form-container form {
+  width: 460px;
 }
 /*
 	modal windows
@@ -114,12 +114,16 @@ h6 {
 .modal .modal-footer button {
   width: 80px;
 }
-/*
-	account signup & home page
-*/
-#account-form-container {
-  width: 460px;
-  margin: 100px auto;
+.center-vertical {
+  height: 100vh;
+}
+.center-vertical form {
+  top: 50%;
+  margin: auto;
+  position: relative;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .form-horizontal .form-buttons {
   float: right;
