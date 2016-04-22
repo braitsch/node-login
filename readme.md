@@ -1,6 +1,6 @@
-#[Node-Login](http://nodejs-login.herokuapp.com)
+#[Node-Login](https://nodejs-login.herokuapp.com)
 
-[![node-login](./readme.img/node-login.jpg?raw=true)](http://nodejs-login.herokuapp.com)
+[![node-login](./readme.img/node-login.jpg?raw=true)](https://nodejs-login.herokuapp.com)
 
 ###A basic account management system built in Node.js with the following features:
 
@@ -52,13 +52,13 @@ To do this on OSX you can simply add them to your .profile or .bashrc file.
 	export EMAIL_USER='your.email@gmail.com'
 	export EMAIL_PASS='1234'
 
-[![node-login](./readme.img/retrieve-password.jpg?raw=true)](http://nodejs-login.herokuapp.com)
+[![node-login](./readme.img/retrieve-password.jpg?raw=true)](https://nodejs-login.herokuapp.com)
 
 ##Live Demo
 
-A [Live Demo](http://nodejs-login.herokuapp.com) and [some thoughts about the app's architecture.](http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/)
+A [Live Demo](https://nodejs-login.herokuapp.com) and [some thoughts about the app's architecture.](http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/)
 
-For testing purposes you can view a [database dump of all accounts here](http://nodejs-login.herokuapp.com/print).    
+For testing purposes you can view a [database dump of all accounts here](https://nodejs-login.herokuapp.com/print).    
 Note this database automatically resets every 24 hours.
 
 ##Contributing
