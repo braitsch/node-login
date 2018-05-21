@@ -171,7 +171,8 @@ var generateSalt = function()
 	return salt;
 }
 
-var md5 = function(str) {
+var md5 = function(str) 
+{
 	return crypto.createHash('md5').update(str).digest('hex');
 }
 
