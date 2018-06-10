@@ -2,20 +2,20 @@
 extends layout
 
 block content
-	div.container(style='margin:20px')
+	div.container(style='margin:20px auto')
 		table.table.table-bordered.table-striped
 			thead
 				tr
-					th(style='width:40px') #
-					th(style='width:180px') Name
-					th(style='width:200px') Location
-					th(style='width:180px') Username
+					th(style='width:40px;text-align:center') #
+					th(style='width:220px') Name
+					th(style='width:220px') Username
+					th(style='width:220px') Location
 					th Account Created
 			tbody
 			- for (var i = 0; i < accts.length; i++)
 				tr
-					td= i+1
+					td(style='text-align:center')= i+1
 					td= accts[i].name
-					td= accts[i].country
 					td= accts[i].user
+					td= accts[i].country
 					td= accts[i].date
