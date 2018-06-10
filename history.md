@@ -1,3 +1,9 @@
+**v1.6.0** –– 06-10-2018
+
+* updated dependencies to latest versions
+* updated mongodb connection scheme
+* replaced jade templating engine with pug
+
 **v1.5.0** –– 04-21-2016
 
 * redesigned login window
