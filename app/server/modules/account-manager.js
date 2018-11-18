@@ -14,6 +14,8 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 	}
 });
 
+const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
+
 /* login validation methods */
 
 exports.autoLogin = function(user, pass, callback)
@@ -42,6 +44,23 @@ exports.manualLogin = function(user, pass, callback)
 			});
 		}
 	});
+}
+
+exports.generateLoginKey = function(user, ipAddress, callback)
+{
+	let cookie = guid();
+	accounts.findOneAndUpdate({user:user}, {$set:{
+		ip : ipAddress,
+		cookie : cookie
+	}}, {returnOriginal : false}, function(e, o){ 
+		callback(cookie);
+	});
+}
+
+exports.validateLoginKey = function(cookie, ipAddress, callback)
+{
+// ensure the cookie maps to the user's last recorded ip address //
+	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
 }
 
 /* record insertion, update & deletion methods */

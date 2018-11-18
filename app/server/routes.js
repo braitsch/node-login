@@ -10,15 +10,17 @@ module.exports = function(app) {
 */
 
 	app.get('/', function(req, res){
-	// check if the user's credentials are saved in a cookie //
-		if (req.cookies.user == undefined || req.cookies.pass == undefined){
+	// check if the user has an auto login key saved in a cookie //
+		if (req.cookies.login == undefined){
 			res.render('login', { title: 'Hello - Please Login To Your Account' });
 		}	else{
 	// attempt automatic login //
-			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
-				if (o != null){
-					req.session.user = o;
-					res.redirect('/home');
+			AM.validateLoginKey(req.cookies.login, req.ip, function(e, o){
+				if (o){
+					AM.autoLogin(o.user, o.pass, function(o){
+						req.session.user = o;
+						res.redirect('/home');
+					});
 				}	else{
 					res.render('login', { title: 'Hello - Please Login To Your Account' });
 				}
@@ -32,18 +34,20 @@ module.exports = function(app) {
 				res.status(400).send(e);
 			}	else{
 				req.session.user = o;
-				if (req.body['remember-me'] == 'true'){
-					res.cookie('user', o.user, { maxAge: 900000 });
-					res.cookie('pass', o.pass, { maxAge: 900000 });
+				if (req.body['remember-me'] == 'false'){
+					res.status(200).send(o);
+				}	else{
+					AM.generateLoginKey(o.user, req.ip, function(key){
+						res.cookie('login', key, { maxAge: 900000 });
+						res.status(200).send(o);
+					});
 				}
-				res.status(200).send(o);
 			}
 		});
 	});
 
 	app.post('/logout', function(req, res){
-		res.clearCookie('user');
-		res.clearCookie('pass');
+		res.clearCookie('login');
 		req.session.destroy(function(e){ res.status(200).send('ok'); });
 	})
 	
@@ -79,11 +83,6 @@ module.exports = function(app) {
 					res.status(400).send('error-updating-account');
 				}	else{
 					req.session.user = o.value;
-			// update the user's login cookies if they exists //
-					if (req.cookies.user != undefined && req.cookies.pass != undefined){
-						res.cookie('user', o.user, { maxAge: 900000 });
-						res.cookie('pass', o.pass, { maxAge: 900000 });	
-					}
 					res.status(200).send('ok');
 				}
 			});
@@ -180,8 +179,7 @@ module.exports = function(app) {
 	app.post('/delete', function(req, res){
 		AM.deleteAccount(req.session.user._id, function(e, obj){
 			if (!e){
-				res.clearCookie('user');
-				res.clearCookie('pass');
+				res.clearCookie('login');
 				req.session.destroy(function(e){ res.status(200).send('ok'); });
 			}	else{
 				res.status(400).send('record not found');
