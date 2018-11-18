@@ -4,7 +4,7 @@ const moment 		= require('moment');
 const MongoClient 	= require('mongodb').MongoClient;
 
 var db, accounts;
-MongoClient.connect(process.env.DB_URL, function(e, client) {
+MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) {
 	if (e){
 		console.log(e);
 	}	else{
@@ -60,7 +60,7 @@ exports.addNewAccount = function(newData, callback)
 						newData.pass = hash;
 					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-						accounts.insert(newData, {safe: true}, callback);
+						accounts.insertOne(newData, callback);
 					});
 				}
 			});
@@ -70,25 +70,23 @@ exports.addNewAccount = function(newData, callback)
 
 exports.updateAccount = function(newData, callback)
 {
-	accounts.findOne({_id:getObjectId(newData.id)}, function(e, o){
-		o.name 		= newData.name;
-		o.email 	= newData.email;
-		o.country 	= newData.country;
-		if (newData.pass == ''){
-			accounts.save(o, {safe: true}, function(e) {
-				if (e) callback(e);
-				else callback(null, o);
-			});
-		}	else{
-			saltAndHash(newData.pass, function(hash){
-				o.pass = hash;
-				accounts.save(o, {safe: true}, function(e) {
-					if (e) callback(e);
-					else callback(null, o);
-				});
-			});
+	let findOneAndUpdate = function(data){
+		var o = {
+			name : data.name,
+			email : data.email,
+			country : data.country
 		}
-	});
+		if (data.pass) o.pass = data.pass;
+		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
+	}
+	if (newData.pass == ''){
+		findOneAndUpdate(newData);
+	}	else { 
+		saltAndHash(newData.pass, function(hash){
+			newData.pass = hash;
+			findOneAndUpdate(newData);
+		});
+	}
 }
 
 exports.updatePassword = function(email, newPass, callback)
@@ -98,8 +96,8 @@ exports.updatePassword = function(email, newPass, callback)
 			callback(e, null);
 		}	else{
 			saltAndHash(newPass, function(hash){
-		        o.pass = hash;
-		        accounts.save(o, {safe: true}, callback);
+				o.pass = hash;
+				accounts.save(o, {safe: true}, callback);
 			});
 		}
 	});
@@ -109,7 +107,7 @@ exports.updatePassword = function(email, newPass, callback)
 
 exports.deleteAccount = function(id, callback)
 {
-	accounts.remove({_id: getObjectId(id)}, callback);
+	accounts.deleteOne({_id: getObjectId(id)}, callback);
 }
 
 exports.getAccountByEmail = function(email, callback)
@@ -135,7 +133,7 @@ exports.getAllRecords = function(callback)
 
 exports.delAllRecords = function(callback)
 {
-	accounts.remove({}, callback); // reset accounts collection for testing //
+	accounts.deleteMany({}, callback); // reset accounts collection for testing //
 }
 
 /* private encryption & validation methods */

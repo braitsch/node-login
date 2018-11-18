@@ -78,7 +78,7 @@ module.exports = function(app) {
 				if (e){
 					res.status(400).send('error-updating-account');
 				}	else{
-					req.session.user = o;
+					req.session.user = o.value;
 			// update the user's login cookies if they exists //
 					if (req.cookies.user != undefined && req.cookies.pass != undefined){
 						res.cookie('user', o.user, { maxAge: 900000 });
