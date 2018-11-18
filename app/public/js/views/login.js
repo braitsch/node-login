@@ -12,7 +12,7 @@ $(document).ready(function(){
 				return false;
 			} 	else{
 			// append 'remember-me' option to formData to write local cookie //
-				formData.push({name:'remember-me', value:$('.button-rememember-me-glyph').hasClass('glyphicon-ok')});
+				formData.push({name:'remember-me', value:$('#btn_remember').find('span').hasClass('fa-check-square')});
 				return true;
 			}
 		},
@@ -23,8 +23,19 @@ $(document).ready(function(){
 			lv.showLoginError('Login Failure', 'Please check your username and/or password');
 		}
 	}); 
-	$('#user-tf').focus();
-	
+
+	$("input:text:visible:first").focus();
+	$('#btn_remember').click(function(){
+		var span = $(this).find('span');
+		if (span.hasClass('fa-minus-square')){
+			span.removeClass('fa-minus-square');
+			span.addClass('fa-check-square');
+		}	else{
+			span.addClass('fa-minus-square');
+			span.removeClass('fa-check-square');
+		}
+	});
+
 // login retrieval form via email //
 	
 	var ev = new EmailValidator();
@@ -36,14 +47,14 @@ $(document).ready(function(){
 				ev.hideEmailAlert();
 				return true;
 			}	else{
-				ev.showEmailAlert("<b>Error!</b> Please enter a valid email address");
+				ev.showEmailAlert("Please enter a valid email address");
 				return false;
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
 			$('#cancel').html('OK');
 			$('#retrieve-password-submit').hide();
-			ev.showEmailSuccess("Check your email on how to reset your password.");
+			ev.showEmailSuccess("A link to reset your password was emailed to you.");
 		},
 		error : function(e){
 			if (e.responseText == 'email-not-found'){

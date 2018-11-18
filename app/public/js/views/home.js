@@ -30,9 +30,10 @@ $(document).ready(function(){
 // customize the account settings form //
 	
 	$('#account-form h2').text('Account Settings');
-	$('#account-form #sub1').text('Here are the current settings for your account.');
+	$('#account-form #sub').text('Here are the current settings for your account.');
 	$('#user-tf').attr('disabled', 'disabled');
 	$('#account-form-btn1').html('Delete');
+	$('#account-form-btn1').removeClass('btn-outline-dark');
 	$('#account-form-btn1').addClass('btn-danger');
 	$('#account-form-btn2').html('Update');
 

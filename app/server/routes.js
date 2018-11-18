@@ -5,7 +5,10 @@ var EM = require('./modules/email-dispatcher');
 
 module.exports = function(app) {
 
-// main login page //
+/*
+	login & logout
+*/
+
 	app.get('/', function(req, res){
 	// check if the user's credentials are saved in a cookie //
 		if (req.cookies.user == undefined || req.cookies.pass == undefined){
@@ -14,7 +17,7 @@ module.exports = function(app) {
 	// attempt automatic login //
 			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 				if (o != null){
-				    req.session.user = o;
+					req.session.user = o;
 					res.redirect('/home');
 				}	else{
 					res.render('login', { title: 'Hello - Please Login To Your Account' });
@@ -37,8 +40,16 @@ module.exports = function(app) {
 			}
 		});
 	});
+
+	app.post('/logout', function(req, res){
+		res.clearCookie('user');
+		res.clearCookie('pass');
+		req.session.destroy(function(e){ res.status(200).send('ok'); });
+	})
 	
-// logged-in user homepage //
+/*
+	control panel
+*/
 	
 	app.get('/home', function(req, res) {
 		if (req.session.user == null){
@@ -79,14 +90,10 @@ module.exports = function(app) {
 		}
 	});
 
-	app.post('/logout', function(req, res){
-		res.clearCookie('user');
-		res.clearCookie('pass');
-		req.session.destroy(function(e){ res.status(200).send('ok'); });
-	})
-	
-// creating new accounts //
-	
+/*
+	new accounts
+*/
+
 	app.get('/signup', function(req, res) {
 		res.render('signup', {  title: 'Signup', countries : CT });
 	});
@@ -107,7 +114,9 @@ module.exports = function(app) {
 		});
 	});
 
-// password reset //
+/*
+	password reset
+*/
 
 	app.post('/lost-password', function(req, res){
 	// look up the user's account via their email //
@@ -158,7 +167,9 @@ module.exports = function(app) {
 		})
 	});
 	
-// view & delete accounts //
+/*
+	view, delete & reset accounts
+*/
 	
 	app.get('/print', function(req, res) {
 		AM.getAllRecords( function(e, accounts){
@@ -167,7 +178,7 @@ module.exports = function(app) {
 	});
 	
 	app.post('/delete', function(req, res){
-		AM.deleteAccount(req.body.id, function(e, obj){
+		AM.deleteAccount(req.session.user._id, function(e, obj){
 			if (!e){
 				res.clearCookie('user');
 				res.clearCookie('pass');
@@ -175,12 +186,12 @@ module.exports = function(app) {
 			}	else{
 				res.status(400).send('record not found');
 			}
-	    });
+		});
 	});
 	
 	app.get('/reset', function(req, res) {
 		AM.delAllRecords(function(){
-			res.redirect('/print');	
+			res.redirect('/print');
 		});
 	});
 	

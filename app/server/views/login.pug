@@ -2,9 +2,8 @@
 extends layout
 
 block content
-
 	#login.center-vertical
-		form.well(id='form-login', method='post')
+		form.card.card-body.bg-light(method='post')
 			h2 Hello!
 			h6 Please Login To Your Account
 			.form-group
@@ -13,21 +12,19 @@ block content
 			.form-group
 				label Password
 				input.form-control(type='password', id='pass-tf', name='pass')
-			.controls
-				button(type='button').btn.btn-default.button-rememember-me
-					span.glyphicon.glyphicon-unchecked.button-rememember-me-glyph
+			#row1
+				button(type='button')#btn_remember.btn.btn-light.btn-left
+					span.fa.fa-check-square
 					| Remember Me
-				button(type='submit').btn.btn-primary.button-sign-in
-					span.glyphicon.glyphicon-lock
+				button(type='submit')#btn_sign_in.btn.btn-primary
+					span.fa.fa-lock
 					| Sign In
-			.clearfix
 			hr
 			.btm-links
 				#forgot-password
 					a(href='#') Forgot Your Password?
 				#create-account
 					a(href='/signup') Create An Account
-			.clearfix
 
 	include modals/alert
 	include modals/lost-password

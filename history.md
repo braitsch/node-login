@@ -1,3 +1,10 @@
+**v1.7.0** –– 11-18-2018
+
+* updated dependencies to latest versions
+* bootstrap v4.1.3 & jquery v3.3.1
+* style.css completely rewritten
+* fix for #36
+
 **v1.6.0** –– 06-10-2018
 
 * updated dependencies to latest versions

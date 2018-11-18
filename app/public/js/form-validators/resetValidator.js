@@ -1,10 +1,10 @@
 
 function ResetValidator()
 {
-// modal window to allow users to reset their password //
-	this.setPassword = $('#set-password');
-	this.setPassword.modal({ show : false, keyboard : false, backdrop : 'static' });
-	this.setPasswordAlert = $('#set-password .alert');
+	this.modal = $('#set-password');
+	this.modal.modal({ show : false, keyboard : false, backdrop : 'static' });
+	this.alert = $('#set-password .alert');
+	this.alert.hide();
 }
 
 ResetValidator.prototype.validatePassword = function(s)
@@ -19,19 +19,19 @@ ResetValidator.prototype.validatePassword = function(s)
 
 ResetValidator.prototype.showAlert = function(m)
 {
-	this.setPasswordAlert.attr('class', 'alert alert-danger');
-	this.setPasswordAlert.html(m);
-	this.setPasswordAlert.show();
+	this.alert.attr('class', 'alert alert-danger');
+	this.alert.html(m);
+	this.alert.show();
 }
 
 ResetValidator.prototype.hideAlert = function()
 {
-	this.setPasswordAlert.hide();
+	this.alert.hide();
 }
 
 ResetValidator.prototype.showSuccess = function(m)
 {
-	this.setPasswordAlert.attr('class', 'alert alert-success');
-	this.setPasswordAlert.html(m);
-	this.setPasswordAlert.fadeIn(500);
+	this.alert.attr('class', 'alert alert-success');
+	this.alert.html(m);
+	this.alert.fadeIn(500);
 }

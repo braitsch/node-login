@@ -77,4 +77,3 @@ AccountValidator.prototype.validateForm = function()
 	return e.length === 0;
 }
 
-	

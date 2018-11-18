@@ -13,9 +13,9 @@ $(document).ready(function(){
 		},
 		error : function(e){
 			if (e.responseText == 'email-taken'){
-			    av.showInvalidEmail();
+				av.showInvalidEmail();
 			}	else if (e.responseText == 'username-taken'){
-			    av.showInvalidUserName();
+				av.showInvalidUserName();
 			}
 		}
 	});
@@ -24,8 +24,7 @@ $(document).ready(function(){
 // customize the account signup form //
 	
 	$('#account-form h2').text('Signup');
-	$('#account-form #sub1').text('Please tell us a little about yourself');
-	$('#account-form #sub2').text('Choose your username & password');
+	$('#account-form #sub').text('Please tell us a little about yourself');
 	$('#account-form-btn1').html('Cancel');
 	$('#account-form-btn2').html('Submit');
 	$('#account-form-btn2').addClass('btn-primary');

@@ -5,25 +5,20 @@ raiseText()
 	-moz-text-shadow  -1px 1px 0 white
 	-webkit-text-shadow  -1px 1px 0 white
 
-body 
-	margin  0
-	padding  0
-	height  100%
-	background rgb(242,249,254)
-	background -moz-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%, rgba(214,240,253,1) 100%) /* FF3.6+ */
-	background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(242,249,254,1)), color-stop(100%,rgba(214,240,253,1))) /* Chrome,Safari4+ */
-	background -webkit-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* Chrome10+,Safari5.1+ */
-	background -o-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* Opera 12+ */
-	background -ms-radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* IE10+ */
-	background radial-gradient(center, ellipse cover,  rgba(242,249,254,1) 0%,rgba(214,240,253,1) 100%) /* W3C */
+html{
+	height 100%
+}
+
+body{
+	margin 0
+	padding 0
+	height 100%
+	background-image: radial-gradient(circle, #f2f9fe, #ebf7fe, #e5f4fe, #ddf2fe, #d6f0fd);
+}
 
 h2{
 	margin: 0 0 6px 0;
 	font-weight: bold; 
-}
-
-h6{
-	margin: 2px 0 20px 0;
 }
 
 hr{
@@ -43,70 +38,82 @@ label, h6 {
 	text-shadow: -1px 1px 0 #fff;
 }
 
-.well{
-	background: #f8f8f8;
-	.tab-title{
-		float:left;
-		margin-left: 10px;
-	}
-	.button-top-right{
-		float:right;
-		margin: 0 10px 20px 0;
-	}
-	margin-bottom 0;
-}
-
-.navbar-btn{
-	min-width: 100px
-	margin-right: 8px;
-	.btn{
-		min-width: 100px
-	}
-}
-
-.glyphicon{
-	margin-right: 8px;
-}
-
 /*
 	login window
 */
 
 #login{
-	label{
-		margin-left: 2px;
+	width: 380px;
+	.btn{
+		float: left;
+		width: 48%;
+		font-size: .8rem;
 	}
-	form{
-		width:320px;
+	.btn-btm{
+		padding: 0;
 	}
-	.controls{
-		margin-top: 20px;
-		.button-rememember-me{
-			float: left;
-			width: 150px;
-		}
-		.button-sign-in{
-			float: right;
-			width: 120px;
-		}
+	.btn-left{
+		margin-right: 4%;
+	}
+	#btn_sign_in{
+		color: white;
+	}
+	#btn_remember{
+		background: white;
+		border: 1px solid #ced4da;
+	}
+	#btn_remember:hover{
+		background: #F8F9FA;
+	}
+	h6, label{
+		font-size: .8rem;
+	}
+	h6, label, #btn_remember{
+		color: #808080;
+		text-shadow: -1px 1px 0 #fff;
+	}
+	.fa{
+		padding-right: 10px;
+	}
+	hr{
+		clear: left;
 	}
 	.btm-links{
-		font-size: .9em;
+		font-size: .8rem;
 		margin 2px 0 0 0
 		#forgot-password{
 			float left
-			margin-left 10px;
+			margin-left 16px;
 		}
 		#create-account{
 			float right
-			margin-right 5px;
+			margin-right 20px;
 		}
 	}
 }
 
 #account-form-container{
-	form{
-		width:460px;
+	label{
+		text-align right;
+		margin-top 2px;
+	}
+	input, select{
+		font-size: .875rem;
+	}
+	.col-sm-9{
+		padding-left 0;
+	}
+	.margin-zero{
+		margin-bottom 0;
+	}
+	.form-buttons{
+		display flex;
+		align-items center;
+		justify-content flex-end;
+	}
+	.form-buttons>:not(:last-child)
+	{
+		margin-right: .5rem;
 	}
 }
 
@@ -141,28 +148,11 @@ label, h6 {
 }
 
 .center-vertical{
-	height:100vh;
-	form{
-		top: 50%;
-		margin:auto;
-		position: relative;
-		-webkit-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		transform: translateY(-50%);
-	}
+	top 50%; left 50%
+	position: absolute;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
 
-.form-horizontal{
-	.form-buttons{
-		float right;
-		.btn{
-			width 80px
-			margin-left 6px
-		}
-	}
-	input, select{
-		height 30px
-	}
-}
 
-		

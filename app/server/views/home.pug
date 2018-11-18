@@ -2,15 +2,12 @@
 extends layout
 
 block content
-
-	nav.navbar.navbar-default.navbar-fixed-top
-		.container
-			.navbar-header
-				.navbar-brand Control Panel
-			ul.nav.navbar-nav.navbar-right
-				li
-					.navbar-btn#btn-logout.btn.btn-default
-						| Sign Out
+	nav.navbar.navbar-expand.navbar-light.bg-light
+		.nav-item
+			.navbar-brand Control Panel
+		.navbar-nav.ml-auto
+			.nav-item
+				button.btn.navbar-btn.btn-outline-dark#btn-logout Sign Out
 
 	include account
 	include modals/alert

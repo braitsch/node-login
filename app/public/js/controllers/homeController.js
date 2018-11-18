@@ -20,7 +20,6 @@ function HomeController()
 		$.ajax({
 			url: '/delete',
 			type: 'POST',
-			data: { id: $('#userId').val()},
 			success: function(data){
 	 			that.showLockedAlert('Your account has been deleted.<br>Redirecting you back to the homepage.');
 			},
@@ -34,8 +33,8 @@ function HomeController()
 	{
 		var that = this;
 		$.ajax({
-			url: "/logout",
-			type: "POST",
+			url: '/logout',
+			type: 'POST',
 			data: {logout : true},
 			success: function(data){
 	 			that.showLockedAlert('You are now logged out.<br>Redirecting you back to the homepage.');

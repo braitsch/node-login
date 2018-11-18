@@ -1,4 +1,4 @@
-# [Node-Login](https://nodejs-login.herokuapp.com)
+# Node Login
 
 [![node-login](./readme.img/node-login.jpg?raw=true)](https://nodejs-login.herokuapp.com)
 
@@ -11,18 +11,11 @@
 * Local Cookie Storage for Returning Users
 * Blowfish-based Scheme Password Encryption
 
+## Live Demo
 
-### Node-Login is built on top of the following libraries :
+[https://nodejs-login.herokuapp.com](https://nodejs-login.herokuapp.com)
 
-* [Node.js](http://nodejs.org/) - Application Server
-* [Express.js](http://expressjs.com/) - Node.js Web Framework
-* [MongoDB](http://mongodb.org/) - Database Storage
-* [Pug](https://pugjs.org/) - HTML Templating Engine
-* [Stylus](http://stylus-lang.com/) - CSS Preprocessor
-* [EmailJS](http://github.com/eleith/emailjs) - Node.js > SMTP Server Middleware
-* [Moment.js](http://momentjs.com/) - Lightweight Date Library
-* [Twitter Bootstrap](http://twitter.github.com/bootstrap/) - UI Component & Layout Library
-
+For testing purposes you can view a [database dump of all accounts here](https://nodejs-login.herokuapp.com/print).<br>Note: This database automatically resets every 24 hours.
 
 ## Installation & Setup
 1. Install [Node.js](https://nodejs.org/) & [MongoDB](https://www.mongodb.org/) if you haven't already.
@@ -32,11 +25,11 @@
 		> cd node-login
 		> npm install
 		
-3. In a separate shell start the MongoDB daemon.
+3. In a separate shell start MongoDB.
 
 		> mongod
 
-4. From within the node-login directory, start the server.
+4. From within the node-login directory start the server.
 
 		> node app
 		
@@ -48,18 +41,12 @@ To enable the password retrieval feature it is recommended that you create envir
 
 To do this on OSX you can simply add them to your .profile or .bashrc file.
 
-	export EMAIL_HOST='smtp.gmail.com'
-	export EMAIL_USER='your.email@gmail.com'
-	export EMAIL_PASS='1234'
+	export NL_EMAIL_HOST='smtp.gmail.com'
+	export NL_EMAIL_USER='your.email@gmail.com'
+	export NL_EMAIL_PASS='1234'
 
 [![node-login](./readme.img/retrieve-password.jpg?raw=true)](https://nodejs-login.herokuapp.com)
 
-## Live Demo
-
-A [Live Demo](https://nodejs-login.herokuapp.com) and [some thoughts about the app's architecture.](http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/)
-
-For testing purposes you can view a [database dump of all accounts here](https://nodejs-login.herokuapp.com/print).    
-Note this database automatically resets every 24 hours.
 
 ## Contributing
 

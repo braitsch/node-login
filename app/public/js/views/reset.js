@@ -13,6 +13,8 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
+			$('#set-password-submit').addClass('disabled');
+			$('#set-password-submit').prop('disabled', true);
 			rv.showSuccess("Your password has been reset.");
 			setTimeout(function(){ window.location.href = '/'; }, 3000);
 		},

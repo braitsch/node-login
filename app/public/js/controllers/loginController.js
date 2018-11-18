@@ -19,6 +19,8 @@ function LoginController()
 		}
 	});
 
+	$('.modal-alert #ok').click(function(){ $('.modal-alert').modal('hide'); });
+
 // automatically toggle focus between the email modal window and the login form //
 	$('#get-credentials').on('shown.bs.modal', function(){ $('#email-tf').focus(); });
 	$('#get-credentials').on('hidden.bs.modal', function(){ $('#user-tf').focus(); });

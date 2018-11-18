@@ -1,13 +1,12 @@
 
 function EmailValidator()
 {
-// bind this to _local for anonymous functions //
-	var _local = this;
+	let modal = $('#get-credentials');
+	let alert = $('#get-credentials .alert');
 
-// modal window to allow users to request credentials by email //
-	_local.retrievePassword = $('#get-credentials');
-	_local.retrievePasswordAlert = $('#get-credentials .alert');
-	_local.retrievePassword.on('show.bs.modal', function(){ $('#get-credentials-form').resetForm(); _local.retrievePasswordAlert.hide();});
+	this.modal = modal;
+	this.alert = alert;
+	this.modal.on('show.bs.modal', function(){ $('#get-credentials-form').resetForm(); alert.hide();});
 }
 
 EmailValidator.prototype.validateEmail = function(e)
@@ -18,19 +17,19 @@ EmailValidator.prototype.validateEmail = function(e)
 
 EmailValidator.prototype.showEmailAlert = function(m)
 {
-	this.retrievePasswordAlert.attr('class', 'alert alert-danger');
-	this.retrievePasswordAlert.html(m);
-	this.retrievePasswordAlert.show();
+	this.alert.attr('class', 'alert alert-danger');
+	this.alert.html(m);
+	this.alert.show();
 }
 
 EmailValidator.prototype.hideEmailAlert = function()
 {
-	this.retrievePasswordAlert.hide();
+	this.alert.hide();
 }
 
 EmailValidator.prototype.showEmailSuccess = function(m)
 {
-	this.retrievePasswordAlert.attr('class', 'alert alert-success');
-	this.retrievePasswordAlert.html(m);
-	this.retrievePasswordAlert.fadeIn(500);
+	this.alert.attr('class', 'alert alert-success');
+	this.alert.html(m);
+	this.alert.fadeIn(500);
 }

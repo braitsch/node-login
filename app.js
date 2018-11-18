@@ -1,15 +1,14 @@
 
 /**
 	* Node.js Login Boilerplate
-	* More Info : http://kitchen.braitsch.io/building-a-login-system-in-node-js-and-mongodb/
-	* Copyright (c) 2013-2016 Stephen Braitsch
+	* More Info : https://github.com/braitsch/node-login
+	* Copyright (c) 2013-2018 Stephen Braitsch
 **/
 
 var http = require('http');
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
 

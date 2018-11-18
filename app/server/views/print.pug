@@ -4,12 +4,12 @@ extends layout
 block content
 	div.container(style='margin:20px auto')
 		table.table.table-bordered.table-striped
-			thead
+			thead.thead-dark
 				tr
-					th(style='width:40px;text-align:center') #
+					th(style='width:50px;text-align:center') #
 					th(style='width:220px') Name
 					th(style='width:220px') Username
-					th(style='width:220px') Location
+					th(style='width:240px') Location
 					th Account Created
 			tbody
 			- for (var i = 0; i < accts.length; i++)
