@@ -16,7 +16,9 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
-/* login validation methods */
+/*
+	login validation methods
+*/
 
 exports.autoLogin = function(user, pass, callback)
 {
@@ -63,7 +65,30 @@ exports.validateLoginKey = function(cookie, ipAddress, callback)
 	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
 }
 
-/* record insertion, update & deletion methods */
+exports.generatePasswordKey = function(email, ipAddress, callback)
+{
+	let passKey = guid();
+	accounts.findOneAndUpdate({email:email}, {$set:{
+		ip : ipAddress,
+		passKey : passKey
+	}, $unset:{cookie:''}}, {returnOriginal : false}, function(e, o){
+		if (o.value != null){
+			callback(null, o.value);
+		}	else{
+			callback(e || 'account not found');
+		}
+	});
+}
+
+exports.validatePasswordKey = function(passKey, ipAddress, callback)
+{
+// ensure the passKey maps to the user's last recorded ip address //
+	accounts.findOne({passKey:passKey, ip:ipAddress}, callback);
+}
+
+/*
+	record insertion, update & deletion methods
+*/
 
 exports.addNewAccount = function(newData, callback)
 {
@@ -108,38 +133,17 @@ exports.updateAccount = function(newData, callback)
 	}
 }
 
-exports.updatePassword = function(email, newPass, callback)
+exports.updatePassword = function(passKey, newPass, callback)
 {
-	accounts.findOne({email:email}, function(e, o){
-		if (e){
-			callback(e, null);
-		}	else{
-			saltAndHash(newPass, function(hash){
-				o.pass = hash;
-				accounts.save(o, {safe: true}, callback);
-			});
-		}
+	saltAndHash(newPass, function(hash){
+		newPass = hash;
+		accounts.findOneAndUpdate({passKey:passKey}, {$set:{pass:newPass}, $unset:{passKey:''}}, {returnOriginal : false}, callback);
 	});
 }
 
-/* account lookup methods */
-
-exports.deleteAccount = function(id, callback)
-{
-	accounts.deleteOne({_id: getObjectId(id)}, callback);
-}
-
-exports.getAccountByEmail = function(email, callback)
-{
-	accounts.findOne({email:email}, function(e, o){ callback(o); });
-}
-
-exports.validateResetLink = function(email, passHash, callback)
-{
-	accounts.find({ $and: [{email:email, pass:passHash}] }, function(e, o){
-		callback(o ? 'ok' : null);
-	});
-}
+/*
+	account lookup methods
+*/
 
 exports.getAllRecords = function(callback)
 {
@@ -150,12 +154,19 @@ exports.getAllRecords = function(callback)
 	});
 }
 
-exports.delAllRecords = function(callback)
+exports.deleteAccount = function(id, callback)
 {
-	accounts.deleteMany({}, callback); // reset accounts collection for testing //
+	accounts.deleteOne({_id: getObjectId(id)}, callback);
 }
 
-/* private encryption & validation methods */
+exports.deleteAllAccounts = function(callback)
+{
+	accounts.deleteMany({}, callback);
+}
+
+/*
+	private encryption & validation methods
+*/
 
 var generateSalt = function()
 {
@@ -190,21 +201,3 @@ var getObjectId = function(id)
 	return new require('mongodb').ObjectID(id);
 }
 
-var findById = function(id, callback)
-{
-	accounts.findOne({_id: getObjectId(id)},
-		function(e, res) {
-		if (e) callback(e)
-		else callback(null, res)
-	});
-}
-
-var findByMultipleFields = function(a, callback)
-{
-// this takes an array of name/val pairs to search against {fieldName : 'value'} //
-	accounts.find( { $or : a } ).toArray(
-		function(e, results) {
-		if (e) callback(e)
-		else callback(null, results)
-	});
-}

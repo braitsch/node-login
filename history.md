@@ -1,3 +1,7 @@
+**v1.7.2** –– 11-18-2018
+
+* auto-login & password-reset now validating against UUIDs and the user's last recorded IP address
+
 **v1.7.1** –– 11-18-2018
 
 * updating mongodb calls to latest driver
