@@ -3,6 +3,7 @@ const crypto 		= require('crypto');
 const moment 		= require('moment');
 const MongoClient 	= require('mongodb').MongoClient;
 
+const PASS_VER = 1;
 var db, accounts;
 MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) {
 	if (e){
@@ -39,13 +40,23 @@ exports.manualLogin = function(user, pass, callback)
 		if (o == null){
 			callback('user-not-found');
 		}	else{
-			validatePassword(pass, o.pass, function(err, res) {
-				if (res){
-					callback(null, o);
-				}	else{
-					callback('invalid-password');
-				}
-			});
+			if (o.pass_ver === undefined || o.pass_ver === 0) {
+				validatePasswordV0(pass, o.pass, function(err, res) {
+					if (res){
+						callback(null, o);
+					}	else{
+						callback('invalid-password');
+					}
+				});
+			} else if (o.pass_ver === 1) {
+				validatePasswordV1(pass, o.pass, function(err, res) {
+					if (res){
+						callback(null, o);
+					}	else{
+						callback('invalid-password');
+					}
+				});
+			}
 		}
 	});
 }
@@ -104,6 +115,7 @@ exports.addNewAccount = function(newData, callback)
 				}	else{
 					saltAndHash(newData.pass, function(hash){
 						newData.pass = hash;
+						newData.pass_ver = PASS_VER;
 					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 						accounts.insertOne(newData, callback);
@@ -122,8 +134,11 @@ exports.updateAccount = function(newData, callback)
 			email : data.email,
 			country : data.country
 		}
-		if (data.pass) o.pass = data.pass;
-		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
+		if (data.pass) {
+			o.pass = data.pass;
+			o.pass_ver = PASS_VER;
+		}
+		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {upsert:true, returnOriginal:false}, callback);
 	}
 	if (newData.pass == ''){
 		findOneAndUpdate(newData);
@@ -137,9 +152,8 @@ exports.updateAccount = function(newData, callback)
 
 exports.updatePassword = function(passKey, newPass, callback)
 {
-	saltAndHash(newPass, function(hash){
-		newPass = hash;
-		accounts.findOneAndUpdate({passKey:passKey}, {$set:{pass:newPass}, $unset:{passKey:''}}, {returnOriginal : false}, callback);
+	saltAndHash(newPass, function(hash) {
+		accounts.findOneAndUpdate({passKey:passKey}, {$set:{pass:hash, pass_ver:PASS_VER}, $unset:{passKey:''}}, {upsert:true, returnOriginal:false}, callback);
 	});
 }
 
@@ -187,15 +201,40 @@ var md5 = function(str) {
 
 var saltAndHash = function(pass, callback)
 {
-	var salt = generateSalt();
-	callback(salt + md5(pass + salt));
+	const hasher = 'sha256';
+	const iterations = 10000;
+	const hashLength = 32;
+	const saltBytes = 16;
+	crypto.randomBytes(saltBytes, function(err, buf) {
+		if (err) throw err;
+		const salt = buf.toString('hex');
+		crypto.pbkdf2(pass, salt, iterations, hashLength, hasher, function(err, derivedKey) {
+			if (err) throw err;
+			const hash = derivedKey.toString('hex');
+			callback([salt, hash].join('$'));
+		});
+	});
 }
 
-var validatePassword = function(plainPass, hashedPass, callback)
+var validatePasswordV0 = function(plainPass, hashedPass, callback)
 {
 	var salt = hashedPass.substr(0, 10);
 	var validHash = salt + md5(plainPass + salt);
 	callback(null, hashedPass === validHash);
+}
+
+var validatePasswordV1 = function(plainPass, hashedPass, callback)
+{
+	const hasher = 'sha256';
+	const iterations = 10000;
+	const hashLength = 32;
+	const salt = hashedPass.split('$')[0];
+	crypto.pbkdf2(plainPass, salt, iterations, hashLength, hasher, function(err, derivedKey) {
+		if (err) throw err;
+		const plainPassHash = derivedKey.toString('hex');
+		const validHash = [salt, plainPassHash].join('$');
+		callback(null, hashedPass === validHash);
+	});
 }
 
 var getObjectId = function(id)
