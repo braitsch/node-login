@@ -3,8 +3,9 @@
 	.modal-dialog
 		.modal-content
 			.modal-header
-				button.close(data-dismiss='modal') x
-				h4 Whoops!
+				h4.modal-title Whoops!
+				button.close(type='button', data-dismiss='modal', aria-label='Close')
+					span(aria-hidden='true') ×
 			.modal-body
 				| It looks like there was a problem.
 				ul
