@@ -10,6 +10,8 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 	}	else{
 		db = client.db(process.env.DB_NAME);
 		accounts = db.collection('accounts');
+	// index fields 'user' & 'email' for faster new account validation //
+		accounts.createIndex({user: 1, email: 1});
 		console.log('mongo :: connected to database :: "'+process.env.DB_NAME+'"');
 	}
 });
@@ -199,5 +201,12 @@ var validatePassword = function(plainPass, hashedPass, callback)
 var getObjectId = function(id)
 {
 	return new require('mongodb').ObjectID(id);
+}
+
+var listIndexes = function()
+{
+	accounts.indexes(null, function(e, indexes){
+		for (var i = 0; i < indexes.length; i++) console.log('index:', i, indexes[i]);
+	});
 }
 
