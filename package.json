@@ -3,6 +3,9 @@
   "version": "1.7.0",
   "description": "A template for quickly building login systems on top of Node.js & MongoDb",
   "author": "Stephen Braitsch <stephen@braitsch.io>",
+  "contributors": [
+    "Brett Zamir"
+  ],
   "website": {
     "url": "https://nodejs-login.herokuapp.com"
   },
@@ -11,6 +14,12 @@
     "type": "git",
     "url": "git@github.com:braitsch/node-login.git"
   },
+  "license": "MIT",
+  "keywords": [
+    "login"
+  ],
+  "homepage": "https://github.com/braitsch/node-login",
+  "bugs": "https://github.com/braitsch/node-login/issues",
   "dependencies": {
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.1",
@@ -24,7 +33,7 @@
     "stylus": "^0.54.5"
   },
   "engines": {
-    "node": "10.4.0"
+    "node": ">=10.4.0"
   },
   "scripts": {
     "start": "node app.js"
