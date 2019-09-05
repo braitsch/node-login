@@ -26,9 +26,6 @@ h6 {
   font-weight: normal;
   text-shadow: -1px 1px 0 #fff;
 }
-/*
-	login window
-*/
 #login {
   width: 380px;
 }
@@ -103,9 +100,6 @@ h6 {
 #account-form-container .form-buttons>:not(:last-child) {
   margin-right: 0.5rem;
 }
-/*
-	modal windows
-*/
 .modal .modal-dialog {
   width: 480px;
 }

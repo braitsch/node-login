@@ -1,158 +1,136 @@
 
 raiseText()
 	color grey
-	text-shadow  -1px 1px 0 white
-	-moz-text-shadow  -1px 1px 0 white
-	-webkit-text-shadow  -1px 1px 0 white
+	text-shadow -1px 1px 0 white
+	-moz-text-shadow -1px 1px 0 white
+	-webkit-text-shadow -1px 1px 0 white
 
-html{
+html
 	height 100%
-}
 
-body{
+body
 	margin 0
 	padding 0
 	height 100%
-	background-image: radial-gradient(circle, #f2f9fe, #ebf7fe, #e5f4fe, #ddf2fe, #d6f0fd);
-}
+	background-image radial-gradient(circle, #f2f9fe, #ebf7fe, #e5f4fe, #ddf2fe, #d6f0fd)
 
-h2{
-	margin: 0 0 6px 0;
-	font-weight: bold; 
-}
+h2
+	margin 0 0 6px 0
+	font-weight bold
 
-hr{
+hr
 	margin 14px 0
-	border-top: 1px solid rgb(238, 238, 238);
-	border-bottom: 1px solid rgb(255, 255, 255);
-}
+	border-top 1px solid rgb(238, 238, 238)
+	border-bottom 1px solid rgb(255, 255, 255)
 
-ul{
-	margin: 4px 0 0 0;
-}
+ul
+	margin 4px 0 0 0
 
-label, h6 {
-	color: #808080;
-	font-size: 13px;
-	font-weight: normal;
-	text-shadow: -1px 1px 0 #fff;
-}
+label, h6
+	color #808080
+	font-size 13px
+	font-weight normal
+	text-shadow -1px 1px 0 #fff
 
-/*
-	login window
-*/
+// login window
 
-#login{
-	width: 380px;
-	.btn{
-		float: left;
-		width: 48%;
-		font-size: .8rem;
-	}
-	.btn-btm{
-		padding: 0;
-	}
-	.btn-left{
-		margin-right: 4%;
-	}
-	#btn_sign_in{
-		color: white;
-	}
-	#btn_remember{
-		background: white;
-		border: 1px solid #ced4da;
-	}
-	#btn_remember:hover{
-		background: #F8F9FA;
-	}
-	h6, label{
-		font-size: .8rem;
-	}
-	h6, label, #btn_remember{
-		color: #808080;
-		text-shadow: -1px 1px 0 #fff;
-	}
-	.fa{
-		padding-right: 10px;
-	}
-	hr{
-		clear: left;
-	}
-	.btm-links{
-		font-size: .8rem;
+#login
+	width 380px
+	.btn
+		float left
+		width 48%
+		font-size .8rem
+
+	.btn-btm
+		padding 0
+
+	.btn-left
+		margin-right 4%
+
+	#btn_sign_in
+		color white
+
+	#btn_remember
+		background white
+		border 1px solid #ced4da
+
+	#btn_remember:hover
+		background #F8F9FA
+
+	h6, label
+		font-size .8rem
+
+	h6, label, #btn_remember
+		color #808080
+		text-shadow -1px 1px 0 #fff
+
+	.fa
+		padding-right 10px
+
+	hr
+		clear left
+
+	.btm-links
+		font-size .8rem
 		margin 2px 0 0 0
-		#forgot-password{
+		#forgot-password
 			float left
-			margin-left 16px;
-		}
-		#create-account{
+			margin-left 16px
+
+		#create-account
 			float right
-			margin-right 20px;
-		}
-	}
-}
+			margin-right 20px
 
-#account-form-container{
-	label{
-		text-align right;
-		margin-top 2px;
-	}
-	input, select{
-		font-size: .875rem;
-	}
-	.col-sm-9{
-		padding-left 0;
-	}
-	.margin-zero{
-		margin-bottom 0;
-	}
-	.form-buttons{
-		display flex;
-		align-items center;
-		justify-content flex-end;
-	}
+#account-form-container
+	label
+		text-align right
+		margin-top 2px
+
+	input, select
+		font-size .875rem
+
+	.col-sm-9
+		padding-left 0
+
+	.margin-zero
+		margin-bottom 0
+
+	.form-buttons
+		display flex
+		align-items center
+		justify-content flex-end
+
 	.form-buttons>:not(:last-child)
-	{
-		margin-right: .5rem;
-	}
-}
+		margin-right .5rem;
 
-/*
-	modal windows
-*/
+// modal windows
 
-.modal{
-	.modal-dialog{
-		width:480px;
-	}
-	.form-group{
-		margin-bottom: 0px;
-	}
-	.alert{
-		margin-top 10px;
-		margin-bottom: 0
+.modal
+	.modal-dialog
+		width 480px
+
+	.form-group
+		margin-bottom 0px
+
+	.alert
+		margin-top 10px
+		margin-bottom 0
 		padding 8px 15px 8px 15px
-	}
-	.alert-dismissable, .close{
-		right -4px;
-	}
-	p{
-		margin:0;
-		padding:0;
-	}
-	.modal-footer{
-		button{
-			width:80px;
-		}
-	}
-}
 
-.center-vertical{
+	.alert-dismissable, .close
+		right -4px
+
+	p
+		margin 0
+		padding 0
+
+	.modal-footer
+		button
+			width 80px
+
+.center-vertical
 	top 50%; left 50%
-	position: absolute;
-	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-}
-
-
+	position absolute
+	-webkit-transform translate(-50%, -50%)
+	-ms-transform translate(-50%, -50%)
+	transform translate(-50%, -50%)
