@@ -55,9 +55,9 @@ window.HomeController = class HomeController {
       $('.modal-alert .modal-body p').html(msg);
       $('.modal-alert').modal('show');
       $('.modal-alert button').click(() => {
-        window.location.href = '/';
+        location.href = '/';
       });
-      setTimeout(() => { window.location.href = '/'; }, 3000);
+      setTimeout(() => { location.href = '/'; }, 3000);
     };
   }
 

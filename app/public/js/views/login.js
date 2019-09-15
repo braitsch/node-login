@@ -18,7 +18,7 @@ $(document).ready(function () {
       return true;
     },
     success (responseText, status, xhr, $form) {
-      if (status === 'success') window.location.href = '/home';
+      if (status === 'success') location.href = '/home';
     },
     error (e) {
       lv.showLoginError(

@@ -1,4 +1,3 @@
-/* eslint-disable callback-return, standard/no-callback-literal */
 /* eslint-disable-next-line no-shadow  */
 const crypto = require('crypto');
 const moment = require('moment');
@@ -94,139 +93,146 @@ class AccountManager {
     login validation methods
   */
 
-  autoLogin (user, pass, callback) {
-    this.accounts.findOne({ user }, (e, o) => {
-      if (o) {
-        o.pass === pass ? callback(o) : callback(null);
-      } else {
-        callback(null);
-      }
-    });
+  async autoLogin (user, pass) {
+    try {
+      const o = await this.accounts.findOne({ user });
+      return o.pass === pass ? o : null;
+    } catch (err) {
+      return null;
+    }
   }
 
-  manualLogin (user, pass, callback) {
-    this.accounts.findOne({ user }, (e, o) => {
-      if (isNullish(o)) {
-        callback('user-not-found');
-      } else {
-        const res = validatePassword(pass, o.pass);
-        if (res) {
-          callback(null, o);
-        } else {
-          callback('invalid-password');
-        }
-      }
-    });
+  async manualLogin (user, pass) {
+    let o;
+    try {
+      o = await this.accounts.findOne({ user });
+    } catch (err) {}
+    if (isNullish(o)) {
+      throw new Error('user-not-found');
+    }
+    const res = validatePassword(pass, o.pass);
+    if (res) {
+      return o;
+    }
+    throw new Error('invalid-password');
   }
 
-  generateLoginKey (user, ipAddress, callback) {
+  async generateLoginKey (user, ipAddress) {
     const cookie = guid();
-    this.accounts.findOneAndUpdate({ user }, { $set: {
+    await this.accounts.findOneAndUpdate({ user }, { $set: {
       ip: ipAddress,
       cookie
-    } }, { returnOriginal: false }, (e, o) => {
-      callback(cookie);
-    });
+    } }, { returnOriginal: false });
+    return cookie;
   }
 
-  validateLoginKey (cookie, ipAddress, callback) {
+  // eslint-disable-next-line require-await
+  async validateLoginKey (cookie, ipAddress) {
     // ensure the cookie maps to the user's last recorded ip address
-    this.accounts.findOne({ cookie, ip: ipAddress }, callback);
+    return this.accounts.findOne({ cookie, ip: ipAddress });
   }
 
-  generatePasswordKey (email, ipAddress, callback) {
+  async generatePasswordKey (email, ipAddress) {
     const passKey = guid();
-    this.accounts.findOneAndUpdate({ email }, { $set: {
-      ip: ipAddress,
-      passKey
-    }, $unset: { cookie: '' } }, { returnOriginal: false }, (e, o) => {
-      if (!isNullish(o.value)) {
-        callback(null, o.value);
-      } else {
-        callback(e || 'account not found');
-      }
-    });
+    let o, e;
+    try {
+      o = await this.accounts.findOneAndUpdate({ email }, { $set: {
+        ip: ipAddress,
+        passKey
+      }, $unset: { cookie: '' } }, { returnOriginal: false });
+    } catch (err) {
+      e = err;
+    }
+    if (o && !isNullish(o.value)) {
+      return o.value;
+    }
+    throw (e || new Error('account not found'));
   }
 
-  validatePasswordKey (passKey, ipAddress, callback) {
+  // eslint-disable-next-line require-await
+  async validatePasswordKey (passKey, ipAddress) {
     // ensure the passKey maps to the user's last recorded ip address
-    this.accounts.findOne({ passKey, ip: ipAddress }, callback);
+    return this.accounts.findOne({ passKey, ip: ipAddress });
   }
 
   /*
     record insertion, update & deletion methods
   */
-  addNewAccount (newData, callback) {
-    this.accounts.findOne({ user: newData.user }, (e, o) => {
-      if (o) {
-        callback('username-taken');
-      } else {
-        this.accounts.findOne({ email: newData.email }, (_e, _o) => {
-          if (_o) {
-            callback('email-taken');
-          } else {
-            const hash = saltAndHash(newData.pass);
-            newData.pass = hash;
-            // append date stamp when record was created
-            newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-            this.accounts.insertOne(newData, callback);
-          }
-        });
-      }
-    });
+  async addNewAccount (newData) {
+    let o;
+    try {
+      o = await this.accounts.findOne({ user: newData.user });
+    } catch (err) {}
+    if (o) {
+      throw new Error('username-taken');
+    }
+    let _o;
+    try {
+      _o = await this.accounts.findOne({ email: newData.email });
+    } catch (err) {}
+    if (_o) {
+      throw new Error('email-taken');
+    }
+
+    const hash = saltAndHash(newData.pass);
+    // eslint-disable-next-line require-atomic-updates
+    newData.pass = hash;
+    // append date stamp when record was created
+    // eslint-disable-next-line require-atomic-updates
+    newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+    return this.accounts.insertOne(newData);
   }
 
-  updateAccount (newData, callback) {
-    const findOneAndUpdate = (data) => {
+  // eslint-disable-next-line require-await
+  async updateAccount (newData) {
+    // eslint-disable-next-line require-await
+    const findOneAndUpdate = async (data) => {
       const o = {
         name: data.name,
         email: data.email,
         country: data.country
       };
       if (data.pass) o.pass = data.pass;
-      this.accounts.findOneAndUpdate(
+      return this.accounts.findOneAndUpdate(
         { _id: getObjectId(data.id) },
         { $set: o },
-        { returnOriginal: false },
-        callback
+        { returnOriginal: false }
       );
     };
     if (newData.pass === '') {
-      findOneAndUpdate(newData);
-    } else {
-      const hash = saltAndHash(newData.pass);
-      newData.pass = hash;
-      findOneAndUpdate(newData);
+      return findOneAndUpdate(newData);
     }
+    const hash = saltAndHash(newData.pass);
+    newData.pass = hash;
+    return findOneAndUpdate(newData);
   }
 
-  updatePassword (passKey, newPass, callback) {
+  // eslint-disable-next-line require-await
+  async updatePassword (passKey, newPass) {
     const hash = saltAndHash(newPass);
     newPass = hash;
-    this.accounts.findOneAndUpdate({ passKey }, {
+    return this.accounts.findOneAndUpdate({ passKey }, {
       $set: { pass: newPass }, $unset: { passKey: '' }
-    }, { returnOriginal: false }, callback);
+    }, { returnOriginal: false });
   }
 
   /*
     account lookup methods
   */
 
-  getAllRecords (callback) {
-    this.accounts.find().toArray(
-      (e, res) => {
-        if (e) callback(e);
-        else callback(null, res);
-      }
-    );
+  // eslint-disable-next-line require-await
+  async getAllRecords () {
+    return this.accounts.find().toArray();
   }
 
-  deleteAccount (id, callback) {
-    this.accounts.deleteOne({ _id: getObjectId(id) }, callback);
+  // eslint-disable-next-line require-await
+  async deleteAccount (id) {
+    return this.accounts.deleteOne({ _id: getObjectId(id) });
   }
 
-  deleteAllAccounts (callback) {
-    this.accounts.deleteMany({}, callback);
+  // eslint-disable-next-line require-await
+  async deleteAllAccounts () {
+    return this.accounts.deleteMany({});
   }
 }
 

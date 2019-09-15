@@ -12,10 +12,10 @@ block content
 					th(style='width:240px') Location
 					th Account Created
 			tbody
-			- for (var i = 0; i < accts.length; i++)
+			- for (const [i, {name, user, country, date}] of accts.entries())
 				tr
 					td(style='text-align:center')= i+1
-					td= accts[i].name
-					td= accts[i].user
-					td= accts[i].country
-					td= accts[i].date
+					td= name
+					td= user
+					td= country
+					td= date

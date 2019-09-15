@@ -11,7 +11,7 @@ $(document).ready(function () {
       $('#set-password-submit').addClass('disabled');
       $('#set-password-submit').prop('disabled', true);
       rv.showSuccess('Your password has been reset.');
-      setTimeout(() => { window.location.href = '/'; }, 3000);
+      setTimeout(() => { location.href = '/'; }, 3000);
     },
     error () {
       rv.showAlert("I'm sorry something went wrong, please try again.");

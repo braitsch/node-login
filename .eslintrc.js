@@ -16,13 +16,14 @@ module.exports = {
       "sourceType": "module"
     },
     "rules": {
+      "object-curly-spacing": ["error", "always"],
+
       "import/no-commonjs": 0,
       "import/unambiguous": 0,
-      "object-curly-spacing": ["error", "always"],
-      "no-console": 0,
+
+      // Browser only
       "compat/compat": 0,
 
-      // Reenable later as possible
-      "promise/prefer-await-to-callbacks": 0
+      "no-console": 0
     }
 };
