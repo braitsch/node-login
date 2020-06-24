@@ -24,7 +24,7 @@ For testing purposes you can view a [database dump of all accounts here](https:/
 		> git clone git://github.com/braitsch/node-login.git node-login
 		> cd node-login
 		> npm install
-		
+	
 3. In a separate shell start MongoDB.
 
 		> mongod
@@ -32,7 +32,7 @@ For testing purposes you can view a [database dump of all accounts here](https:/
 4. From within the node-login directory start the server.
 
 		> node app
-		
+	
 5. Open a browser window and navigate to: [http://localhost:3000](http://localhost:3000)
 
 ## Password Retrieval
@@ -51,3 +51,5 @@ To do this on OSX you can simply add them to your .profile or .bashrc file.
 ## Contributing
 
 Questions and suggestions for improvement are welcome.
+
+<a href='https://tracking.gitads.io/?repo=node-login'><img src="https://images.gitads.io/node-login" alt="git-ad"/></a>

@@ -4,7 +4,7 @@ const moment 		= require('moment');
 const MongoClient 	= require('mongodb').MongoClient;
 
 var db, accounts;
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) {
+MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, function(e, client) {
 	if (e){
 		console.log(e);
 	}	else{

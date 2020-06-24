@@ -1,3 +1,7 @@
+**v1.7.3** –– 06-24-2020
+
+* updating npm dependencies & resolving vulnerabilities
+
 **v1.7.2** –– 11-18-2018
 
 * auto-login & password-reset now validating against UUIDs and the user's last recorded IP address
