@@ -51,5 +51,3 @@ To do this on OSX you can simply add them to your .profile or .bashrc file.
 ## Contributing
 
 Questions and suggestions for improvement are welcome.
-
-<a href='https://tracking.gitads.io/?repo=node-login'><img src="https://images.gitads.io/node-login" alt="git-ad"/></a>
