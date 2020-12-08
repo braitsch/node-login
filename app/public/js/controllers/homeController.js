@@ -10,6 +10,9 @@ function HomeController()
 // confirm account deletion //
 	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
 
+// get csrf_token
+	var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
 // handle account deletion //
 	$('.modal-confirm .submit').click(function(){ that.deleteAccount(); });
 
@@ -20,6 +23,9 @@ function HomeController()
 		$.ajax({
 			url: '/delete',
 			type: 'POST',
+			headers: {
+				'CSRF-Token': token
+			},
 			success: function(data){
 	 			that.showLockedAlert('Your account has been deleted.<br>Redirecting you back to the homepage.');
 			},
@@ -35,6 +41,9 @@ function HomeController()
 		$.ajax({
 			url: '/logout',
 			type: 'POST',
+			headers: {
+				'CSRF-Token': token
+			},
 			data: {logout : true},
 			success: function(data){
 	 			that.showLockedAlert('You are now logged out.<br>Redirecting you back to the homepage.');

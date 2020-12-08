@@ -12,6 +12,8 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
 
+var csurf = require('csurf')
+
 var app = express();
 
 app.locals.pretty = true;
@@ -45,6 +47,13 @@ app.use(session({
 	store: new MongoStore({ url: process.env.DB_URL })
 	})
 );
+
+app.use(csurf({ }));
+
+app.use(function(request,response,next){
+    app.locals._token = request.csrfToken()
+    next()
+})
 
 require('./app/server/routes')(app);
 
