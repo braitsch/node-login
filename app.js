@@ -55,6 +55,14 @@ app.use(function(request,response,next){
     next()
 })
 
+app.use(function (err, req, res, next) {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+  // handle CSRF token errors here
+  res.status(403)
+  res.send('Form tampered with')
+})
+
 require('./app/server/routes')(app);
 
 http.createServer(app).listen(app.get('port'), function(){
