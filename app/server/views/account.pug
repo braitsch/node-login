@@ -36,6 +36,8 @@ input(type='hidden', value= user._id)#userId
 			.col-sm-9
 				input.form-control#pass-tf(type='password', name='pass', value='')
 
+		input(type="hidden" name="_csrf" value= _token)
+
 		hr
 		.form-buttons
 			button(type='button')#account-form-btn1.btn.btn-outline-dark

@@ -19,6 +19,9 @@ block content
 				button(type='submit')#btn_sign_in.btn.btn-primary
 					span.fa.fa-lock
 					| Sign In
+
+			input(type="hidden" name="_csrf" value= _token)
+
 			hr
 			.btm-links
 				#forgot-password

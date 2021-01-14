@@ -79,6 +79,9 @@ module.exports = function(app) {
 				country	: req.body['country']
 			}, function(e, o){
 				if (e){
+					if (e === 'email-taken') {
+            return res.status(400).send('email-taken');
+          }
 					res.status(400).send('error-updating-account');
 				}	else{
 					req.session.user = o.value;
