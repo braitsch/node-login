@@ -114,6 +114,17 @@ exports.addNewAccount = function(newData, callback)
 	});
 }
 
+function validateEmail(email, _id) {
+  return new Promise(function(resolve, reject) {
+    return accounts.find({email: email}).toArray(function(err, records) {
+      if (err) reject(err);
+      if (records.length > 1) reject('xerox')
+      if (records.length === 1 && records[0]._id.toString() !== _id) reject('imposter')
+      resolve(true);
+    });
+  });
+}
+
 exports.updateAccount = function(newData, callback)
 {
 	let findOneAndUpdate = function(data){
@@ -123,7 +134,14 @@ exports.updateAccount = function(newData, callback)
 			country : data.country
 		}
 		if (data.pass) o.pass = data.pass;
-		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
+    
+    validateEmail(data.email, data.id)
+      .then(function() {
+        accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
+      })
+      .catch(function() {
+        callback('email-taken');
+      });
 	}
 	if (newData.pass == ''){
 		findOneAndUpdate(newData);
