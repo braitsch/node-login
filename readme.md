@@ -11,6 +11,18 @@
 * Local Cookie Storage for Returning Users
 * Blowfish-based Scheme Password Encryption
 
+**###Node-Login is built on top of the following libraries :
+
+* [Node.js](http://nodejs.org/) - Application Server
+* [Express.js](http://expressjs.com/) - Node.js Web Framework
+* [MongoDb](http://mongodb.org/) - Database Storage
+* [Jade](http://jade-lang.com/) - HTML Templating Engine
+* [Stylus](http://stylus-lang.com/) - CSS Preprocessor
+* [EmailJS](http://github.com/eleith/emailjs) - Node.js > SMTP Server Middleware
+* [Moment.js](http://momentjs.com/) - Lightweight Date Library
+* [Twitter Bootstrap](http://twitter.github.com/bootstrap/) - UI Component & Layout Library
+
+
 ## Live Demo
 
 [https://nodejs-login.herokuapp.com](https://nodejs-login.herokuapp.com)
