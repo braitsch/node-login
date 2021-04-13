@@ -1,6 +1,6 @@
 # Node Login
 
-[![node-login](./readme.img/node-login.jpg?raw=true)](https://nodejs-login.braitsch.io)
+[![node-login](./readme.img/node-login.jpg?raw=true)](https://node-login.braitsch.io)
 
 #### A basic account management system built in Node.js with the following features:
 
@@ -15,9 +15,9 @@
 
 ### Live Demo
 
-[https://nodejs-login.braitsch.io](https://nodejs-login.braitsch.io)
+[https://node-login.braitsch.io](https://node-login.braitsch.io)
 
-For testing purposes you can view a [database dump of all accounts here](https://nodejs-login.braitsch.io/print)
+For testing purposes you can view a [database dump of all accounts here](https://node-login.braitsch.io/print)
 
 **Note: This database automatically resets every 24 hours.**
 
@@ -56,7 +56,7 @@ To do this on OSX you can simply add them to your .profile or .bashrc file.
 
 Or use [dotenv](https://www.npmjs.com/package/dotenv) (recommended) and place these inside of a ``.env`` file in your project's root directory.
 
-[![node-login](./readme.img/retrieve-password.jpg?raw=true)](https://nodejs-login.braitsch.io)
+[![node-login](./readme.img/retrieve-password.jpg?raw=true)](https://node-login.braitsch.io)
 
 ### Contributing
 
