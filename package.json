@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@braitsch/express": "^1.1.7",
+    "@braitsch/express": "^1.1.8",
     "cookie-parser": "^1.4.5",
     "emailjs": "^3.4.0",
     "moment": "^2.29.1",
