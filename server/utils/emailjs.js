@@ -17,7 +17,7 @@ module.exports.dispatchResetPasswordLink = function(account, callback)
 		attachment	: composeResetPasswordEmail(account)
 	};
 	client.send(email, (e) => {
-		if (e.code == 5 || e.smtp == undefined){
+		if (e && (e.code == 5 || e.smtp == undefined)){
 			callback('emailjs is not setup correctly, did you set your env variables?');
 		}	else{
 			callback(null);

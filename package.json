@@ -4,7 +4,7 @@
   "description": "A template for quickly building login systems on top of Node.js & MongoDb",
   "author": "Stephen Braitsch <stephen@braitsch.io>",
   "website": {
-    "url": "https://nodejs-login.braitsch.io"
+    "url": "https://node-login.braitsch.io"
   },
   "private": false,
   "repository": {
