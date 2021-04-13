@@ -1,3 +1,4 @@
 .DS_Store
+.env
+logs
 node_modules
-app/server/modules/email-settings-mine.js

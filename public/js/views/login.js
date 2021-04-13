@@ -22,7 +22,7 @@ $(document).ready(function(){
 		error : function(e){
 			lv.showLoginError('Login Failure', 'Please check your username and/or password');
 		}
-	}); 
+	});
 
 	$("input:text:visible:first").focus();
 	$('#btn_remember').click(function(){
@@ -37,9 +37,9 @@ $(document).ready(function(){
 	});
 
 // login retrieval form via email //
-	
+
 	var ev = new EmailValidator();
-	
+
 	$('#get-credentials-form').ajaxForm({
 		url: '/lost-password',
 		beforeSubmit : function(formData, jqForm, options){
@@ -57,7 +57,7 @@ $(document).ready(function(){
 			ev.showEmailSuccess("A link to reset your password was emailed to you.");
 		},
 		error : function(e){
-			if (e.responseText == 'email-not-found'){
+			if (e.responseText == 'account not found'){
 				ev.showEmailAlert("Email not found. Are you sure you entered it correctly?");
 			}	else{
 				$('#cancel').html('OK');
@@ -66,5 +66,5 @@ $(document).ready(function(){
 			}
 		}
 	});
-	
+
 });

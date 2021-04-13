@@ -1,28 +1,21 @@
 
 const crypto 		= require('crypto');
 const moment 		= require('moment');
-const MongoClient 	= require('mongodb').MongoClient;
 
-var db, accounts;
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, function(e, client) {
-	if (e){
-		console.log(e);
-	}	else{
-		db = client.db(process.env.DB_NAME);
-		accounts = db.collection('accounts');
-	// index fields 'user' & 'email' for faster new account validation //
-		accounts.createIndex({user: 1, email: 1});
-		console.log('mongo :: connected to database :: "'+process.env.DB_NAME+'"');
-	}
-});
+let accounts = undefined;
 
-const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
+module.exports.init = function(db)
+{
+	accounts = db.collection('accounts');
+// index fields 'user' & 'email' for faster new account validation //
+	accounts.createIndex({user: 1, email: 1});
+}
 
 /*
 	login validation methods
 */
 
-exports.autoLogin = function(user, pass, callback)
+module.exports.autoLogin = function(user, pass, callback)
 {
 	accounts.findOne({user:user}, function(e, o) {
 		if (o){
@@ -33,7 +26,7 @@ exports.autoLogin = function(user, pass, callback)
 	});
 }
 
-exports.manualLogin = function(user, pass, callback)
+module.exports.manualLogin = function(user, pass, callback)
 {
 	accounts.findOne({user:user}, function(e, o) {
 		if (o == null){
@@ -50,24 +43,24 @@ exports.manualLogin = function(user, pass, callback)
 	});
 }
 
-exports.generateLoginKey = function(user, ipAddress, callback)
+module.exports.generateLoginKey = function(user, ipAddress, callback)
 {
 	let cookie = guid();
 	accounts.findOneAndUpdate({user:user}, {$set:{
 		ip : ipAddress,
 		cookie : cookie
-	}}, {returnOriginal : false}, function(e, o){ 
+	}}, {returnOriginal : false}, function(e, o){
 		callback(cookie);
 	});
 }
 
-exports.validateLoginKey = function(cookie, ipAddress, callback)
+module.exports.validateLoginKey = function(cookie, ipAddress, callback)
 {
 // ensure the cookie maps to the user's last recorded ip address //
 	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
 }
 
-exports.generatePasswordKey = function(email, ipAddress, callback)
+module.exports.generatePasswordKey = function(email, ipAddress, callback)
 {
 	let passKey = guid();
 	accounts.findOneAndUpdate({email:email}, {$set:{
@@ -82,7 +75,7 @@ exports.generatePasswordKey = function(email, ipAddress, callback)
 	});
 }
 
-exports.validatePasswordKey = function(passKey, ipAddress, callback)
+module.exports.validatePasswordKey = function(passKey, ipAddress, callback)
 {
 // ensure the passKey maps to the user's last recorded ip address //
 	accounts.findOne({passKey:passKey, ip:ipAddress}, callback);
@@ -92,7 +85,7 @@ exports.validatePasswordKey = function(passKey, ipAddress, callback)
 	record insertion, update & deletion methods
 */
 
-exports.addNewAccount = function(newData, callback)
+module.exports.addNewAccount = function(newData, callback)
 {
 	accounts.findOne({user:newData.user}, function(e, o) {
 		if (o){
@@ -114,7 +107,7 @@ exports.addNewAccount = function(newData, callback)
 	});
 }
 
-exports.updateAccount = function(newData, callback)
+module.exports.updateAccount = function(newData, callback)
 {
 	let findOneAndUpdate = function(data){
 		var o = {
@@ -127,7 +120,7 @@ exports.updateAccount = function(newData, callback)
 	}
 	if (newData.pass == ''){
 		findOneAndUpdate(newData);
-	}	else { 
+	}	else {
 		saltAndHash(newData.pass, function(hash){
 			newData.pass = hash;
 			findOneAndUpdate(newData);
@@ -135,7 +128,7 @@ exports.updateAccount = function(newData, callback)
 	}
 }
 
-exports.updatePassword = function(passKey, newPass, callback)
+module.exports.updatePassword = function(passKey, newPass, callback)
 {
 	saltAndHash(newPass, function(hash){
 		newPass = hash;
@@ -147,7 +140,7 @@ exports.updatePassword = function(passKey, newPass, callback)
 	account lookup methods
 */
 
-exports.getAllRecords = function(callback)
+module.exports.getAllRecords = function(callback)
 {
 	accounts.find().toArray(
 		function(e, res) {
@@ -156,14 +149,14 @@ exports.getAllRecords = function(callback)
 	});
 }
 
-exports.deleteAccount = function(id, callback)
+module.exports.deleteAccount = function(id, callback)
 {
 	accounts.deleteOne({_id: getObjectId(id)}, callback);
 }
 
-exports.deleteAllAccounts = function(callback)
+module.exports.deleteAllAccounts = function(callback)
 {
-	accounts.deleteMany({}, callback);
+	accounts.deleteMany({}, () => { if (callback) callback(); });
 }
 
 /*

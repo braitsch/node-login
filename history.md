@@ -1,3 +1,7 @@
+**v1.8.0** –– 04-13-2021
+
+* updating all dependencies, refactoring app to use [@braitsch/express](https://www.npmjs.com/package/@braitsch/express) and organizing server modules into model, utils and json directories.
+
 **v1.7.3** –– 06-24-2020
 
 * updating npm dependencies & resolving vulnerabilities
@@ -28,7 +32,7 @@
 
 * redesigned login window
 * improved error handling on password reset
-* updating client side libraries: 
+* updating client side libraries:
 	* jQuery –– v2.2.3
 	* jQuery.form –– v3.51.0
 	* Twitter Bootstrap –– v3.3.6
@@ -45,7 +49,7 @@
 **v1.4.0** –– 06-14-2015
 
 * updating to Express v4.12.4
-* adding connect-mongo for db session store 
+* adding connect-mongo for db session store
 
 --
 **v1.3.2** –– 03-11-2013
