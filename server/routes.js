@@ -10,18 +10,28 @@ module.exports = function(app) {
 */
 
 	app.get('/', function(req, res){
-	// check if the user has an auto login key saved in a cookie //
-		if (req.cookies.login == undefined){
-			res.render('login', { title: 'Hello - Please Login To Your Account' });
-		}	else{
+	    // If session already made then traverse to /home page so not to login again and again for that instance  
+		if(req.session.user)
+		{
+			res.redirect('/home');
+		}
+		// check if the user has an auto login key saved in a cookie //
+		else if (req.cookies.login == undefined){
+			res.render('login', { title: 'Hello - Please Login To Your Account { For Exp} ' });
+		}
+		else{
 	// attempt automatic login //
-			accounts.validateLoginKey(req.cookies.login, req.ip, function(e, o){
+			// first need to check the cookie and IP address so we gonna get db
+			AM.validateLoginKey(req.cookies.login, req.ip, function(e, o){
 				if (o){
-					accounts.autoLogin(o.user, o.pass, function(o){
+					// If we got the data using cookie and IP from db then next step is login 
+					AM.autoLogin(o.user, o.pass, function(o){
 						req.session.user = o;
 						res.redirect('/home');
 					});
-				}	else{
+				}
+				// Ether Login Key is not available or Its Mismatch 
+				else{
 					res.render('login', { title: 'Hello - Please Login To Your Account' });
 				}
 			});
