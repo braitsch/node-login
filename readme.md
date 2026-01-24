@@ -56,6 +56,8 @@ To do this on OSX you can simply add them to your .profile or .bashrc file.
 
 Or use [dotenv](https://www.npmjs.com/package/dotenv) (recommended) and place these inside of a ``.env`` file in your project's root directory.
 
+Special Thank you to Stephen Braitsch for this great example for revisioning and great for beginners to use towards a development and production build.
+
 [![node-login](./readme.img/retrieve-password.jpg?raw=true)](https://node-login.braitsch.io)
 
 ### Contributing
